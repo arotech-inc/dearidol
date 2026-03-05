@@ -187,7 +187,7 @@ export default function Home() {
       {/* ================= FOOTER ================= */}
       <footer className="py-16 px-6 border-t border-white/10 text-center bg-black">
         <a
-          href="https://arotech.co.kr"
+          href="https://corporate-xi-six.vercel.app/"
           className="text-pink-400 hover:underline"
         >
           ← Back to AROTECH
