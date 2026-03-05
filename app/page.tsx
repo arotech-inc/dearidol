@@ -12,6 +12,8 @@ const menuItems = [
   { label: "Trailer", link: "#trailer" },
 ];
 
+<h1 style={{color:"red"}}>TEST</h1>
+
 export default function Home() {
 
   export default function Home() {
@@ -223,7 +225,7 @@ export default function Home() {
 
         <div className="text-center mb-10">
           <a
-            href="https://arotech.co.kr"
+            href="https://corporate-xi-six.vercel.app/"
             className="inline-flex items-center gap-3 px-8 py-3 rounded-full border border-pink-500/40 hover:bg-pink-500 hover:text-white transition"
           >
             <span className="text-xl">←</span>
