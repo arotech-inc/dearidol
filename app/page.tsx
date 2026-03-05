@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { newsData } from "./data";
 
 const menuItems = [
   { label: "About Game", link: "#about" },
@@ -11,6 +13,15 @@ const menuItems = [
 ];
 
 export default function Home() {
+
+  export default function Home() {
+  const router = useRouter();
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 60 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
   return (
     <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white overflow-hidden">
 
@@ -27,13 +38,21 @@ export default function Home() {
 
         {/* 🎀 왼쪽 게임 로고 */}
         <div className="w-28">
+
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="w-40"
+          >
+         
           <Image
             src="/IDOL_LOGO.png"
             alt="Dear Idol Logo"
-            width={120}
-            height={120}
+            width={180}
+            height={180}
             className="object-contain"
           />
+          </button>
+
         </div>
 
         {/* 🎵 오른쪽 음표 메뉴 */}
@@ -125,6 +144,77 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+            {/* ================= REWARDS ================= */}
+      <section id="rewards" className="py-32 px-6 text-center border-t border-white/10">
+        <h3 className="text-4xl font-bold text-pink-400 mb-12">
+          Pre-registration Rewards
+        </h3>
+
+        <div className="space-y-6 opacity-80 text-lg">
+          <p>10,000 Registrations – Exclusive Costume</p>
+          <p>50,000 Registrations – Premium Currency</p>
+          <p>100,000 Registrations – Limited Idol Card</p>
+        </div>
+      </section>
+
+      {/* ================= UPDATES ================= */}
+      <motion.section
+        id="updates"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false }}
+        variants={fadeUp}
+        className="py-32 px-6"
+      >
+        <div className="flex justify-between items-center max-w-6xl mx-auto mb-12">
+          <h3 className="text-4xl font-bold text-pink-400">
+            Latest Updates
+          </h3>
+          <button className="text-sm bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">
+            더보기
+          </button>
+        </div>
+
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+
+          {newsData.map((item, i) => (
+            <div
+              key={i}
+              onClick={() => router.push(`/news/${item.slug}`)}
+              className="cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300"
+            >
+              <div className="relative h-60 overflow-hidden">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition duration-500 hover:scale-110"
+                />
+              </div>
+
+              <div className="p-6">
+                <p className="text-sm opacity-60 mb-2">{item.date}</p>
+                <h4 className="font-semibold">{item.title}</h4>
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </motion.section>
+
+      {/* ================= TRAILER ================= */}
+      <section id="trailer" className="py-32 px-6 text-center border-t border-white/10">
+        <h3 className="text-4xl font-bold text-pink-400 mb-12">
+          Trailer
+        </h3>
+
+        <div className="max-w-4xl mx-auto">
+          <video controls className="w-full rounded-xl">
+            <source src="/trailer.mp4" type="video/mp4" />
+          </video>
         </div>
       </section>
 
