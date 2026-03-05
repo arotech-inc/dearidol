@@ -1,31 +1,58 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import Image from "next/image";
+
+const menuItems = [
+  { label: "About Game", link: "#about" },
+  { label: "News", link: "#updates" },
+  { label: "Rewards", link: "#rewards" },
+  { label: "Trailer", link: "#trailer" },
+];
 
 export default function Home() {
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white overflow-hidden">
+    <main className="bg-black text-white overflow-hidden">
 
-      {/* ================= FLOATING MUSIC HEADER ================= */}
-      <header className="fixed top-6 right-6 z-50 flex gap-4">
-
-        {[
-          { label: "About", link: "#about" },
-          { label: "Rewards", link: "#rewards" },
-          { label: "Updates", link: "#updates" },
-          { label: "Trailer", link: "#trailer" },
-        ].map((item, i) => (
-          <a
+      {/* ================= FLOATING MUSIC NAV ================= */}
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={{
+          hidden: {},
+          show: {
+            transition: { staggerChildren: 0.15 },
+          },
+        }}
+        className="fixed top-10 right-10 z-50 flex gap-12"
+      >
+        {menuItems.map((item, i) => (
+          <motion.a
             key={i}
             href={item.link}
-            className="w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_25px_rgba(236,72,153,0.6)] hover:scale-110 transition duration-300"
+            variants={{
+              hidden: { opacity: 0, y: -30 },
+              show: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.6 }}
+            className="relative group"
           >
-            <span className="text-xl">🎵</span>
-          </a>
-        ))}
+            {/* 음표 막대 */}
+            <div className="absolute left-1/2 -translate-x-1/2 -top-14 w-1 h-14 bg-pink-400"></div>
 
-      </header>
+            {/* 음표 둥근 부분 */}
+            <motion.div
+              whileHover={{ rotate: 8 }}
+              transition={{ duration: 0.2 }}
+              className="w-28 h-28 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)]"
+            >
+              <span className="text-sm text-center px-3 leading-tight font-semibold">
+                {item.label}
+              </span>
+            </motion.div>
+          </motion.a>
+        ))}
+      </motion.div>
 
       {/* ================= HERO ================= */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
@@ -40,69 +67,43 @@ export default function Home() {
           <source src="/dearidol-hero.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70" />
+        <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 text-center px-6">
-          <h2 className="text-6xl md:text-8xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+          <h2 className="text-6xl md:text-8xl font-extrabold text-pink-400">
             PRODUCE YOUR STAR
           </h2>
-
-          <div className="mt-10">
-            <a
-              href="#rewards"
-              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition"
-            >
-              🔥 사전예약 바로가기
-            </a>
-          </div>
         </div>
 
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section id="about" className="py-32 px-6 text-center">
+      <section id="about" className="py-40 px-6 text-center">
         <h3 className="text-4xl font-bold text-pink-400 mb-10">
           About The Game
         </h3>
+      </section>
 
-        <p className="max-w-3xl mx-auto opacity-80 mb-16">
-          감성과 전략이 결합된 차세대 아이돌 프로듀싱 게임.
-          트레이닝, 무대 연출, 팬 관리까지 직접 설계하세요.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {["dearidol-feature1.jpg", "dearidol-feature2.jpg", "dearidol-feature3.jpg"].map((img, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden hover:scale-105 transition">
-              <div className="relative h-64">
-                <Image src={`/${img}`} alt="Feature" fill className="object-cover" />
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* ================= REWARDS ================= */}
+      <section id="rewards" className="py-40 px-6 text-center border-t border-white/10">
+        <h3 className="text-4xl font-bold text-pink-400">
+          Rewards
+        </h3>
       </section>
 
       {/* ================= UPDATES ================= */}
-      <section id="updates" className="py-32 px-6 text-center border-t border-white/10">
-        <h3 className="text-4xl font-bold text-pink-400 mb-10">
-          Latest Updates
+      <section id="updates" className="py-40 px-6 text-center border-t border-white/10">
+        <h3 className="text-4xl font-bold text-pink-400">
+          News
         </h3>
-
-        <div className="space-y-6 max-w-4xl mx-auto">
-          <div className="bg-zinc-900 p-6 rounded-xl border border-pink-500/30">
-            2025.03 – Pre-registration Open
-          </div>
-          <div className="bg-zinc-900 p-6 rounded-xl border border-purple-500/30">
-            2025.02 – Official Trailer Released
-          </div>
-        </div>
       </section>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="py-16 text-center border-t border-white/10">
-        <a href="https://arotech.co.kr" className="text-pink-400 hover:underline">
-          ← Back to AROTECH
-        </a>
-      </footer>
+      {/* ================= TRAILER ================= */}
+      <section id="trailer" className="py-40 px-6 text-center border-t border-white/10">
+        <h3 className="text-4xl font-bold text-pink-400">
+          Trailer
+        </h3>
+      </section>
 
     </main>
   );
