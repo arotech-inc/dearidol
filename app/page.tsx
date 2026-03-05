@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,6 +16,8 @@ const menuItems = [
 export default function Home() {
   const router = useRouter();
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const fadeUp = {
     hidden: { opacity: 0, y: 60 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -25,20 +28,19 @@ export default function Home() {
 
       {/* ================= FLOATING MUSIC NAV ================= */}
       <motion.div
-        initial="hidden"
-        animate="show"
-        variants={{
-          hidden: {},
-          show: { transition: { staggerChildren: 0.1 } },
-        }}
-        className="fixed top-8 left-8 right-8 z-50 flex justify-between items-start"
-      >
-
-        {/* 🎀 왼쪽 게임 로고 */}
-        <div className="w-28">
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.1 } },
+          }}
+          // 모바일에서는 배경을 살짝 어둡게, PC에서는 투명하게
+          className="fixed top-0 left-0 right-0 z-50 p-6 md:p-8 flex justify-between items-center md:items-start bg-black/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none"
+        >
+          {/* 🎀 왼쪽 게임 로고 */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="w-40"
+            className="w-24 md:w-32 cursor-pointer z-50"
           >
             <Image
               src="/IDOL_LOGO.png"
@@ -48,36 +50,61 @@ export default function Home() {
               className="object-contain"
             />
           </button>
-        </div>
 
-        {/* 🎵 오른쪽 음표 메뉴 */}
-        <div className="flex gap-12">
-          {menuItems.map((item, i) => (
-            <motion.a
-              key={i}
-              href={item.link}
-              variants={{
-                hidden: { opacity: 0, y: -20 },
-                show: { opacity: 1, y: 0 },
-              }}
-              className="relative group"
-            >
-              <div className="absolute left-1/2 -translate-x-1/2 -top-12 w-1 h-12 bg-pink-400"></div>
+          {/* 📱 모바일용 햄버거 버튼 (PC에선 숨김) */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-white text-3xl z-50 focus:outline-none"
+          >
+            {isMobileMenuOpen ? "✕" : "☰"}
+          </button>
 
-              <motion.div
-                whileHover={{ rotate: 8 }}
-                transition={{ duration: 0.2 }}
-                className="w-28 h-28 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)]"
+          {/* 💻 PC 오른쪽 음표 메뉴 (모바일에선 숨김) */}
+          <div className="hidden md:flex gap-12">
+            {menuItems.map((item, i) => (
+              <motion.a
+                key={i}
+                href={item.link}
+                variants={{
+                  hidden: { opacity: 0, y: -20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                className="relative group"
               >
-                <span className="text-sm text-center px-3 font-semibold leading-tight">
-                  {item.label}
-                </span>
-              </motion.div>
-            </motion.a>
-          ))}
-        </div>
+                <div className="absolute left-1/2 -translate-x-1/2 -top-12 w-1 h-12 bg-pink-400"></div>
+                <motion.div
+                  whileHover={{ rotate: 8 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-28 h-28 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)] cursor-pointer"
+                >
+                  <span className="text-sm text-center px-3 font-semibold leading-tight">
+                    {item.label}
+                  </span>
+                </motion.div>
+              </motion.a>
+            ))}
+          </div>
 
-      </motion.div>
+          {/* 📱 모바일 드롭다운 메뉴 (햄버거 버튼 누를 때만 보임) */}
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute top-full left-0 w-full bg-black/95 border-t border-pink-500/30 flex flex-col items-center py-8 gap-8 md:hidden shadow-2xl"
+            >
+              {menuItems.map((item, i) => (
+                <a
+                  key={i}
+                  href={item.link}
+                  onClick={() => setIsMobileMenuOpen(false)} // 누르면 메뉴 닫힘
+                  className="text-xl font-bold text-white hover:text-pink-400 transition"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </motion.div>
+          )}
+        </motion.div>
 
       {/* ================= HERO ================= */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden pt-20">

@@ -1,36 +1,44 @@
 import { newsData } from "../../data";
 import Image from "next/image";
 
-export default function NewsDetail({ params }: any) {
-  const post = newsData.find((n) => n.slug === params.slug);
+export default async function NewsDetail({ params }: { params: Promise<{ slug: string }> }) {
+  
+  const resolvedParams = await params;
+  const post = newsData.find((n) => n.slug === resolvedParams.slug);
 
-  if (!post) return <div className="text-white p-10">Not Found</div>;
+  if (!post) {
+    return (
+      <div className="bg-black min-h-screen flex items-center justify-center text-white text-2xl font-bold">
+        게시글을 찾을 수 없습니다. 😢
+      </div>
+    );
+  }
 
   return (
-    <main className="bg-white min-h-screen text-black p-10">
+    <main className="bg-white min-h-screen text-black p-6 md:p-20">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-10">
+          <a href="/" className="text-pink-500 font-bold hover:underline">
+            ← 메인으로 돌아가기
+          </a>
+        </div>
 
-      <h1 className="text-4xl font-bold mb-4">
-        {post.title}
-      </h1>
+        <h1 className="text-3xl md:text-5xl font-bold mb-4">{post.title}</h1>
+        <p className="text-sm text-gray-500 mb-8">{post.date}</p>
 
-      <p className="text-sm text-gray-500 mb-6">
-        {post.date}
-      </p>
+        <div className="mb-10 w-full relative aspect-video">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="rounded-xl object-cover shadow-lg"
+          />
+        </div>
 
-      <div className="mb-10">
-        <Image
-          src={post.image}
-          alt={post.title}
-          width={1200}
-          height={800}
-          className="rounded-xl"
-        />
+        <p className="leading-relaxed whitespace-pre-line text-lg text-gray-800">
+          {post.content}
+        </p>
       </div>
-
-      <p className="leading-relaxed whitespace-pre-line">
-        {post.content}
-      </p>
-
     </main>
   );
 }
