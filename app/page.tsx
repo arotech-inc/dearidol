@@ -12,16 +12,12 @@ const menuItems = [
   { label: "Trailer", link: "#trailer" },
 ];
 
-<h1 style={{color:"red"}}>TEST</h1>
-
 export default function Home() {
-
-  export default function Home() {
   const router = useRouter();
 
   const fadeUp = {
     hidden: { opacity: 0, y: 60 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   return (
@@ -40,21 +36,18 @@ export default function Home() {
 
         {/* 🎀 왼쪽 게임 로고 */}
         <div className="w-28">
-
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="w-40"
           >
-         
-          <Image
-            src="/IDOL_LOGO.png"
-            alt="Dear Idol Logo"
-            width={180}
-            height={180}
-            className="object-contain"
-          />
+            <Image
+              src="/IDOL_LOGO.png"
+              alt="Dear Idol Logo"
+              width={180}
+              height={180}
+              className="object-contain"
+            />
           </button>
-
         </div>
 
         {/* 🎵 오른쪽 음표 메뉴 */}
@@ -149,19 +142,6 @@ export default function Home() {
         </div>
       </section>
 
-            {/* ================= REWARDS ================= */}
-      <section id="rewards" className="py-32 px-6 text-center border-t border-white/10">
-        <h3 className="text-4xl font-bold text-pink-400 mb-12">
-          Pre-registration Rewards
-        </h3>
-
-        <div className="space-y-6 opacity-80 text-lg">
-          <p>10,000 Registrations – Exclusive Costume</p>
-          <p>50,000 Registrations – Premium Currency</p>
-          <p>100,000 Registrations – Limited Idol Card</p>
-        </div>
-      </section>
-
       {/* ================= UPDATES ================= */}
       <motion.section
         id="updates"
@@ -206,6 +186,19 @@ export default function Home() {
 
         </div>
       </motion.section>
+
+      {/* ================= REWARDS ================= */}
+      <section id="rewards" className="py-32 px-6 text-center border-t border-white/10">
+        <h3 className="text-4xl font-bold text-pink-400 mb-12">
+          Pre-registration Rewards
+        </h3>
+
+        <div className="space-y-6 opacity-80 text-lg">
+          <p>10,000 Registrations – Exclusive Costume</p>
+          <p>50,000 Registrations – Premium Currency</p>
+          <p>100,000 Registrations – Limited Idol Card</p>
+        </div>
+      </section>
 
       {/* ================= TRAILER ================= */}
       <section id="trailer" className="py-32 px-6 text-center border-t border-white/10">
