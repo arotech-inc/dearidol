@@ -8,6 +8,9 @@ export default function NewsListPage() {
       <div className="max-w-6xl mx-auto">
 
         <div className="mb-12">
+          <Link href="/" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-pink-400 text-pink-400 font-semibold text-sm hover:bg-pink-500 hover:text-white transition mb-8 inline-block">
+            ← 메인으로
+          </Link>
           <h1 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">News</h1>
           <p className="opacity-60">Dear Idol의 최신 소식을 확인하세요.</p>
         </div>

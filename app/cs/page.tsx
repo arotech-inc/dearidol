@@ -191,7 +191,7 @@ export default function CSPage() {
 
         {/* 헤더 */}
         <div className="mb-12">
-          <Link href="/" className="text-pink-400 text-sm hover:underline">← 메인으로</Link>
+          <Link href="/" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-pink-400 text-pink-500 font-semibold text-sm hover:bg-pink-500 hover:text-white transition">← 메인으로</Link>
           <h1 className="text-4xl md:text-5xl font-bold text-pink-400 mt-4 mb-2">고객센터</h1>
           <p className="text-white/50">무엇을 도와드릴까요?</p>
         </div>

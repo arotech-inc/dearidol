@@ -37,8 +37,8 @@ export default function DearIdolHeader() {
         {menuItems.map((item, i) => (
           <Link key={i} href={item.link} className="relative group">
             <div className="absolute left-1/2 -translate-x-1/2 -top-12 w-1 h-12 bg-pink-400"></div>
-            <motion.div whileHover={{ rotate: 8 }} transition={{ duration: 0.2 }} className="w-32 h-32 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)] cursor-pointer">
-              <span className="text-base text-center px-3 font-semibold leading-tight text-white">{item.label}</span>
+            <motion.div whileHover={{ rotate: 8 }} transition={{ duration: 0.2 }} className="w-28 h-28 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)] cursor-pointer">
+              <span className="text-sm text-center px-3 font-semibold leading-tight text-white">{item.label}</span>
             </motion.div>
           </Link>
         ))}
