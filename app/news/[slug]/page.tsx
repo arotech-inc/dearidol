@@ -19,7 +19,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
           <a href="/" className="text-pink-500 font-bold hover:underline">
-            ← 메인으로 돌아가기
+            ← 목록보기
           </a>
         </div>
 
