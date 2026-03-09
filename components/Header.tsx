@@ -23,8 +23,8 @@ export default function DearIdolHeader() {
       className="fixed top-0 left-0 right-0 z-[100] p-6 md:p-8 flex justify-between items-center md:items-start bg-black/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none"
     >
       {/* 🎀 로고 누르면 Dear Idol 메인 홈으로 */}
-      <Link href="/" className="w-24 md:w-32 cursor-pointer z-50">
-        <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={180} height={180} className="object-contain" />
+      <Link href="/" className="w-32 md:w-44 cursor-pointer z-50">
+        <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={220} height={220} className="object-contain" />
       </Link>
 
       {/* 📱 모바일 햄버거 버튼 */}
@@ -37,8 +37,8 @@ export default function DearIdolHeader() {
         {menuItems.map((item, i) => (
           <Link key={i} href={item.link} className="relative group">
             <div className="absolute left-1/2 -translate-x-1/2 -top-12 w-1 h-12 bg-pink-400"></div>
-            <motion.div whileHover={{ rotate: 8 }} transition={{ duration: 0.2 }} className="w-28 h-28 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)] cursor-pointer">
-              <span className="text-sm text-center px-3 font-semibold leading-tight text-white">{item.label}</span>
+            <motion.div whileHover={{ rotate: 8 }} transition={{ duration: 0.2 }} className="w-32 h-32 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(236,72,153,0.6)] cursor-pointer">
+              <span className="text-base text-center px-3 font-semibold leading-tight text-white">{item.label}</span>
             </motion.div>
           </Link>
         ))}
