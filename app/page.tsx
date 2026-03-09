@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { newsData } from "./data";
 
@@ -92,9 +93,9 @@ export default function Home() {
           <h3 className="text-4xl font-bold text-pink-400">
             Latest Updates
           </h3>
-          <button className="text-sm bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">
+          <Link href="/news" className="text-sm bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">
             더보기
-          </button>
+          </Link>
         </div>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">

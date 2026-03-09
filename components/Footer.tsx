@@ -12,7 +12,7 @@ export default function DearIdolFooter() {
       <div className="flex flex-col md:flex-row justify-center gap-6 text-sm opacity-70 text-center">
         <a href="#" className="hover:text-pink-400">개인정보처리방침</a>
         <a href="#" className="hover:text-pink-400">이용약관</a>
-        <a href="#" className="hover:text-pink-400">고객센터</a>
+        <Link href="/cs" className="hover:text-pink-400">고객센터</Link>
       </div>
       <p className="mt-10 text-center text-xs opacity-50">© 2026 AROTECH Studio. All rights reserved.</p>
     </footer>
