@@ -34,29 +34,46 @@ export default function Home() {
 
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="relative z-10 text-center px-6">
-          <h2 className="text-6xl md:text-8xl font-extrabold text-pink-400">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } } }}
+          className="relative z-10 text-center px-6"
+        >
+          <motion.h2
+            variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-8xl font-extrabold text-pink-400"
+          >
             PRODUCE YOUR STAR
-          </h2>
+          </motion.h2>
 
-          <div className="mt-10">
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6 }}
+            className="mt-10"
+          >
             <button
               onClick={() => setShowPopup(true)}
               className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition cursor-pointer"
             >
               🔥 사전예약 바로가기
             </button>
-          </div>
+          </motion.div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center">
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6 }}
+            className="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
             <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
               <Image src="/googleplay.png" alt="Google Play" width={180} height={60} />
             </a>
             <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
               <Image src="/appstore.png" alt="App Store" width={180} height={60} />
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
       </section>
 
@@ -72,10 +89,19 @@ export default function Home() {
         </p>
 
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {["dearidol-feature1.jpg", "dearidol-feature2.jpg", "dearidol-feature3.jpg"].map((img, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden hover:scale-105 transition">
-              <div className="relative h-64">
-                <Image src={`/${img}`} alt="Feature" fill className="object-cover" />
+          {[
+            { img: "dearidol-feature1.jpg", title: "Training", desc: "나만의 트레이닝 커리큘럼으로 아이돌을 성장시키세요" },
+            { img: "dearidol-feature2.jpg", title: "Stage", desc: "화려한 무대 연출과 퍼포먼스를 직접 설계하세요" },
+            { img: "dearidol-feature3.jpg", title: "Fan Management", desc: "팬과 소통하고 팬덤을 키워 톱 아이돌로 만드세요" },
+          ].map((item, i) => (
+            <div key={i} className="group rounded-2xl overflow-hidden hover:scale-105 transition duration-300 bg-zinc-900 border border-white/10 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)]">
+              <div className="relative h-64 overflow-hidden">
+                <Image src={`/${item.img}`} alt={item.title} fill className="object-cover transition duration-500 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              </div>
+              <div className="p-5">
+                <h4 className="text-lg font-bold text-pink-400 mb-1">{item.title}</h4>
+                <p className="text-sm text-white/50">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -106,7 +132,7 @@ export default function Home() {
             <div
               key={i}
               onClick={() => router.push(`/news/${item.slug}`)}
-              className="cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300"
+              className="cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 hover:scale-105 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] transition duration-300"
             >
               <div className="relative h-60 overflow-hidden">
                 <Image
