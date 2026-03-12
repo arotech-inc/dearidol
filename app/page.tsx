@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { newsData } from "./data";
 
 export default function Home() {
   const router = useRouter();
+  const [showPopup, setShowPopup] = useState(false);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 60 },
@@ -38,19 +40,19 @@ export default function Home() {
           </h2>
 
           <div className="mt-10">
-            <a
-              href="#rewards"
-              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition"
+            <button
+              onClick={() => setShowPopup(true)}
+              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition cursor-pointer"
             >
               🔥 사전예약 바로가기
-            </a>
+            </button>
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="#">
+            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
               <Image src="/googleplay.png" alt="Google Play" width={180} height={60} />
             </a>
-            <a href="#">
+            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
               <Image src="/appstore.png" alt="App Store" width={180} height={60} />
             </a>
           </div>
@@ -127,29 +129,103 @@ export default function Home() {
 
       {/* ================= REWARDS ================= */}
       <section id="rewards" className="py-32 px-6 text-center border-t border-white/10">
-        <h3 className="text-4xl font-bold text-pink-400 mb-12">
+        <h3 className="text-4xl font-bold text-pink-400 mb-4">
           Pre-registration Rewards
         </h3>
+        <p className="text-white/50 mb-16">사전예약 달성 인원에 따라 보상이 해금됩니다!</p>
 
-        <div className="space-y-6 opacity-80 text-lg">
-          <p>10,000 Registrations – Exclusive Costume</p>
-          <p>50,000 Registrations – Premium Currency</p>
-          <p>100,000 Registrations – Limited Idol Card</p>
+        <div className="max-w-3xl mx-auto space-y-6">
+          {[
+            { milestone: "10,000", reward: "Exclusive Costume", icon: "👗", color: "from-pink-500 to-rose-400" },
+            { milestone: "50,000", reward: "Premium Currency", icon: "💎", color: "from-purple-500 to-violet-400" },
+            { milestone: "100,000", reward: "Limited Idol Card", icon: "🃏", color: "from-amber-500 to-yellow-400" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="relative flex items-center gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-pink-500/40 hover:bg-white/10 transition group"
+            >
+              {/* 아이콘 */}
+              <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-3xl shrink-0 shadow-lg group-hover:scale-110 transition`}>
+                {item.icon}
+              </div>
+
+              {/* 내용 */}
+              <div className="text-left flex-1">
+                <p className="text-xs text-white/40 font-semibold mb-1">MILESTONE</p>
+                <p className="text-2xl font-bold text-white">{item.milestone}<span className="text-sm text-white/40 font-normal ml-1">명 달성</span></p>
+              </div>
+
+              {/* 보상 */}
+              <div className="text-right">
+                <p className="text-xs text-pink-400/60 font-semibold mb-1">REWARD</p>
+                <p className="text-lg font-bold text-pink-400">{item.reward}</p>
+              </div>
+
+              {/* 연결선 (마지막 카드 제외) */}
+              {i < 2 && (
+                <div className="absolute left-[3.25rem] -bottom-6 w-0.5 h-6 bg-gradient-to-b from-white/20 to-transparent" />
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* ================= TRAILER ================= */}
-      <section id="trailer" className="py-32 px-6 text-center border-t border-white/10">
-        <h3 className="text-4xl font-bold text-pink-400 mb-12">
-          Trailer
-        </h3>
+      <section id="trailer" className="py-32 px-6 text-center border-t border-white/10 relative overflow-hidden">
+        {/* 배경 장식 */}
+        <div className="absolute top-10 left-1/4 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
 
-        <div className="max-w-4xl mx-auto">
-          <video controls className="w-full rounded-xl">
-            <source src="/trailer.mp4" type="video/mp4" />
-          </video>
+        <div className="relative z-10">
+          <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Official</p>
+          <h3 className="text-4xl font-bold text-pink-400 mb-4">
+            Trailer
+          </h3>
+          <p className="text-white/40 mb-12">Dear Idol의 세계를 미리 만나보세요</p>
+
+          <div className="max-w-4xl mx-auto relative">
+            {/* 글로우 프레임 */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur-sm" />
+            <video controls className="relative w-full rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(236,72,153,0.15)]">
+              <source src="/trailer.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </section>
+
+      {/* ================= 준비중 팝업 ================= */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            onClick={() => setShowPopup(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="bg-gradient-to-br from-purple-900 to-black border border-pink-500/30 rounded-3xl p-10 text-center shadow-[0_0_60px_rgba(236,72,153,0.3)] max-w-sm mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-6xl mb-4">🎀</div>
+              <h3 className="text-2xl font-bold text-pink-400 mb-2">준비중이에요!</h3>
+              <p className="text-white/60 text-sm mb-6">
+                사전예약 오픈 시 공지를 통해 안내드릴게요.<br />조금만 기다려주세요!
+              </p>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition shadow-lg cursor-pointer"
+              >
+                알겠어요!
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   );
