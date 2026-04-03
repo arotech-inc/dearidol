@@ -19,33 +19,22 @@ export default function DearIdolHeader() {
   useEffect(() => {
     const aboutSection = document.getElementById("about");
     if (!aboutSection) {
+      // 홈이 아닌 다른 페이지에서는 메뉴 항상 표시
       setShowMenu(true);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // about 섹션이 뷰포트 상단에 도달하면 메뉴 표시
-        setShowMenu(entry.isIntersecting || entry.boundingClientRect.top < 0);
-      },
-      { threshold: 0, rootMargin: "0px 0px 0px 0px" }
-    );
-
-    observer.observe(aboutSection);
-
-    // 스크롤 시 about 섹션을 이미 지나갔는지도 체크
     const handleScroll = () => {
-      if (aboutSection) {
-        const rect = aboutSection.getBoundingClientRect();
-        setShowMenu(rect.top <= window.innerHeight);
-      }
+      // about 섹션의 상단이 뷰포트 안으로 들어왔는지 체크
+      const rect = aboutSection.getBoundingClientRect();
+      setShowMenu(rect.top < window.innerHeight * 0.5);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-    };
+    // 초기 상태 체크
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
