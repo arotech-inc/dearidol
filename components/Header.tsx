@@ -53,10 +53,10 @@ export default function DearIdolHeader() {
       initial="hidden"
       animate="show"
       variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
-      className="fixed top-0 left-0 right-0 z-[100] p-6 md:p-8 flex justify-between items-center md:items-start bg-black/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none"
+      className="fixed top-0 left-0 right-0 z-[100] px-4 py-3 md:p-8 flex justify-between items-center md:items-start bg-black/60 md:bg-transparent backdrop-blur-md md:backdrop-blur-none"
     >
       {/* 🎀 로고 누르면 Dear Idol 메인 홈으로 */}
-      <Link href="/" className="w-32 md:w-44 cursor-pointer z-50">
+      <Link href="/" className="w-20 md:w-44 cursor-pointer z-50">
         <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={220} height={220} className="object-contain" />
       </Link>
 
@@ -106,6 +106,9 @@ export default function DearIdolHeader() {
                 {item.label}
               </Link>
             ))}
+            <Link href="/cs" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-bold text-white hover:text-pink-400 transition">
+              고객센터
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

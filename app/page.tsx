@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { newsData } from "./data";
 
 export default function Home() {
   const router = useRouter();
+  const [showPopup, setShowPopup] = useState(false);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 60 },
@@ -32,29 +34,46 @@ export default function Home() {
 
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="relative z-10 text-center px-6">
-          <h2 className="text-6xl md:text-8xl font-extrabold text-pink-400">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } } }}
+          className="relative z-10 text-center px-6"
+        >
+          <motion.h2
+            variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-8xl font-extrabold text-pink-400"
+          >
             PRODUCE YOUR STAR
-          </h2>
+          </motion.h2>
 
-          <div className="mt-10">
-            <a
-              href="#rewards"
-              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition"
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6 }}
+            className="mt-10"
+          >
+            <button
+              onClick={() => setShowPopup(true)}
+              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition cursor-pointer"
             >
               🔥 사전예약 바로가기
-            </a>
-          </div>
+            </button>
+          </motion.div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="#">
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6 }}
+            className="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
+            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
               <Image src="/googleplay.png" alt="Google Play" width={180} height={60} />
             </a>
-            <a href="#">
+            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
               <Image src="/appstore.png" alt="App Store" width={180} height={60} />
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
       </section>
 
@@ -70,10 +89,19 @@ export default function Home() {
         </p>
 
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {["dearidol-feature1.jpg", "dearidol-feature2.jpg", "dearidol-feature3.jpg"].map((img, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden hover:scale-105 transition">
-              <div className="relative h-64">
-                <Image src={`/${img}`} alt="Feature" fill className="object-cover" />
+          {[
+            { img: "dearidol-feature1.jpg", title: "Idol", desc: "나만의 아이돌을 뽑아서 관리하세요" },
+            { img: "dearidol-feature2.jpg", title: "Stage", desc: "화려한 무대 연출과 퍼포먼스를 직접 설계하세요" },
+            { img: "dearidol-feature3.jpg", title: "Training", desc: "나만의 트레이닝 커리큘럼으로 아이돌을 성장시키세요" },
+          ].map((item, i) => (
+            <div key={i} className="group rounded-2xl overflow-hidden hover:scale-105 transition duration-300 bg-zinc-900 border border-white/10 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)]">
+              <div className="relative h-64 overflow-hidden">
+                <Image src={`/${item.img}`} alt={item.title} fill className="object-cover transition duration-500 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              </div>
+              <div className="p-5">
+                <h4 className="text-lg font-bold text-pink-400 mb-1">{item.title}</h4>
+                <p className="text-sm text-white/50">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -104,7 +132,7 @@ export default function Home() {
             <div
               key={i}
               onClick={() => router.push(`/news/${item.slug}`)}
-              className="cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 hover:scale-105 transition duration-300"
+              className="cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 hover:scale-105 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] transition duration-300"
             >
               <div className="relative h-60 overflow-hidden">
                 <Image
@@ -126,30 +154,131 @@ export default function Home() {
       </motion.section>
 
       {/* ================= REWARDS ================= */}
-      <section id="rewards" className="py-32 px-6 text-center border-t border-white/10">
-        <h3 className="text-4xl font-bold text-pink-400 mb-12">
-          Pre-registration Rewards
-        </h3>
+      <section id="rewards" className="py-32 px-6 text-center border-t border-white/10 relative overflow-hidden">
+        {/* 배경 장식 */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-500/5 rounded-full blur-3xl" />
 
-        <div className="space-y-6 opacity-80 text-lg">
-          <p>10,000 Registrations – Exclusive Costume</p>
-          <p>50,000 Registrations – Premium Currency</p>
-          <p>100,000 Registrations – Limited Idol Card</p>
+        <div className="relative z-10">
+          <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Special Benefits</p>
+          <h3 className="text-4xl font-bold text-pink-400 mb-4">
+            Pre-registration Rewards
+          </h3>
+          <p className="text-white/50 mb-16">사전예약 달성 인원에 따라 보상이 해금됩니다!</p>
+
+          <div className="max-w-3xl mx-auto space-y-5">
+            {[
+              { milestone: "10,000", reward: "Exclusive Costume", desc: "한정 의상 세트 지급", icon: "👗", color: "from-pink-500 to-rose-400", glow: "rgba(236,72,153,0.15)" },
+              { milestone: "50,000", reward: "Premium Currency", desc: "다이아 3,000개 지급", icon: "💎", color: "from-purple-500 to-violet-400", glow: "rgba(139,92,246,0.15)" },
+              { milestone: "100,000", reward: "Limited Idol Card", desc: "SSR 한정 아이돌 카드 지급", icon: "🃏", color: "from-amber-500 to-yellow-400", glow: "rgba(245,158,11,0.15)" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="relative overflow-hidden"
+              >
+                {/* 카드 본체 */}
+                <div className={`relative flex items-center gap-5 md:gap-6 rounded-2xl p-5 md:p-6 border border-white/10 bg-white/5 hover:border-pink-500/40 transition group cursor-default`}
+                  style={{ boxShadow: `0 0 0 rgba(0,0,0,0)` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 40px ${item.glow}`; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 0 0 rgba(0,0,0,0)`; }}
+                >
+                  {/* 넘버링 뱃지 */}
+                  <div className="absolute top-3 right-4 text-xs font-bold text-white/10">
+                    STEP {i + 1}
+                  </div>
+
+                  {/* 아이콘 */}
+                  <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-3xl md:text-4xl shrink-0 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition duration-300`}>
+                    {item.icon}
+                  </div>
+
+                  {/* 마일스톤 */}
+                  <div className="text-left flex-1 min-w-0">
+                    <p className="text-[10px] md:text-xs text-white/30 font-semibold tracking-wider mb-1">MILESTONE</p>
+                    <p className="text-xl md:text-2xl font-bold text-white">{item.milestone}<span className="text-xs md:text-sm text-white/30 font-normal ml-1">명 달성</span></p>
+                  </div>
+
+                  {/* 보상 */}
+                  <div className="text-right shrink-0">
+                    <p className="text-[10px] md:text-xs text-pink-400/40 font-semibold tracking-wider mb-1">REWARD</p>
+                    <p className="text-base md:text-lg font-bold text-pink-400">{item.reward}</p>
+                    <p className="text-[11px] text-white/30 mt-0.5">{item.desc}</p>
+                  </div>
+                </div>
+
+                {/* 연결선 */}
+                {i < 2 && (
+                  <div className="flex justify-center">
+                    <div className="w-px h-5 bg-gradient-to-b from-white/15 to-transparent" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 하단 안내 */}
+          <div className="mt-12 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white/40 text-sm">
+            <span className="inline-block w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
+            현재 사전예약 집계중
+          </div>
         </div>
       </section>
 
       {/* ================= TRAILER ================= */}
-      <section id="trailer" className="py-32 px-6 text-center border-t border-white/10">
-        <h3 className="text-4xl font-bold text-pink-400 mb-12">
-          Trailer
-        </h3>
+      <section id="trailer" className="py-32 px-6 text-center border-t border-white/10 relative overflow-hidden">
+        {/* 배경 장식 */}
+        <div className="absolute top-10 left-1/4 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
 
-        <div className="max-w-4xl mx-auto">
-          <video controls className="w-full rounded-xl">
-            <source src="/trailer.mp4" type="video/mp4" />
-          </video>
+        <div className="relative z-10">
+          <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Official</p>
+          <h3 className="text-4xl font-bold text-pink-400 mb-4">
+            Trailer
+          </h3>
+          <p className="text-white/40 mb-12">Dear Idol의 세계를 미리 만나보세요</p>
+
+          <div className="max-w-4xl mx-auto relative">
+            {/* 글로우 프레임 */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur-sm" />
+            <video controls className="relative w-full rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(236,72,153,0.15)]">
+              <source src="/trailer.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </section>
+
+      {/* ================= 준비중 팝업 ================= */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            onClick={() => setShowPopup(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="bg-gradient-to-br from-purple-900 to-black border border-pink-500/30 rounded-3xl p-10 text-center shadow-[0_0_60px_rgba(236,72,153,0.3)] max-w-sm mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-6xl mb-4">🎀</div>
+              <h3 className="text-2xl font-bold text-pink-400 mb-2">준비중이에요!</h3>
+              <p className="text-white/60 text-sm mb-6">
+                사전예약 오픈 시 공지를 통해 안내드릴게요.<br />조금만 기다려주세요!
+              </p>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition shadow-lg cursor-pointer"
+              >
+                알겠어요!
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   );
