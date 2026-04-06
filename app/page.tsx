@@ -10,6 +10,7 @@ import { newsData } from "./data";
 export default function Home() {
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
+  const [activeNews, setActiveNews] = useState(0);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 60 },
@@ -115,41 +116,108 @@ export default function Home() {
         whileInView="show"
         viewport={{ once: false }}
         variants={fadeUp}
-        className="py-32 px-6"
+        className="py-32 px-6 relative overflow-hidden"
       >
-        <div className="flex justify-between items-center max-w-6xl mx-auto mb-12">
-          <h3 className="text-4xl font-bold text-pink-400">
-            Latest Updates
-          </h3>
-          <Link href="/news" className="text-sm bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">
-            더보기
-          </Link>
-        </div>
+        {/* 배경 장식 */}
+        <div className="absolute top-20 right-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-2">News & Events</p>
+              <h3 className="text-4xl font-bold text-pink-400">
+                Latest Updates
+              </h3>
+            </div>
+            <Link href="/news" className="text-sm bg-white/10 px-5 py-2.5 rounded-full hover:bg-pink-500/20 hover:border-pink-500/40 border border-white/10 transition">
+              더보기 →
+            </Link>
+          </div>
 
-          {newsData.map((item, i) => (
+          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+
+            {/* 왼쪽: 큰 이미지 */}
             <div
-              key={i}
-              onClick={() => router.push(`/news/${item.slug}`)}
-              className="cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 hover:scale-105 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] transition duration-300"
+              onClick={() => router.push(`/news/${newsData[activeNews].slug}`)}
+              className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group border border-white/10 shadow-[0_0_40px_rgba(236,72,153,0.15)]"
             >
-              <div className="relative h-60 overflow-hidden">
+              {newsData.map((item, i) => (
                 <Image
+                  key={item.slug}
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover transition duration-500 hover:scale-110"
+                  className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                    activeNews === i ? "opacity-100" : "opacity-0"
+                  }`}
                 />
+              ))}
+
+              {/* 오버레이 그라데이션 */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+
+              {/* 카테고리 뱃지 */}
+              <div className="absolute top-5 left-5">
+                <span className="inline-block px-3 py-1.5 bg-pink-500/90 backdrop-blur text-white text-xs font-bold rounded-full">
+                  공지사항
+                </span>
               </div>
 
-              <div className="p-6">
-                <p className="text-sm opacity-60 mb-2">{item.date}</p>
-                <h4 className="font-semibold">{item.title}</h4>
+              {/* 하단 텍스트 */}
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="text-pink-400 text-xs font-semibold mb-2">{newsData[activeNews].date}</p>
+                <h4 className="text-white text-2xl font-bold leading-tight group-hover:text-pink-300 transition">
+                  {newsData[activeNews].title}
+                </h4>
               </div>
             </div>
-          ))}
 
+            {/* 오른쪽: 리스트 */}
+            <div className="flex flex-col gap-3">
+              {newsData.map((item, i) => (
+                <div
+                  key={item.slug}
+                  onMouseEnter={() => setActiveNews(i)}
+                  onClick={() => router.push(`/news/${item.slug}`)}
+                  className={`relative cursor-pointer rounded-xl border p-5 transition-all duration-300 group ${
+                    activeNews === i
+                      ? "bg-gradient-to-r from-pink-500/15 to-purple-500/5 border-pink-500/40 shadow-[0_0_25px_rgba(236,72,153,0.15)]"
+                      : "bg-white/5 border-white/10 hover:bg-white/10"
+                  }`}
+                >
+                  {/* 좌측 인디케이터 바 */}
+                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full bg-gradient-to-b from-pink-400 to-purple-500 transition-all duration-300 ${
+                    activeNews === i ? "h-12" : "h-0"
+                  }`} />
+
+                  <div className="flex items-start justify-between gap-4 pl-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`inline-block px-2 py-0.5 text-[10px] font-bold rounded ${
+                          activeNews === i ? "bg-pink-500 text-white" : "bg-white/10 text-white/60"
+                        }`}>
+                          NEWS
+                        </span>
+                        <span className="text-xs text-white/40">{item.date}</span>
+                      </div>
+                      <h5 className={`font-semibold text-base leading-snug truncate transition ${
+                        activeNews === i ? "text-pink-300" : "text-white group-hover:text-pink-200"
+                      }`}>
+                        {item.title}
+                      </h5>
+                    </div>
+
+                    <div className={`shrink-0 self-center text-lg transition-all ${
+                      activeNews === i ? "text-pink-400 translate-x-0 opacity-100" : "text-white/30 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
+                    }`}>
+                      →
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
         </div>
       </motion.section>
 
