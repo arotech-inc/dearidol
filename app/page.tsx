@@ -67,10 +67,20 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://play.google.com/store"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block transition duration-300 hover:scale-110 hover:-translate-y-1 hover:drop-shadow-[0_0_25px_rgba(236,72,153,0.7)]"
+            >
               <Image src="/googleplay.png" alt="Google Play" width={180} height={60} />
             </a>
-            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.apple.com/app-store/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block transition duration-300 hover:scale-110 hover:-translate-y-1 hover:drop-shadow-[0_0_25px_rgba(168,85,247,0.7)]"
+            >
               <Image src="/appstore.png" alt="App Store" width={180} height={60} />
             </a>
           </motion.div>

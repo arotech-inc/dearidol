@@ -45,7 +45,16 @@ export default function DearIdolHeader() {
       className="fixed top-0 left-0 right-0 z-[100] px-4 py-3 md:p-8 flex justify-between items-center md:items-start bg-black/60 md:bg-transparent backdrop-blur-md md:backdrop-blur-none"
     >
       {/* 🎀 로고 누르면 Dear Idol 메인 홈으로 */}
-      <Link href="/" className="w-20 md:w-44 cursor-pointer z-50">
+      <Link
+        href="/"
+        onClick={(e) => {
+          if (window.location.pathname === "/") {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }}
+        className="w-20 md:w-44 cursor-pointer z-50"
+      >
         <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={220} height={220} className="object-contain" />
       </Link>
 
