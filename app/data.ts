@@ -12,7 +12,7 @@ export const newsData: {
     slug: "pre-registration-open",
     title: "사전예약 시작 안내",
     date: "2026-07-01",
-    image: "/dearidol-hero.jpg",
+    image: "/dearidol-hero.png",
     category: "notice",
     content: `
     Dear Idol 글로벌 사전예약이 시작되었습니다.
