@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dear Idol",
-  description: "produce your Idol",
+  title: "Dear Idol — K-POP Production & Social Rhythm Game",
+  description: "나만의 K-POP 아이돌 프로덕션을 운영하며 아이돌을 육성·스타일링·연출하는 차세대 아이돌 게임",
 };
 
 export default function RootLayout({

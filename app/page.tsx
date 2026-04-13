@@ -36,13 +36,30 @@ export default function Home() {
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } } }}
           className="relative z-10 text-center px-6"
         >
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6 }}
+            className="text-sm md:text-base text-pink-400/70 tracking-[0.3em] uppercase font-semibold mb-4"
+          >
+            K-POP Production & Social Rhythm Game
+          </motion.p>
+
           <motion.h2
             variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.8 }}
-            className="text-6xl md:text-8xl font-extrabold text-pink-400"
+            className="text-5xl md:text-8xl font-extrabold text-pink-400 mb-4"
           >
-            PRODUCE YOUR STAR
+            DEAR IDOL
           </motion.h2>
+
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6 }}
+            className="text-white/50 text-base md:text-lg max-w-xl mx-auto"
+          >
+            나만의 K-POP 프로덕션을 운영하고<br className="hidden md:block" />
+            아이돌을 육성 · 스타일링 · 연출하세요
+          </motion.p>
 
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
@@ -153,13 +170,22 @@ export default function Home() {
             <div>
               <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Story</p>
               <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-6 leading-tight">
-                당신만의 아이돌<br />스토리를 만드세요
+                아이돌을 &apos;뽑는&apos; 게임이 아닌<br />
+                &apos;기획하고 성장시키는&apos; 게임
               </h3>
               <p className="text-white/60 leading-relaxed mb-8">
-                평범한 연습생에서 톱 아이돌까지, 당신의 선택이 스토리를 바꿉니다.
-                감성적인 스토리라인과 개성 넘치는 캐릭터들이 만들어내는
-                Dear Idol만의 세계에 빠져보세요.
+                당신은 아이돌 프로덕션의 대표 PD.
+                스캔들 관리, 화보 촬영, CF 계약, 팬사인회, 그리고 콘서트까지 —
+                아이돌의 성장 과정 자체가 하나의 드라마입니다.
+                당신의 선택이 스토리를 바꿉니다.
               </p>
+              <div className="flex flex-wrap gap-3 mb-6">
+                {["스캔들 관리", "화보 촬영", "CF 계약", "팬사인회", "콘서트"].map((tag) => (
+                  <span key={tag} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-white/50">
+                    {tag}
+                  </span>
+                ))}
+              </div>
               <div className="flex gap-4">
                 <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-center">
                   <p className="text-2xl font-bold text-pink-400">50+</p>
@@ -177,10 +203,17 @@ export default function Home() {
             </div>
 
             {/* 오른쪽 이미지 */}
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.1)]">
-              <Image src="/dearidol-feature1.jpg" alt="Story" fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            </div>
+            <Link href="/story" className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.1)] block group cursor-pointer">
+              <Image src="/idol-story.png" alt="Story" fill className="object-cover transition duration-700 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:from-black/70 transition duration-500" />
+              <div className="absolute bottom-6 left-6 overflow-hidden">
+                <div className="flex items-center gap-2 translate-x-[-110%] group-hover:translate-x-0 transition-transform duration-500 ease-out">
+                  <span className="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white text-sm font-semibold shadow-lg">
+                    View More →
+                  </span>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -191,31 +224,54 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
           <div className="text-center mb-14">
-            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">System</p>
-            <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">게임 시스템</h3>
-            <p className="text-white/50">트레이닝, 무대 연출, 팬 관리까지 직접 설계하세요</p>
+            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Core System</p>
+            <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">아이돌 산업 전체를 플레이</h3>
+            <p className="text-white/50">육성 · 패션 · 리듬게임 · MV제작 · 소셜까지 하나로</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto">
             {[
-              { img: "dearidol-feature1.jpg", title: "Idol Management", desc: "나만의 아이돌을 뽑아서 관리하세요", icon: "🎤" },
-              { img: "dearidol-feature2.jpg", title: "Stage Performance", desc: "화려한 무대 연출과 퍼포먼스를 직접 설계하세요", icon: "🎵" },
-              { img: "dearidol-feature3.jpg", title: "Training System", desc: "나만의 트레이닝 커리큘럼으로 아이돌을 성장시키세요", icon: "💪" },
+              {
+                icon: "🏢",
+                title: "프로덕션 경영",
+                desc: "3D 프로덕션을 꾸미고 키워나가세요. 사무실, 연습실, 촬영실이 성장과 함께 확장됩니다.",
+                color: "from-pink-500 to-rose-400",
+              },
+              {
+                icon: "👗",
+                title: "아이돌 패션",
+                desc: "헤어부터 악세서리까지 파츠별 코디. 수많은 아이돌의 스타일을 직접 디자인하세요.",
+                color: "from-purple-500 to-violet-400",
+              },
+              {
+                icon: "🎵",
+                title: "리듬 & 댄스카드",
+                desc: "K-POP에 맞춰 댄스 카드를 전략적으로 발동! 리듬 게임과 카드 전략의 결합.",
+                color: "from-blue-500 to-cyan-400",
+              },
+              {
+                icon: "🎬",
+                title: "MV 제작 & 공유",
+                desc: "댄스 카드로 안무를 구성하고 카메라를 연출해 나만의 뮤직비디오를 만드세요.",
+                color: "from-amber-500 to-yellow-400",
+              },
             ].map((item, i) => (
-              <div key={i} className="group rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition duration-300 hover:scale-[1.03]">
-                <div className="relative h-52 overflow-hidden">
-                  <Image src={`/${item.img}`} alt={item.title} fill className="object-cover transition duration-500 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute top-4 left-4 w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-lg">
-                    {item.icon}
-                  </div>
+              <div key={i} className="group rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition duration-300 hover:scale-[1.03] p-5">
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-2xl mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition duration-300`}>
+                  {item.icon}
                 </div>
-                <div className="p-5">
-                  <h4 className="text-lg font-bold text-pink-400 mb-2">{item.title}</h4>
-                  <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
-                </div>
+                <h4 className="text-base font-bold text-white mb-2">{item.title}</h4>
+                <p className="text-xs text-white/40 leading-relaxed">{item.desc}</p>
               </div>
             ))}
+          </div>
+
+          {/* 소셜 메타 강조 */}
+          <div className="mt-10 max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10">
+              <span className="text-lg">🌍</span>
+              <p className="text-sm text-white/50">다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요</p>
+            </div>
           </div>
         </div>
       </section>
@@ -228,20 +284,35 @@ export default function Home() {
           <div className="text-center mb-14">
             <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Scenes</p>
             <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">인게임 장면</h3>
-            <p className="text-white/50">Dear Idol의 세계를 미리 만나보세요</p>
+            <p className="text-white/50">프로덕션 운영부터 무대 위 퍼포먼스까지, Dear Idol의 세계를 미리 만나보세요</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["dearidol-feature1.jpg", "dearidol-feature2.jpg", "dearidol-feature3.jpg", "dearidol-hero.png"].map((img, i) => (
+            {[
+              { img: "dearidol-feature1.jpg", label: "프로덕션 공간" },
+              { img: "dearidol-feature2.jpg", label: "리듬 배틀" },
+              { img: "dearidol-feature3.jpg", label: "드레스룸" },
+              { img: "dearidol-hero.png", label: "무대 퍼포먼스" },
+            ].map((item, i) => (
               <div key={i} className={`relative overflow-hidden rounded-2xl border border-white/10 hover:border-pink-500/30 transition group cursor-pointer ${
                 i === 0 ? "col-span-2 row-span-2 aspect-square" : "aspect-square"
               }`}>
-                <Image src={`/${img}`} alt={`Scene ${i + 1}`} fill className="object-cover transition duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
-                <div className="absolute bottom-3 left-3 px-2 py-1 bg-black/50 backdrop-blur rounded-lg text-[10px] text-white/60 font-semibold">
-                  SCENE {String(i + 1).padStart(2, "0")}
+                <Image src={`/${item.img}`} alt={item.label} fill className="object-cover transition duration-500 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <p className="text-[10px] text-pink-400/60 font-semibold tracking-wider mb-0.5">SCENE {String(i + 1).padStart(2, "0")}</p>
+                  <p className="text-sm text-white font-semibold">{item.label}</p>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* 하단 확장성 힌트 */}
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            {["리그전 · 팀전 · 레이드", "신규 K-POP 곡 추가", "시즌 의상 이벤트", "소극장 → 돔 → 월드투어"].map((tag) => (
+              <span key={tag} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs text-white/40">
+                {tag}
+              </span>
             ))}
           </div>
         </div>
