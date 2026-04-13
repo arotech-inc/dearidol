@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const menuItems = [
   { label: "News", link: "/news" },
-  { label: "Story", link: "/#story" },
+  { label: "Characters", link: "/#characters" },
   { label: "System", link: "/#system" },
   { label: "Scenes", link: "/#scenes" },
   { label: "고객센터", link: "/cs" },

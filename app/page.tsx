@@ -49,7 +49,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-8xl font-extrabold text-pink-400 mb-4"
           >
-            DEAR IDOL
+            PRODUCE YOUR STAR
           </motion.h2>
 
           <motion.p
@@ -160,60 +160,56 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= STORY ================= */}
-      <section id="story" className="snap-section h-screen flex items-center relative overflow-hidden bg-gradient-to-b from-black to-purple-950/30">
+      {/* ================= CHARACTERS ================= */}
+      <section id="characters" className="snap-section h-screen flex items-center relative overflow-hidden bg-gradient-to-b from-black to-purple-950/30">
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-pink-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-3xl" />
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* 왼쪽 텍스트 */}
-            <div>
-              <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Story</p>
-              <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-6 leading-tight">
-                아이돌을 &apos;뽑는&apos; 게임이 아닌<br />
-                &apos;기획하고 성장시키는&apos; 게임
-              </h3>
-              <p className="text-white/60 leading-relaxed mb-8">
-                당신은 아이돌 프로덕션의 대표 PD.
-                스캔들 관리, 화보 촬영, CF 계약, 팬사인회, 그리고 콘서트까지 —
-                아이돌의 성장 과정 자체가 하나의 드라마입니다.
-                당신의 선택이 스토리를 바꿉니다.
-              </p>
-              <div className="flex flex-wrap gap-3 mb-6">
-                {["스캔들 관리", "화보 촬영", "CF 계약", "팬사인회", "콘서트"].map((tag) => (
-                  <span key={tag} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-white/50">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex gap-4">
-                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-pink-400">50+</p>
-                  <p className="text-[11px] text-white/40">스토리 챕터</p>
-                </div>
-                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-pink-400">20+</p>
-                  <p className="text-[11px] text-white/40">개성 캐릭터</p>
-                </div>
-                <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-pink-400">100+</p>
-                  <p className="text-[11px] text-white/40">분기 엔딩</p>
-                </div>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Characters</p>
+            <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">당신의 아이돌을 만나보세요</h3>
+            <p className="text-white/50">각 캐릭터를 클릭하면 스토리를 확인할 수 있어요</p>
+          </div>
 
-            {/* 오른쪽 이미지 */}
-            <Link href="/story" className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.1)] block group cursor-pointer">
-              <Image src="/idol-story.png" alt="Story" fill className="object-cover transition duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:from-black/70 transition duration-500" />
-              <div className="absolute bottom-6 left-6 overflow-hidden">
-                <div className="flex items-center gap-2 translate-x-[-110%] group-hover:translate-x-0 transition-transform duration-500 ease-out">
-                  <span className="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white text-sm font-semibold shadow-lg">
-                    View More →
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto">
+            {[
+              { id: "karina", name: "카리나", role: "메인 보컬", color: "from-pink-500 to-rose-400", img: "/dearidol-feature1.jpg" },
+              { id: "haru", name: "하루", role: "메인 댄서", color: "from-purple-500 to-violet-400", img: "/dearidol-feature2.jpg" },
+              { id: "minseo", name: "민서", role: "래퍼", color: "from-blue-500 to-cyan-400", img: "/dearidol-feature3.jpg" },
+              { id: "jiwon", name: "지원", role: "비주얼", color: "from-amber-500 to-yellow-400", img: "/dearidol-hero.png" },
+            ].map((char) => (
+              <Link
+                key={char.id}
+                href={`/characters/${char.id}`}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-pink-500/40 transition duration-300 cursor-pointer aspect-[3/4]"
+              >
+                <Image src={char.img} alt={char.name} fill className="object-cover transition duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 transition duration-500" />
+
+                {/* 역할 뱃지 */}
+                <div className="absolute top-4 left-4">
+                  <span className={`inline-block px-2.5 py-1 bg-gradient-to-r ${char.color} rounded-full text-[10px] font-bold text-white shadow-lg`}>
+                    {char.role}
                   </span>
                 </div>
-              </div>
-            </Link>
+
+                {/* 이름 */}
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <p className="text-xl font-bold text-white group-hover:text-pink-300 transition">{char.name}</p>
+                  <p className="text-xs text-white/40 mt-1">{char.role}</p>
+                </div>
+
+                {/* View More */}
+                <div className="absolute bottom-5 right-5 overflow-hidden">
+                  <div className="translate-x-[120%] group-hover:translate-x-0 transition-transform duration-500 ease-out">
+                    <span className="px-3 py-1.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white text-[11px] font-semibold shadow-lg">
+                      Story →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
