@@ -36,30 +36,13 @@ export default function Home() {
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } } }}
           className="relative z-10 text-center px-6"
         >
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6 }}
-            className="text-sm md:text-base text-pink-400/70 tracking-[0.3em] uppercase font-semibold mb-4"
-          >
-            K-POP Production & Social Rhythm Game
-          </motion.p>
-
           <motion.h2
             variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-8xl font-extrabold text-pink-400 mb-4"
+            className="text-6xl md:text-8xl font-extrabold text-pink-400"
           >
             PRODUCE YOUR STAR
           </motion.h2>
-
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6 }}
-            className="text-white/50 text-base md:text-lg max-w-xl mx-auto"
-          >
-            나만의 K-POP 프로덕션을 운영하고<br className="hidden md:block" />
-            아이돌을 육성 · 스타일링 · 연출하세요
-          </motion.p>
 
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}

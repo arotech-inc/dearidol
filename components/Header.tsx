@@ -147,7 +147,7 @@ export default function DearIdolHeader() {
 
               {/* 로고 */}
               <div className="text-center mb-6">
-                <Image src="/IDOL_LOGO.png" alt="Dear Idol" width={100} height={100} className="mx-auto object-contain" />
+                <Image src="/IDOL_LOGO.png" alt="Dear Idol" width={160} height={160} className="mx-auto object-contain" />
               </div>
 
               {showAuth === "login" ? (
