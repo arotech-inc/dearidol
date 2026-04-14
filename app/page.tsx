@@ -20,10 +20,10 @@ import {
 } from "lucide-react";
 
 const characters = [
-  { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
-  { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.png", scale: "scale-125 group-hover:scale-[1.38]" },
-  { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-125 group-hover:scale-[1.38]" },
-  { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
+  { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-[1.35] group-hover:scale-[1.48]" },
+  { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.png", scale: "scale-[1.55] group-hover:scale-[1.7]" },
+  { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-[1.55] group-hover:scale-[1.7]" },
+  { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-[1.35] group-hover:scale-[1.48]" },
 ];
 
 export default function Home() {
@@ -301,9 +301,9 @@ export default function Home() {
                 href={`/characters/${char.id}`}
                 className="group flex-1 flex flex-col items-center cursor-pointer"
               >
-                <div className="relative w-full aspect-[3/5] flex items-end justify-center overflow-visible">
+                <div className="relative w-full aspect-[3/4] flex items-end justify-center overflow-visible">
                   {/* 번호 배경 */}
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 font-display text-[8rem] text-white/[0.04] leading-none select-none pointer-events-none transition-all duration-500 group-hover:text-pink-400/10">
+                  <span className="absolute top-4 left-1/2 -translate-x-1/2 font-display text-[5rem] lg:text-[6rem] text-white/[0.05] leading-none select-none pointer-events-none transition-all duration-500 group-hover:text-pink-400/15">
                     {char.num}
                   </span>
                   <Image
@@ -314,11 +314,11 @@ export default function Home() {
                   />
                 </div>
 
-                <div className="mt-8 text-center">
+                <div className="mt-6 text-center">
                   <span className="font-mono-tight text-[10px] text-pink-400 block mb-2">
                     {char.role}
                   </span>
-                  <p className="font-display text-3xl text-white group-hover:gradient-text-pink transition">
+                  <p className="font-display text-2xl lg:text-3xl text-white group-hover:gradient-text-pink transition">
                     {char.nameEn}
                   </p>
                   <p className="text-xs text-white/40 mt-1 font-medium">{char.name}</p>
