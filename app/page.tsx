@@ -40,14 +40,16 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // 휠/터치 스크롤을 가로채서 섹션 단위로 이동 (Honkai 스타일)
+  // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
   useEffect(() => {
+    // 모바일에서는 자유 스크롤 허용
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+
     const getSections = () =>
       Array.from(document.querySelectorAll<HTMLElement>(".snap-section"));
 
     let isAnimating = false;
     let lockUntil = 0;
-    let touchStartY: number | null = null;
 
     const getCurrentIndex = (sections: HTMLElement[]) => {
       const y = window.scrollY + 2;
@@ -96,26 +98,10 @@ export default function Home() {
       if (snapped) e.preventDefault();
     };
 
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (touchStartY === null) return;
-      const endY = e.changedTouches[0].clientY;
-      const deltaY = touchStartY - endY;
-      touchStartY = null;
-      if (Math.abs(deltaY) > 30) handleDelta(deltaY);
-    };
-
     window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, []);
 
@@ -194,9 +180,11 @@ export default function Home() {
 
             <a
               href="#scenes"
-              className="group h-14 flex items-center gap-3 px-8 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
+              className="group h-14 flex items-center gap-3 pl-3 pr-6 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
             >
-              <Play size={14} fill="currentColor" className="text-pink-400" />
+              <div className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition shrink-0">
+                <Play size={12} fill="currentColor" className="ml-0.5" />
+              </div>
               <span className="font-bold">트레일러 보기</span>
             </a>
           </motion.div>
