@@ -206,7 +206,7 @@ export default function Home() {
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6 }}
-            className="flex flex-wrap justify-center items-center gap-4"
+            className="flex flex-wrap justify-center items-center gap-4 mb-24 md:mb-16"
           >
             <span className="section-label text-white/40">Available on</span>
             <div className="h-4 w-px bg-white/20" />
@@ -222,14 +222,14 @@ export default function Home() {
         </motion.div>
 
         {/* 스크롤 힌트 */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
-          <span className="section-label text-white/40">Scroll</span>
-          <ChevronDown size={20} className="text-white/40 animate-bounce" />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+          <span className="section-label text-white/40 text-[10px]">Scroll</span>
+          <ChevronDown size={18} className="text-white/40 animate-bounce" />
         </div>
       </section>
 
       {/* ================= NEWS ================= */}
-      <section id="news" className="snap-section relative py-32 md:py-40 overflow-hidden noise-bg">
+      <section id="news" className="snap-section relative py-20 md:py-24 overflow-hidden noise-bg">
         {/* 배경 */}
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
@@ -240,7 +240,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-end justify-between mb-16 gap-8 flex-wrap"
+            className="flex items-end justify-between mb-10 gap-8 flex-wrap"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -335,7 +335,7 @@ export default function Home() {
       </section>
 
       {/* ================= CHARACTERS ================= */}
-      <section id="characters" className="snap-section relative py-32 md:py-40 overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#13111a] to-[#0a0a0f]">
+      <section id="characters" className="snap-section relative py-20 md:py-24 overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#13111a] to-[#0a0a0f]">
         {/* 배경 조명 */}
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[140px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[140px]" />
@@ -353,7 +353,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mb-16 text-center"
+            className="mb-10 text-center"
           >
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="h-px w-12 bg-pink-400/40" />
@@ -490,7 +490,7 @@ export default function Home() {
       </section>
 
       {/* ================= SYSTEM ================= */}
-      <section id="system" className="snap-section relative py-32 md:py-40 overflow-hidden bg-[#0a0a0f]">
+      <section id="system" className="snap-section relative py-20 md:py-24 overflow-hidden bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px]" />
 
@@ -501,7 +501,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-[1fr_1.3fr] gap-12 mb-16 items-end"
+            className="grid md:grid-cols-[1fr_1.3fr] gap-12 mb-10 items-end"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -708,6 +708,99 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2 text-white/30 text-xs font-mono-tight">
               <Sparkles size={14} /> LIVE
+            </div>
+          </motion.div>
+
+          {/* ================= 다운로드 CTA ================= */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative mt-10 overflow-hidden rounded-2xl"
+          >
+            {/* 배경 그라데이션 + 효과 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.2)_0%,transparent_60%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.3)_0%,transparent_60%)]" />
+
+            {/* 장식 블러 */}
+            <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-pink-300/30 blur-[80px]" />
+            <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-purple-400/30 blur-[80px]" />
+
+            {/* 그리드 패턴 */}
+            <div className="absolute inset-0 grid-pattern opacity-30" />
+
+            {/* 콘텐츠 */}
+            <div className="relative px-8 md:px-16 py-16 md:py-24 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="flex items-center justify-center gap-3 mb-4"
+              >
+                <div className="h-px w-10 bg-white/60" />
+                <span className="section-label text-white/80">Now · Pre-register</span>
+                <div className="h-px w-10 bg-white/60" />
+              </motion.div>
+
+              <motion.h3
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="font-display text-5xl md:text-7xl leading-none text-white mb-3"
+              >
+                지금 <span className="text-pink-100">시작하세요</span>
+              </motion.h3>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="text-white/80 text-base md:text-lg mb-10 max-w-lg mx-auto"
+              >
+                사전예약하고 한정 의상, 다이아, SSR 카드까지 — Dear Idol 세계에 가장 먼저 입장하세요.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex flex-col items-center gap-6"
+              >
+                {/* 메인 CTA */}
+                <button
+                  onClick={() => setShowPopup(true)}
+                  className="group inline-flex items-center gap-3 px-10 py-4 bg-white text-black font-bold text-base hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
+                >
+                  <span>무료로 사전예약하기</span>
+                  <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </button>
+
+                {/* 스토어 뱃지 */}
+                <div className="flex flex-wrap justify-center items-center gap-4 mt-2">
+                  <a
+                    href="https://play.google.com/store"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg"
+                  >
+                    <Image src="/googleplay.png" alt="Google Play" width={160} height={52} />
+                  </a>
+                  <a
+                    href="https://www.apple.com/app-store/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg"
+                  >
+                    <Image src="/appstore.png" alt="App Store" width={160} height={52} />
+                  </a>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
