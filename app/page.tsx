@@ -186,7 +186,7 @@ export default function Home() {
           >
             <button
               onClick={() => setShowPopup(true)}
-              className="group relative px-8 py-4 bg-white text-black font-bold rounded-none hover:bg-pink-400 transition-all duration-300 flex items-center gap-3 cursor-pointer"
+              className="group relative h-14 px-8 bg-white text-black font-bold rounded-none hover:bg-pink-400 transition-all duration-300 flex items-center gap-3 cursor-pointer"
             >
               <span>사전예약</span>
               <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -194,12 +194,10 @@ export default function Home() {
 
             <a
               href="#scenes"
-              className="group flex items-center gap-3 px-6 py-4 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
+              className="group h-14 flex items-center gap-3 px-8 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
             >
-              <div className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition">
-                <Play size={12} fill="currentColor" className="ml-0.5" />
-              </div>
-              <span className="font-medium">트레일러 보기</span>
+              <Play size={14} fill="currentColor" className="text-pink-400" />
+              <span className="font-bold">트레일러 보기</span>
             </a>
           </motion.div>
 
