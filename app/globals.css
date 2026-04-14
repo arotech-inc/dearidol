@@ -88,6 +88,26 @@ html {
   scroll-behavior: smooth;
 }
 
+/* 스크롤 스냅: proximity 방식 (강제 아님, 근처 섹션으로 부드럽게 정렬) */
+html:has(.snap-section) {
+  scroll-snap-type: y proximity;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* 모바일: 더 민감한 스냅 — 살짝만 스크롤해도 다음 섹션으로 */
+@media (max-width: 768px) {
+  html:has(.snap-section) {
+    scroll-snap-type: y mandatory;
+  }
+  .snap-section {
+    scroll-snap-stop: always;
+  }
+}
+
 /* 서브페이지 등장 애니메이션 */
 @keyframes fadeInUp {
   from {

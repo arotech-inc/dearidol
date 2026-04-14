@@ -32,7 +32,7 @@ export const characters = [
     nameEn: "Haru",
     role: "서브 보컬",
     color: "from-purple-500 to-violet-400",
-    img: "/character2.jpg",
+    img: "/character2.png",
     profile: {
       age: "18",
       height: "165cm",

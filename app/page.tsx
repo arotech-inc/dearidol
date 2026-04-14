@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,16 +19,32 @@ import {
   Play,
 } from "lucide-react";
 
+const characters = [
+  { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
+  { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.png", scale: "scale-125 group-hover:scale-[1.38]" },
+  { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-125 group-hover:scale-[1.38]" },
+  { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
+];
+
 export default function Home() {
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
+  const [mobileCharIndex, setMobileCharIndex] = useState(0);
+
+  // 모바일 캐릭터 자동 슬라이드 (3초 간격)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMobileCharIndex((prev) => (prev + 1) % characters.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <main className="bg-[#0a0a0f] text-white overflow-hidden">
 
       {/* ================= HERO ================= */}
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+      <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden">
 
         <video
           autoPlay
@@ -133,7 +149,7 @@ export default function Home() {
       </section>
 
       {/* ================= NEWS ================= */}
-      <section id="news" className="relative py-32 md:py-40 overflow-hidden noise-bg">
+      <section id="news" className="snap-section relative py-32 md:py-40 overflow-hidden noise-bg">
         {/* 배경 */}
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
@@ -238,7 +254,7 @@ export default function Home() {
       </section>
 
       {/* ================= CHARACTERS ================= */}
-      <section id="characters" className="relative py-32 md:py-40 overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#13111a] to-[#0a0a0f]">
+      <section id="characters" className="snap-section relative py-32 md:py-40 overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#13111a] to-[#0a0a0f]">
         {/* 배경 조명 */}
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[140px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[140px]" />
@@ -271,19 +287,15 @@ export default function Home() {
             </p>
           </motion.div>
 
+          {/* 데스크톱: 4명 일렬 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex justify-center items-end gap-2 md:gap-4 max-w-6xl mx-auto"
+            className="hidden md:flex justify-center items-end gap-2 md:gap-4 max-w-6xl mx-auto"
           >
-            {[
-              { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
-              { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.jpg", scale: "scale-[1.55] group-hover:scale-[1.7]" },
-              { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-[1.45] group-hover:scale-[1.6]" },
-              { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
-            ].map((char) => (
+            {characters.map((char) => (
               <Link
                 key={char.id}
                 href={`/characters/${char.id}`}
@@ -314,11 +326,88 @@ export default function Home() {
               </Link>
             ))}
           </motion.div>
+
+          {/* 모바일: 1명씩 자동 슬라이드 */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="md:hidden relative max-w-sm mx-auto"
+          >
+            <div className="relative aspect-[3/5] w-full overflow-hidden">
+              <AnimatePresence mode="wait">
+                {characters.map((char, i) =>
+                  i === mobileCharIndex ? (
+                    <motion.div
+                      key={char.id}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -40 }}
+                      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                      className="absolute inset-0"
+                    >
+                      <Link
+                        href={`/characters/${char.id}`}
+                        className="group flex flex-col items-center w-full h-full cursor-pointer"
+                      >
+                        <div className="relative w-full flex-1 flex items-end justify-center overflow-visible">
+                          <span className="absolute top-0 left-1/2 -translate-x-1/2 font-display text-[12rem] text-white/[0.04] leading-none select-none pointer-events-none">
+                            {char.num}
+                          </span>
+                          <Image
+                            src={char.img}
+                            alt={char.name}
+                            fill
+                            className={`object-contain object-bottom origin-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] ${char.scale.split(" ")[0]}`}
+                          />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ) : null
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* 이름/역할 */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={characters[mobileCharIndex].id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                className="mt-6 text-center"
+              >
+                <span className="font-mono-tight text-[10px] text-pink-400 block mb-2">
+                  {characters[mobileCharIndex].role}
+                </span>
+                <p className="font-display text-4xl gradient-text-pink">
+                  {characters[mobileCharIndex].nameEn}
+                </p>
+                <p className="text-sm text-white/40 mt-1 font-medium">{characters[mobileCharIndex].name}</p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* 인디케이터 */}
+            <div className="flex justify-center gap-2 mt-8">
+              {characters.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setMobileCharIndex(i)}
+                  aria-label={`Character ${i + 1}`}
+                  className={`h-1 rounded-full transition-all duration-500 ${
+                    i === mobileCharIndex ? "w-8 bg-pink-400" : "w-4 bg-white/20"
+                  }`}
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ================= SYSTEM ================= */}
-      <section id="system" className="relative py-32 md:py-40 overflow-hidden bg-[#0a0a0f]">
+      <section id="system" className="snap-section relative py-32 md:py-40 overflow-hidden bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px]" />
 
@@ -365,25 +454,26 @@ export default function Home() {
               <source src="/dance.mp4" type="video/mp4" />
             </video>
 
-            {/* 비디오 오버레이 */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+            {/* 비디오 오버레이 (모바일은 더 약하게) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none hidden md:block" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none md:hidden" />
 
-            {/* 프레임 라인 */}
-            <div className="absolute inset-4 border border-white/10 pointer-events-none" />
+            {/* 프레임 라인 (데스크톱만) */}
+            <div className="absolute inset-4 border border-white/10 pointer-events-none hidden md:block" />
 
-            {/* 좌상단 라벨 */}
-            <div className="absolute top-8 left-8 flex items-center gap-3">
+            {/* 좌상단 라벨 (데스크톱만) */}
+            <div className="absolute top-8 left-8 hidden md:flex items-center gap-3">
               <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
               <span className="font-mono-tight text-xs text-white/70 tracking-widest uppercase">Official Gameplay</span>
             </div>
 
-            {/* 우상단 타임스탬프 */}
-            <div className="absolute top-8 right-8 font-mono-tight text-xs text-white/40">
+            {/* 우상단 타임스탬프 (데스크톱만) */}
+            <div className="absolute top-8 right-8 font-mono-tight text-xs text-white/40 hidden md:block">
               REC · 00:00
             </div>
 
-            {/* 좌하단 타이틀 */}
-            <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between gap-6 flex-wrap">
+            {/* 좌하단 타이틀 (데스크톱만) */}
+            <div className="absolute bottom-8 left-8 right-8 hidden md:flex items-end justify-between gap-6 flex-wrap">
               <div>
                 <p className="font-mono-tight text-[10px] text-pink-400 tracking-[0.2em] uppercase mb-2">Game Showcase</p>
                 <h3 className="font-display text-3xl md:text-5xl text-white leading-none">
@@ -399,15 +489,24 @@ export default function Home() {
                 <span>4K · HDR</span>
               </div>
             </div>
+
+            {/* 모바일 전용 미니 라벨 */}
+            <div className="absolute bottom-3 left-3 right-3 flex md:hidden items-center justify-between gap-2 text-[10px] font-mono-tight">
+              <div className="flex items-center gap-2 text-white/70">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                <span className="tracking-widest uppercase">Official</span>
+              </div>
+              <span className="text-pink-400 tracking-widest">LIVE DEMO</span>
+            </div>
           </motion.div>
 
-          {/* 비디오 하단 메타 정보 바 */}
+          {/* 비디오 하단 메타 정보 바 (데스크톱에서만 표시) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex items-center justify-between gap-6 py-4 px-6 mb-20 border-x border-b border-white/10 text-xs font-mono-tight text-white/40 flex-wrap"
+            className="hidden md:flex items-center justify-between gap-6 py-4 px-6 mb-20 border-x border-b border-white/10 text-xs font-mono-tight text-white/40 flex-wrap"
           >
             <span>SYSTEM_OVERVIEW.MP4</span>
             <div className="flex items-center gap-6">
@@ -415,6 +514,9 @@ export default function Home() {
               <span className="text-pink-400">● RECORDING</span>
             </div>
           </motion.div>
+
+          {/* 모바일 전용 간격 */}
+          <div className="md:hidden mb-16" />
 
           {/* 기능별 이미지 그리드 */}
           <motion.div
