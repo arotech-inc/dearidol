@@ -170,11 +170,12 @@ export default function Home() {
           <motion.p
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.7 }}
-            className="max-w-xl text-white/60 text-base md:text-lg leading-relaxed mt-8 mb-10"
+            className="max-w-xl text-white/60 text-sm md:text-lg leading-relaxed mt-8 mb-10 px-4"
           >
-            나만의 K-POP 프로덕션을 세우고, 아이돌을 키우고, 세상에 내보내세요.
-            <br />
-            육성 · 리듬 · MV · 소셜까지 — 하나의 세계로.
+            <span className="block md:inline">나만의 K-POP 프로덕션을 세우고,</span>{" "}
+            <span className="block md:inline">아이돌을 키우고, 세상에 내보내세요.</span>
+            <span className="hidden md:inline"><br /></span>
+            <span className="block mt-2 md:mt-0 md:inline">육성 · 리듬 · MV · 소셜까지 — 하나의 세계로.</span>
           </motion.p>
 
           {/* CTA 그룹 */}
@@ -206,18 +207,23 @@ export default function Home() {
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6 }}
-            className="flex flex-wrap justify-center items-center gap-4 mb-24 md:mb-16"
+            className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-24 md:mb-16"
           >
-            <span className="section-label text-white/40">Available on</span>
-            <div className="h-4 w-px bg-white/20" />
-            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
-              className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-              <Image src="/googleplay.png" alt="Google Play" width={140} height={45} />
-            </a>
-            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
-              className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-              <Image src="/appstore.png" alt="App Store" width={140} height={45} />
-            </a>
+            <div className="hidden md:flex items-center gap-4">
+              <span className="section-label text-white/40">Available on</span>
+              <div className="h-4 w-px bg-white/20" />
+            </div>
+            <span className="section-label text-white/40 md:hidden">Available on</span>
+            <div className="flex items-center justify-center gap-3">
+              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
+                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
+                <Image src="/googleplay.png" alt="Google Play" width={140} height={45} className="w-[120px] md:w-[140px] h-auto" />
+              </a>
+              <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
+                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
+                <Image src="/appstore.png" alt="App Store" width={140} height={45} className="w-[120px] md:w-[140px] h-auto" />
+              </a>
+            </div>
           </motion.div>
         </motion.div>
 
@@ -340,8 +346,8 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[140px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[140px]" />
 
-        {/* 거대 배경 텍스트 */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 pointer-events-none select-none">
+        {/* 거대 배경 텍스트 (데스크톱만) */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 pointer-events-none select-none hidden md:block">
           <h2 className="font-display text-[clamp(8rem,18vw,18rem)] text-white/[0.03] leading-none tracking-tighter whitespace-nowrap">
             CHARACTERS
           </h2>
@@ -415,9 +421,9 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="md:hidden relative max-w-sm mx-auto"
+            className="md:hidden relative max-w-xs mx-auto"
           >
-            <div className="relative aspect-[3/5] w-full overflow-hidden">
+            <div className="relative aspect-[3/4] w-full overflow-hidden">
               <AnimatePresence mode="wait">
                 {characters.map((char, i) =>
                   i === mobileCharIndex ? (
@@ -434,9 +440,6 @@ export default function Home() {
                         className="group flex flex-col items-center w-full h-full cursor-pointer"
                       >
                         <div className="relative w-full flex-1 flex items-end justify-center overflow-visible">
-                          <span className="absolute top-0 left-1/2 -translate-x-1/2 font-display text-[12rem] text-white/[0.04] leading-none select-none pointer-events-none">
-                            {char.num}
-                          </span>
                           <Image
                             src={char.img}
                             alt={char.name}
@@ -460,12 +463,12 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="mt-6 text-center"
+                className="mt-4 text-center"
               >
-                <span className="font-mono-tight text-[10px] text-pink-400 block mb-2">
+                <span className="font-mono-tight text-[10px] text-pink-400 block mb-1">
                   {characters[mobileCharIndex].role}
                 </span>
-                <p className="font-display text-4xl gradient-text-pink">
+                <p className="font-display text-3xl gradient-text-pink">
                   {characters[mobileCharIndex].nameEn}
                 </p>
                 <p className="text-sm text-white/40 mt-1 font-medium">{characters[mobileCharIndex].name}</p>
@@ -473,7 +476,7 @@ export default function Home() {
             </AnimatePresence>
 
             {/* 인디케이터 */}
-            <div className="flex justify-center gap-2 mt-8">
+            <div className="flex justify-center gap-2 mt-5">
               {characters.map((_, i) => (
                 <button
                   key={i}
