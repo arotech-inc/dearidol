@@ -181,29 +181,29 @@ export default function Home() {
             className="flex justify-center items-end gap-2 md:gap-4 max-w-6xl mx-auto"
           >
             {[
-              { id: "karina", name: "카리나", role: "메인 보컬", img: "/character1.png" },
-              { id: "haru", name: "하루", role: "메인 댄서", img: "/character2.png" },
-              { id: "minseo", name: "민서", role: "래퍼", img: "/character3.png" },
-              { id: "jiwon", name: "지원", role: "비주얼", img: "/character4.png" },
+              { id: "iro", name: "이로", role: "래퍼", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
+              { id: "haru", name: "하루", role: "서브 보컬", img: "/character2.png", scale: "scale-125 group-hover:scale-[1.38]" },
+              { id: "yeeun", name: "예은", role: "메인 보컬", img: "/character3.png", scale: "scale-125 group-hover:scale-[1.38]" },
+              { id: "jiwon", name: "지원", role: "메인 댄서", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
             ].map((char) => (
               <Link
                 key={char.id}
                 href={`/characters/${char.id}`}
-                className="group relative flex-1 flex justify-center items-end cursor-pointer"
+                className="group flex-1 flex flex-col items-center cursor-pointer"
               >
                 <div className="relative w-full aspect-[3/5] flex items-end justify-center overflow-visible">
                   <Image
                     src={char.img}
                     alt={char.name}
                     fill
-                    className="object-contain object-bottom transition-all duration-500 ease-out group-hover:scale-110 drop-shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.5)]"
+                    className={`object-contain object-bottom origin-bottom transition-all duration-500 ease-out drop-shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.5)] ${char.scale}`}
                   />
                 </div>
 
-                {/* 이름 (호버 시 표시) */}
-                <div className="absolute bottom-0 left-0 right-0 text-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                {/* 이름 (이미지 아래, 항상 표시) */}
+                <div className="mt-6 text-center">
                   <p className="text-pink-400 text-xs font-semibold tracking-widest uppercase mb-1">{char.role}</p>
-                  <p className="text-2xl font-bold text-white drop-shadow-lg">{char.name}</p>
+                  <p className="text-xl md:text-2xl font-bold text-white group-hover:text-pink-300 transition">{char.name}</p>
                 </div>
               </Link>
             ))}

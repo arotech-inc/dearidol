@@ -25,9 +25,9 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
         {/* 상단: 캐릭터 비주얼 + 프로필 */}
         <div className="grid md:grid-cols-2 gap-10 mb-16">
           {/* 이미지 */}
-          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.15)]">
-            <Image src={char.img} alt={char.name} fill className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className={`relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.15)] bg-gradient-to-br ${char.color} bg-opacity-20`}>
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60" />
+            <Image src={char.img} alt={char.name} fill className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]" />
             <div className="absolute top-5 left-5">
               <span className={`inline-block px-3 py-1.5 bg-gradient-to-r ${char.color} rounded-full text-xs font-bold text-white shadow-lg`}>
                 {char.role}
@@ -79,8 +79,8 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
           <div className="grid grid-cols-2 gap-4">
             {prevChar ? (
               <Link href={`/characters/${prevChar.id}`} className="group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500/40 transition">
-                <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0">
-                  <Image src={prevChar.img} alt={prevChar.name} fill className="object-cover" />
+                <div className={`relative w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-gradient-to-br ${prevChar.color}`}>
+                  <Image src={prevChar.img} alt={prevChar.name} fill className="object-contain object-bottom" />
                 </div>
                 <div>
                   <p className="text-[10px] text-white/30 mb-0.5">이전 캐릭터</p>
@@ -94,8 +94,8 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
                   <p className="text-[10px] text-white/30 mb-0.5">다음 캐릭터</p>
                   <p className="font-semibold text-white group-hover:text-pink-300 transition">{nextChar.name}</p>
                 </div>
-                <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0">
-                  <Image src={nextChar.img} alt={nextChar.name} fill className="object-cover" />
+                <div className={`relative w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-gradient-to-br ${nextChar.color}`}>
+                  <Image src={nextChar.img} alt={nextChar.name} fill className="object-contain object-bottom" />
                 </div>
               </Link>
             ) : <div />}
