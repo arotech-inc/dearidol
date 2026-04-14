@@ -87,7 +87,13 @@ export default function Home() {
         <div className="absolute top-20 right-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-          <div className="flex justify-between items-end mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex justify-between items-end mb-12"
+          >
             <div>
               <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-2">News & Events</p>
               <h3 className="text-4xl font-bold text-pink-400">Latest Updates</h3>
@@ -95,9 +101,15 @@ export default function Home() {
             <Link href="/news" className="text-sm bg-white/10 px-5 py-2.5 rounded-full hover:bg-pink-500/20 hover:border-pink-500/40 border border-white/10 transition">
               더보기 →
             </Link>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="grid md:grid-cols-2 gap-8 items-stretch"
+          >
             {/* 왼쪽 이미지 */}
             <div
               onClick={() => router.push(`/news/${newsData[activeNews].slug}`)}
@@ -139,7 +151,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -149,51 +161,53 @@ export default function Home() {
         <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-3xl" />
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-          <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-center mb-12"
+          >
             <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Characters</p>
             <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">당신의 아이돌을 만나보세요</h3>
             <p className="text-white/50">각 캐릭터를 클릭하면 스토리를 확인할 수 있어요</p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="flex justify-center items-end gap-2 md:gap-4 max-w-6xl mx-auto"
+          >
             {[
-              { id: "karina", name: "카리나", role: "메인 보컬", color: "from-pink-500 to-rose-400", img: "/dearidol-feature1.jpg" },
-              { id: "haru", name: "하루", role: "메인 댄서", color: "from-purple-500 to-violet-400", img: "/dearidol-feature2.jpg" },
-              { id: "minseo", name: "민서", role: "래퍼", color: "from-blue-500 to-cyan-400", img: "/dearidol-feature3.jpg" },
-              { id: "jiwon", name: "지원", role: "비주얼", color: "from-amber-500 to-yellow-400", img: "/dearidol-hero.png" },
+              { id: "karina", name: "카리나", role: "메인 보컬", img: "/character1.png" },
+              { id: "haru", name: "하루", role: "메인 댄서", img: "/character2.png" },
+              { id: "minseo", name: "민서", role: "래퍼", img: "/character3.png" },
+              { id: "jiwon", name: "지원", role: "비주얼", img: "/character4.png" },
             ].map((char) => (
               <Link
                 key={char.id}
                 href={`/characters/${char.id}`}
-                className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-pink-500/40 transition duration-300 cursor-pointer aspect-[3/4]"
+                className="group relative flex-1 flex justify-center items-end cursor-pointer"
               >
-                <Image src={char.img} alt={char.name} fill className="object-cover transition duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 transition duration-500" />
-
-                {/* 역할 뱃지 */}
-                <div className="absolute top-4 left-4">
-                  <span className={`inline-block px-2.5 py-1 bg-gradient-to-r ${char.color} rounded-full text-[10px] font-bold text-white shadow-lg`}>
-                    {char.role}
-                  </span>
+                <div className="relative w-full aspect-[3/5] flex items-end justify-center overflow-visible">
+                  <Image
+                    src={char.img}
+                    alt={char.name}
+                    fill
+                    className="object-contain object-bottom transition-all duration-500 ease-out group-hover:scale-110 drop-shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.5)]"
+                  />
                 </div>
 
-                {/* 이름 */}
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <p className="text-xl font-bold text-white group-hover:text-pink-300 transition">{char.name}</p>
-                  <p className="text-xs text-white/40 mt-1">{char.role}</p>
-                </div>
-
-                {/* View More */}
-                <div className="absolute bottom-5 right-5 overflow-hidden">
-                  <div className="translate-x-[120%] group-hover:translate-x-0 transition-transform duration-500 ease-out">
-                    <span className="px-3 py-1.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white text-[11px] font-semibold shadow-lg">
-                      Story →
-                    </span>
-                  </div>
+                {/* 이름 (호버 시 표시) */}
+                <div className="absolute bottom-0 left-0 right-0 text-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <p className="text-pink-400 text-xs font-semibold tracking-widest uppercase mb-1">{char.role}</p>
+                  <p className="text-2xl font-bold text-white drop-shadow-lg">{char.name}</p>
                 </div>
               </Link>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -202,13 +216,25 @@ export default function Home() {
         <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl" />
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-          <div className="text-center mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-center mb-14"
+          >
             <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Core System</p>
             <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">아이돌 산업 전체를 플레이</h3>
             <p className="text-white/50">육성 · 패션 · 리듬게임 · MV제작 · 소셜까지 하나로</p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto"
+          >
             {[
               {
                 icon: "🏢",
@@ -243,15 +269,21 @@ export default function Home() {
                 <p className="text-xs text-white/40 leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
+          </motion.div>
 
           {/* 소셜 메타 강조 */}
-          <div className="mt-10 max-w-3xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
+            className="mt-10 max-w-3xl mx-auto text-center"
+          >
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10">
               <span className="text-lg">🌍</span>
               <p className="text-sm text-white/50">다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -260,13 +292,25 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-500/5 rounded-full blur-3xl" />
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-          <div className="text-center mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-center mb-14"
+          >
             <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Scenes</p>
             <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">인게임 장면</h3>
             <p className="text-white/50">프로덕션 운영부터 무대 위 퍼포먼스까지, Dear Idol의 세계를 미리 만나보세요</p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          >
             {[
               { img: "dearidol-feature1.jpg", label: "프로덕션 공간" },
               { img: "dearidol-feature2.jpg", label: "리듬 배틀" },
@@ -284,16 +328,22 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
 
           {/* 하단 확장성 힌트 */}
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
+            className="mt-10 flex flex-wrap justify-center gap-4"
+          >
             {["리그전 · 팀전 · 레이드", "신규 K-POP 곡 추가", "시즌 의상 이벤트", "소극장 → 돔 → 월드투어"].map((tag) => (
               <span key={tag} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs text-white/40">
                 {tag}
               </span>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
