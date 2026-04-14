@@ -9,7 +9,6 @@ const menuItems = [
   { label: "News", link: "/news" },
   { label: "Characters", link: "/#characters" },
   { label: "System", link: "/#system" },
-  { label: "Scenes", link: "/#scenes" },
   { label: "고객센터", link: "/cs" },
 ];
 

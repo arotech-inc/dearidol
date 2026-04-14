@@ -6,6 +6,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { newsData } from "./data";
+import {
+  Building2,
+  Shirt,
+  Music2,
+  Clapperboard,
+  Globe2,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  Sparkles,
+  Play,
+} from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -13,10 +25,10 @@ export default function Home() {
   const [activeNews, setActiveNews] = useState(0);
 
   return (
-    <main className="bg-black text-white">
+    <main className="bg-[#0a0a0f] text-white overflow-hidden">
 
       {/* ================= HERO ================= */}
-      <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
 
         <video
           autoPlay
@@ -28,78 +40,124 @@ export default function Home() {
           <source src="/dearidol-hero.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 bg-black/50" />
+        {/* 비네팅 + 하단 페이드 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#0a0a0f]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.7)_100%)]" />
 
         <motion.div
           initial="hidden"
           animate="show"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } } }}
-          className="relative z-10 text-center px-6"
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } } }}
+          className="relative z-10 px-8 w-full max-w-7xl mx-auto"
         >
-          <motion.h2
-            variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.8 }}
-            className="text-6xl md:text-8xl font-extrabold text-pink-400"
-          >
-            PRODUCE YOUR STAR
-          </motion.h2>
-
+          {/* 상단 라벨 */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
+            variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}
             transition={{ duration: 0.6 }}
-            className="mt-10"
+            className="flex items-center gap-3 mb-6"
+          >
+            <div className="h-px w-12 bg-pink-400" />
+            <span className="section-label text-pink-300">Coming 2026 · Global Release</span>
+          </motion.div>
+
+          {/* 메인 타이틀 */}
+          <motion.h1
+            variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+            className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] mb-4"
+          >
+            <span className="block text-white">PRODUCE</span>
+            <span className="block gradient-text-pink">YOUR STAR</span>
+          </motion.h1>
+
+          {/* 서브 카피 */}
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.7 }}
+            className="max-w-xl text-white/60 text-base md:text-lg leading-relaxed mt-8 mb-10"
+          >
+            나만의 K-POP 프로덕션을 세우고, 아이돌을 키우고, 세상에 내보내세요.
+            <br />
+            육성 · 패션 · 리듬 · MV · 소셜까지 — 하나의 세계로.
+          </motion.p>
+
+          {/* CTA 그룹 */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.7 }}
+            className="flex flex-wrap items-center gap-4 mb-14"
           >
             <button
               onClick={() => setShowPopup(true)}
-              className="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-bold text-lg shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-110 transition cursor-pointer"
+              className="group relative px-8 py-4 bg-white text-black font-bold rounded-none hover:bg-pink-400 transition-all duration-300 flex items-center gap-3 cursor-pointer"
             >
-              사전예약 바로가기
+              <span>사전예약</span>
+              <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
+
+            <a
+              href="#scenes"
+              className="group flex items-center gap-3 px-6 py-4 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
+            >
+              <div className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition">
+                <Play size={12} fill="currentColor" className="ml-0.5" />
+              </div>
+              <span className="font-medium">트레일러 보기</span>
+            </a>
           </motion.div>
 
+          {/* 스토어 뱃지 */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6 }}
-            className="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center"
+            className="flex items-center gap-4"
           >
+            <span className="section-label text-white/40">Available on</span>
+            <div className="h-4 w-px bg-white/20" />
             <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
-              className="inline-block transition duration-300 hover:scale-110 hover:-translate-y-1 hover:drop-shadow-[0_0_25px_rgba(236,72,153,0.7)]">
-              <Image src="/googleplay.png" alt="Google Play" width={180} height={60} />
+              className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
+              <Image src="/googleplay.png" alt="Google Play" width={140} height={45} />
             </a>
             <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
-              className="inline-block transition duration-300 hover:scale-110 hover:-translate-y-1 hover:drop-shadow-[0_0_25px_rgba(168,85,247,0.7)]">
-              <Image src="/appstore.png" alt="App Store" width={180} height={60} />
+              className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
+              <Image src="/appstore.png" alt="App Store" width={140} height={45} />
             </a>
           </motion.div>
         </motion.div>
 
         {/* 스크롤 힌트 */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-white/40 text-xs tracking-widest">SCROLL</span>
-          <div className="w-5 h-8 rounded-full border-2 border-white/30 flex justify-center pt-1.5">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
+          <span className="section-label text-white/40">Scroll</span>
+          <ChevronDown size={20} className="text-white/40 animate-bounce" />
         </div>
       </section>
 
       {/* ================= NEWS ================= */}
-      <section id="news" className="snap-section h-screen flex items-center relative overflow-hidden bg-gradient-to-b from-black via-purple-950/50 to-black">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
+      <section id="news" className="relative py-32 md:py-40 overflow-hidden noise-bg">
+        {/* 배경 */}
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
 
-        <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="flex justify-between items-end mb-12"
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex items-end justify-between mb-16 gap-8 flex-wrap"
           >
             <div>
-              <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-2">News & Events</p>
-              <h3 className="text-4xl font-bold text-pink-400">Latest Updates</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">01 / News</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-5xl md:text-6xl leading-none">
+                Latest <span className="gradient-text-pink">Updates</span>
+              </h2>
             </div>
-            <Link href="/news" className="text-sm bg-white/10 px-5 py-2.5 rounded-full hover:bg-pink-500/20 hover:border-pink-500/40 border border-white/10 transition">
-              더보기 →
+            <Link href="/news" className="group flex items-center gap-2 text-sm font-medium text-white/60 hover:text-pink-400 transition">
+              전체 보기
+              <ArrowRight size={16} className="transition group-hover:translate-x-1" />
             </Link>
           </motion.div>
 
@@ -107,46 +165,70 @@ export default function Home() {
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="grid md:grid-cols-2 gap-8 items-stretch"
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-[1.3fr_1fr] gap-10 items-stretch"
           >
             {/* 왼쪽 이미지 */}
             <div
               onClick={() => router.push(`/news/${newsData[activeNews].slug}`)}
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group border border-white/10 shadow-[0_0_40px_rgba(236,72,153,0.15)]"
+              className="relative aspect-[16/11] overflow-hidden cursor-pointer group"
             >
               {newsData.map((item, i) => (
                 <Image key={item.slug} src={item.image} alt={item.title} fill
-                  className={`object-cover transition-all duration-700 group-hover:scale-105 ${activeNews === i ? "opacity-100" : "opacity-0"}`}
+                  className={`object-cover transition-all duration-1000 ${activeNews === i ? "opacity-100 scale-100 group-hover:scale-105" : "opacity-0 scale-110"}`}
                 />
               ))}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-              <div className="absolute top-5 left-5">
-                <span className="inline-block px-3 py-1.5 bg-pink-500/90 backdrop-blur text-white text-xs font-bold rounded-full">공지사항</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+              {/* 프레임 라인 */}
+              <div className="absolute inset-4 border border-white/10 pointer-events-none" />
+
+              <div className="absolute top-6 left-6 flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-pink-400 animate-pulse" />
+                <span className="section-label text-white/70">Notice</span>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-pink-400 text-xs font-semibold mb-2">{newsData[activeNews].date}</p>
-                <h4 className="text-white text-2xl font-bold leading-tight group-hover:text-pink-300 transition">{newsData[activeNews].title}</h4>
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <p className="font-mono-tight text-pink-400/80 text-xs mb-3">{newsData[activeNews].date}</p>
+                <h3 className="text-white text-2xl md:text-3xl font-bold leading-tight group-hover:text-pink-200 transition max-w-lg">
+                  {newsData[activeNews].title}
+                </h3>
+                <div className="mt-5 inline-flex items-center gap-2 text-pink-400 text-sm font-semibold">
+                  자세히 보기 <ArrowUpRight size={14} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
               </div>
             </div>
 
             {/* 오른쪽 리스트 */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-0 border-t border-white/10">
               {newsData.map((item, i) => (
-                <div key={item.slug} onMouseEnter={() => setActiveNews(i)} onClick={() => router.push(`/news/${item.slug}`)}
-                  className={`relative cursor-pointer rounded-xl border p-5 transition-all duration-300 group ${
-                    activeNews === i ? "bg-gradient-to-r from-pink-500/15 to-purple-500/5 border-pink-500/40 shadow-[0_0_25px_rgba(236,72,153,0.15)]" : "bg-white/5 border-white/10 hover:bg-white/10"
-                  }`}>
-                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full bg-gradient-to-b from-pink-400 to-purple-500 transition-all duration-300 ${activeNews === i ? "h-12" : "h-0"}`} />
-                  <div className="flex items-start justify-between gap-4 pl-2">
+                <div
+                  key={item.slug}
+                  onMouseEnter={() => setActiveNews(i)}
+                  onClick={() => router.push(`/news/${item.slug}`)}
+                  className={`relative cursor-pointer py-6 border-b border-white/10 group transition-all duration-500 ${
+                    activeNews === i ? "pl-6" : "pl-0 hover:pl-3"
+                  }`}
+                >
+                  {/* 왼쪽 인디케이터 라인 */}
+                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 h-px bg-pink-400 transition-all duration-500 ${
+                    activeNews === i ? "w-4" : "w-0"
+                  }`} />
+
+                  <div className="flex items-start justify-between gap-6">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className={`inline-block px-2 py-0.5 text-[10px] font-bold rounded ${activeNews === i ? "bg-pink-500 text-white" : "bg-white/10 text-white/60"}`}>NEWS</span>
-                        <span className="text-xs text-white/40">{item.date}</span>
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="font-mono-tight text-[10px] text-pink-400">#{String(i + 1).padStart(2, "0")}</span>
+                        <span className="text-xs text-white/30">{item.date}</span>
                       </div>
-                      <h5 className={`font-semibold text-base leading-snug truncate transition ${activeNews === i ? "text-pink-300" : "text-white group-hover:text-pink-200"}`}>{item.title}</h5>
+                      <h4 className={`text-lg font-bold leading-snug transition ${
+                        activeNews === i ? "text-pink-300" : "text-white/80 group-hover:text-white"
+                      }`}>
+                        {item.title}
+                      </h4>
                     </div>
-                    <div className={`shrink-0 self-center text-lg transition-all ${activeNews === i ? "text-pink-400 translate-x-0 opacity-100" : "text-white/30 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"}`}>→</div>
+                    <ArrowUpRight size={18} className={`shrink-0 mt-1 transition ${
+                      activeNews === i ? "text-pink-400 opacity-100" : "text-white/20 opacity-0 group-hover:opacity-100"
+                    }`} />
                   </div>
                 </div>
               ))}
@@ -156,35 +238,51 @@ export default function Home() {
       </section>
 
       {/* ================= CHARACTERS ================= */}
-      <section id="characters" className="snap-section h-screen flex items-center relative overflow-hidden bg-gradient-to-b from-black to-purple-950/30">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-pink-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-3xl" />
+      <section id="characters" className="relative py-32 md:py-40 overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#13111a] to-[#0a0a0f]">
+        {/* 배경 조명 */}
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[140px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[140px]" />
 
-        <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
+        {/* 거대 배경 텍스트 */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 pointer-events-none select-none">
+          <h2 className="font-display text-[clamp(8rem,18vw,18rem)] text-white/[0.03] leading-none tracking-tighter whitespace-nowrap">
+            CHARACTERS
+          </h2>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-center mb-12"
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mb-16 text-center"
           >
-            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Characters</p>
-            <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">당신의 아이돌을 만나보세요</h3>
-            <p className="text-white/50">각 캐릭터를 클릭하면 스토리를 확인할 수 있어요</p>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-12 bg-pink-400/40" />
+              <span className="section-label text-pink-400">02 / Characters</span>
+              <div className="h-px w-12 bg-pink-400/40" />
+            </div>
+            <h2 className="font-display text-5xl md:text-7xl leading-none">
+              당신의 <span className="gradient-text-pink">아이돌</span>
+            </h2>
+            <p className="text-white/40 mt-6 max-w-md mx-auto text-sm">
+              4명의 멤버, 각자의 이야기. 클릭해서 그들의 세계로 들어가보세요.
+            </p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex justify-center items-end gap-2 md:gap-4 max-w-6xl mx-auto"
           >
             {[
-              { id: "iro", name: "이로", role: "래퍼", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
-              { id: "haru", name: "하루", role: "서브 보컬", img: "/character2.png", scale: "scale-125 group-hover:scale-[1.38]" },
-              { id: "yeeun", name: "예은", role: "메인 보컬", img: "/character3.png", scale: "scale-125 group-hover:scale-[1.38]" },
-              { id: "jiwon", name: "지원", role: "메인 댄서", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
+              { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
+              { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.png", scale: "scale-125 group-hover:scale-[1.38]" },
+              { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-125 group-hover:scale-[1.38]" },
+              { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
             ].map((char) => (
               <Link
                 key={char.id}
@@ -192,18 +290,26 @@ export default function Home() {
                 className="group flex-1 flex flex-col items-center cursor-pointer"
               >
                 <div className="relative w-full aspect-[3/5] flex items-end justify-center overflow-visible">
+                  {/* 번호 배경 */}
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 font-display text-[8rem] text-white/[0.04] leading-none select-none pointer-events-none transition-all duration-500 group-hover:text-pink-400/10">
+                    {char.num}
+                  </span>
                   <Image
                     src={char.img}
                     alt={char.name}
                     fill
-                    className={`object-contain object-bottom origin-bottom transition-all duration-500 ease-out drop-shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.5)] ${char.scale}`}
+                    className={`object-contain object-bottom origin-bottom transition-all duration-500 ease-out drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.4)] ${char.scale}`}
                   />
                 </div>
 
-                {/* 이름 (이미지 아래, 항상 표시) */}
-                <div className="mt-6 text-center">
-                  <p className="text-pink-400 text-xs font-semibold tracking-widest uppercase mb-1">{char.role}</p>
-                  <p className="text-xl md:text-2xl font-bold text-white group-hover:text-pink-300 transition">{char.name}</p>
+                <div className="mt-8 text-center">
+                  <span className="font-mono-tight text-[10px] text-pink-400 block mb-2">
+                    {char.role}
+                  </span>
+                  <p className="font-display text-3xl text-white group-hover:gradient-text-pink transition">
+                    {char.nameEn}
+                  </p>
+                  <p className="text-xs text-white/40 mt-1 font-medium">{char.name}</p>
                 </div>
               </Link>
             ))}
@@ -212,137 +318,211 @@ export default function Home() {
       </section>
 
       {/* ================= SYSTEM ================= */}
-      <section id="system" className="snap-section h-screen flex items-center relative overflow-hidden bg-gradient-to-b from-purple-950/30 to-black">
-        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl" />
+      <section id="system" className="relative py-32 md:py-40 overflow-hidden bg-[#0a0a0f]">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px]" />
 
-        <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+          {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-center mb-14"
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-[1fr_1.3fr] gap-12 mb-16 items-end"
           >
-            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Core System</p>
-            <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">아이돌 산업 전체를 플레이</h3>
-            <p className="text-white/50">육성 · 패션 · 리듬게임 · MV제작 · 소셜까지 하나로</p>
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">03 / Core System</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
+                아이돌 산업<br />
+                <span className="gradient-text-gold">전체를 플레이</span>
+              </h2>
+            </div>
+            <p className="text-white/50 text-lg leading-relaxed max-w-lg">
+              하나의 게임에 담긴 아이돌 세계 — 프로덕션 경영부터 스테이지 퍼포먼스, 그리고 글로벌 팬덤 교류까지.
+              디어 아이돌은 K-POP의 모든 단면을 플레이 가능한 경험으로 풀어냈습니다.
+            </p>
           </motion.div>
 
+          {/* 메인 비디오 쇼케이스 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto"
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative aspect-video w-full overflow-hidden border border-white/10 mb-4 group"
           >
-            {[
-              {
-                icon: "🏢",
-                title: "프로덕션 경영",
-                desc: "3D 프로덕션을 꾸미고 키워나가세요. 사무실, 연습실, 촬영실이 성장과 함께 확장됩니다.",
-                color: "from-pink-500 to-rose-400",
-              },
-              {
-                icon: "👗",
-                title: "아이돌 패션",
-                desc: "헤어부터 악세서리까지 파츠별 코디. 수많은 아이돌의 스타일을 직접 디자인하세요.",
-                color: "from-purple-500 to-violet-400",
-              },
-              {
-                icon: "🎵",
-                title: "리듬 & 댄스카드",
-                desc: "K-POP에 맞춰 댄스 카드를 전략적으로 발동! 리듬 게임과 카드 전략의 결합.",
-                color: "from-blue-500 to-cyan-400",
-              },
-              {
-                icon: "🎬",
-                title: "MV 제작 & 공유",
-                desc: "댄스 카드로 안무를 구성하고 카메라를 연출해 나만의 뮤직비디오를 만드세요.",
-                color: "from-amber-500 to-yellow-400",
-              },
-            ].map((item, i) => (
-              <div key={i} className="group rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-pink-500/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition duration-300 hover:scale-[1.03] p-5">
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-2xl mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition duration-300`}>
-                  {item.icon}
-                </div>
-                <h4 className="text-base font-bold text-white mb-2">{item.title}</h4>
-                <p className="text-xs text-white/40 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </motion.div>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src="/dance.mp4" type="video/mp4" />
+            </video>
 
-          {/* 소셜 메타 강조 */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-            className="mt-10 max-w-3xl mx-auto text-center"
-          >
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10">
-              <span className="text-lg">🌍</span>
-              <p className="text-sm text-white/50">다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요</p>
+            {/* 비디오 오버레이 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+
+            {/* 프레임 라인 */}
+            <div className="absolute inset-4 border border-white/10 pointer-events-none" />
+
+            {/* 좌상단 라벨 */}
+            <div className="absolute top-8 left-8 flex items-center gap-3">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="font-mono-tight text-xs text-white/70 tracking-widest uppercase">Official Gameplay</span>
+            </div>
+
+            {/* 우상단 타임스탬프 */}
+            <div className="absolute top-8 right-8 font-mono-tight text-xs text-white/40">
+              REC · 00:00
+            </div>
+
+            {/* 좌하단 타이틀 */}
+            <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between gap-6 flex-wrap">
+              <div>
+                <p className="font-mono-tight text-[10px] text-pink-400 tracking-[0.2em] uppercase mb-2">Game Showcase</p>
+                <h3 className="font-display text-3xl md:text-5xl text-white leading-none">
+                  Dear Idol <span className="gradient-text-pink">Universe</span>
+                </h3>
+              </div>
+              <div className="flex items-center gap-6 text-xs text-white/60 font-mono-tight">
+                <div className="flex items-center gap-2">
+                  <Sparkles size={14} className="text-pink-400" />
+                  <span>LIVE DEMO</span>
+                </div>
+                <div className="h-4 w-px bg-white/20" />
+                <span>4K · HDR</span>
+              </div>
             </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* ================= SCENES ================= */}
-      <section id="scenes" className="snap-section h-screen flex items-center relative overflow-hidden bg-gradient-to-b from-black to-purple-950/20">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-500/5 rounded-full blur-3xl" />
-
-        <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
+          {/* 비디오 하단 메타 정보 바 */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-center mb-14"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex items-center justify-between gap-6 py-4 px-6 mb-20 border-x border-b border-white/10 text-xs font-mono-tight text-white/40 flex-wrap"
           >
-            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-3">Scenes</p>
-            <h3 className="text-4xl md:text-5xl font-bold text-pink-400 mb-4">인게임 장면</h3>
-            <p className="text-white/50">프로덕션 운영부터 무대 위 퍼포먼스까지, Dear Idol의 세계를 미리 만나보세요</p>
+            <span>SYSTEM_OVERVIEW.MP4</span>
+            <div className="flex items-center gap-6">
+              <span>4 FEATURES</span>
+              <span className="text-pink-400">● RECORDING</span>
+            </div>
           </motion.div>
 
+          {/* 기능별 이미지 그리드 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
           >
             {[
-              { img: "dearidol-feature1.jpg", label: "프로덕션 공간" },
-              { img: "dearidol-feature2.jpg", label: "리듬 배틀" },
-              { img: "dearidol-feature3.jpg", label: "드레스룸" },
-              { img: "dearidol-hero.png", label: "무대 퍼포먼스" },
+              {
+                Icon: Building2,
+                num: "01",
+                title: "프로덕션 경영",
+                desc: "3D 사무실을 꾸미고 확장하며 소속사를 성장시키세요.",
+                accent: "text-pink-400",
+                img: "/dearidol-feature1.jpg",
+                tag: "Management",
+              },
+              {
+                Icon: Shirt,
+                num: "02",
+                title: "아이돌 패션",
+                desc: "헤어부터 악세서리까지, 파츠 단위로 무한 코디.",
+                accent: "text-purple-400",
+                img: "/dearidol-feature2.jpg",
+                tag: "Fashion",
+              },
+              {
+                Icon: Music2,
+                num: "03",
+                title: "리듬 & 댄스카드",
+                desc: "K-POP에 맞춰 전략적으로 카드를 발동하는 신개념 리듬게임.",
+                accent: "text-cyan-400",
+                img: "/dearidol-feature3.jpg",
+                tag: "Rhythm",
+              },
+              {
+                Icon: Clapperboard,
+                num: "04",
+                title: "MV 제작 & 공유",
+                desc: "카메라 워크와 안무를 직접 연출하는 나만의 뮤직비디오.",
+                accent: "text-amber-400",
+                img: "/dearidol-hero.png",
+                tag: "MV Studio",
+              },
             ].map((item, i) => (
-              <div key={i} className={`relative overflow-hidden rounded-2xl border border-white/10 hover:border-pink-500/30 transition group cursor-pointer ${
-                i === 0 ? "col-span-2 row-span-2 aspect-square" : "aspect-square"
-              }`}>
-                <Image src={`/${item.img}`} alt={item.label} fill className="object-cover transition duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                  <p className="text-[10px] text-pink-400/60 font-semibold tracking-wider mb-0.5">SCENE {String(i + 1).padStart(2, "0")}</p>
-                  <p className="text-sm text-white font-semibold">{item.label}</p>
+              <div
+                key={i}
+                className="group relative overflow-hidden border border-white/10 hover:border-white/30 transition duration-500 cursor-pointer"
+              >
+                {/* 이미지 영역 */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 group-hover:from-black/80 transition duration-500" />
+
+                  {/* 거대 번호 */}
+                  <span className="absolute top-3 right-3 font-display text-4xl text-white/20 group-hover:text-white/50 transition duration-500">
+                    {item.num}
+                  </span>
+
+                  {/* 아이콘 */}
+                  <div className={`absolute top-4 left-4 inline-flex items-center justify-center w-11 h-11 rounded-xl border border-white/20 backdrop-blur-md bg-black/30 ${item.accent} group-hover:border-current group-hover:shadow-[0_0_25px_currentColor] transition duration-500`}>
+                    <item.Icon size={20} strokeWidth={1.5} />
+                  </div>
+
+                  {/* 하단 태그 */}
+                  <div className="absolute bottom-3 left-3 font-mono-tight text-[10px] text-white/70 tracking-[0.2em] uppercase">
+                    {item.tag}
+                  </div>
+                </div>
+
+                {/* 텍스트 영역 */}
+                <div className="p-6 bg-[#0a0a0f] group-hover:bg-[#13111a] transition duration-500">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="font-mono-tight text-[10px] text-white/30">FEATURE.{item.num}</span>
+                    <div className="h-px flex-1 bg-white/10" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-pink-300 transition">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
           </motion.div>
 
-          {/* 하단 확장성 힌트 */}
+          {/* 소셜 강조 배너 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-            className="mt-10 flex flex-wrap justify-center gap-4"
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="mt-10 p-8 md:p-10 border border-white/10 bg-gradient-to-r from-white/[0.02] to-transparent flex items-center gap-6 flex-wrap"
           >
-            {["리그전 · 팀전 · 레이드", "신규 K-POP 곡 추가", "시즌 의상 이벤트", "소극장 → 돔 → 월드투어"].map((tag) => (
-              <span key={tag} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs text-white/40">
-                {tag}
-              </span>
-            ))}
+            <Globe2 size={36} strokeWidth={1.2} className="text-pink-400 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h4 className="text-white font-bold text-lg mb-1">Social Meta</h4>
+              <p className="text-sm text-white/50">다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요.</p>
+            </div>
+            <div className="flex items-center gap-2 text-white/30 text-xs font-mono-tight">
+              <Sparkles size={14} /> LIVE
+            </div>
           </motion.div>
         </div>
       </section>
@@ -354,28 +534,39 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md px-4"
             onClick={() => setShowPopup(false)}
           >
             <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.5, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.5 }}
-              className="bg-gradient-to-br from-purple-900 to-black border border-pink-500/30 rounded-3xl p-10 text-center shadow-[0_0_60px_rgba(236,72,153,0.3)] max-w-sm mx-4"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              className="bg-[#13111a] border border-white/10 p-10 max-w-md w-full mx-4 relative overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="text-6xl mb-4">🎀</div>
-              <h3 className="text-2xl font-bold text-pink-400 mb-2">준비중이에요!</h3>
-              <p className="text-white/60 text-sm mb-6">
-                사전예약 오픈 시 공지를 통해 안내드릴게요.<br />조금만 기다려주세요!
-              </p>
-              <button
-                onClick={() => setShowPopup(false)}
-                className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition shadow-lg cursor-pointer"
-              >
-                알겠어요!
-              </button>
+              {/* 장식 */}
+              <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-pink-500/20 blur-3xl" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <Sparkles size={16} className="text-pink-400" />
+                  <span className="section-label text-pink-400">Coming Soon</span>
+                </div>
+                <h3 className="font-display text-3xl text-white mb-4 leading-tight">
+                  조금만<br />
+                  <span className="gradient-text-pink">기다려주세요</span>
+                </h3>
+                <p className="text-white/50 text-sm leading-relaxed mb-8">
+                  사전예약이 오픈되면 공식 채널을 통해 가장 먼저 안내드릴게요.
+                  알림을 받고 싶다면 SNS를 팔로우 해주세요.
+                </p>
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="w-full py-4 bg-white text-black font-bold hover:bg-pink-400 transition cursor-pointer flex items-center justify-center gap-2"
+                >
+                  확인 <ArrowRight size={16} />
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
