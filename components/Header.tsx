@@ -31,7 +31,7 @@ export default function DearIdolHeader() {
           }}
           className="w-20 md:w-32 cursor-pointer z-50"
         >
-          <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={220} height={220} className="object-contain" />
+          <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={220} height={220} priority className="object-contain" />
         </Link>
 
         {/* 오른쪽 버튼들 */}

@@ -48,6 +48,8 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
             src={post.image}
             alt={post.title}
             fill
+            sizes="(max-width: 1024px) 100vw, 896px"
+            priority
             className="object-cover"
           />
         </div>

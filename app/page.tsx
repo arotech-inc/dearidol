@@ -40,6 +40,85 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  // 휠/터치 스크롤을 가로채서 섹션 단위로 이동 (Honkai 스타일)
+  useEffect(() => {
+    const getSections = () =>
+      Array.from(document.querySelectorAll<HTMLElement>(".snap-section"));
+
+    let isAnimating = false;
+    let lockUntil = 0;
+    let touchStartY: number | null = null;
+
+    const getCurrentIndex = (sections: HTMLElement[]) => {
+      const y = window.scrollY + 2;
+      let idx = 0;
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= y) idx = i;
+      }
+      return idx;
+    };
+
+    const scrollToSection = (i: number) => {
+      const sections = getSections();
+      if (i < 0 || i >= sections.length) return;
+      isAnimating = true;
+      lockUntil = Date.now() + 900;
+      window.scrollTo({ top: sections[i].offsetTop, behavior: "smooth" });
+      setTimeout(() => { isAnimating = false; }, 900);
+    };
+
+    const handleDelta = (deltaY: number) => {
+      if (isAnimating || Date.now() < lockUntil) return true;
+      if (Math.abs(deltaY) < 5) return false;
+
+      const sections = getSections();
+      if (sections.length === 0) return false;
+
+      const current = sections[getCurrentIndex(sections)];
+      const viewportH = window.innerHeight;
+      const scrollY = window.scrollY;
+      const sectionTop = current.offsetTop;
+      const sectionBottom = sectionTop + current.offsetHeight;
+      const tall = current.offsetHeight > viewportH + 20;
+
+      if (tall) {
+        // 긴 섹션 내부에서는 자유 스크롤 허용, 경계에서만 스냅
+        if (deltaY > 0 && scrollY + viewportH < sectionBottom - 5) return false;
+        if (deltaY < 0 && scrollY > sectionTop + 5) return false;
+      }
+
+      scrollToSection(getCurrentIndex(sections) + (deltaY > 0 ? 1 : -1));
+      return true;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const snapped = handleDelta(e.deltaY);
+      if (snapped) e.preventDefault();
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (touchStartY === null) return;
+      const endY = e.changedTouches[0].clientY;
+      const deltaY = touchStartY - endY;
+      touchStartY = null;
+      if (Math.abs(deltaY) > 30) handleDelta(deltaY);
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
   return (
     <main className="bg-[#0a0a0f] text-white overflow-hidden">
 
@@ -64,16 +143,17 @@ export default function Home() {
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } } }}
-          className="relative z-10 px-8 w-full max-w-7xl mx-auto"
+          className="relative z-10 px-8 w-full max-w-5xl mx-auto flex flex-col items-center text-center"
         >
           {/* 상단 라벨 */}
           <motion.div
-            variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}
+            variants={{ hidden: { opacity: 0, y: -10 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="h-px w-12 bg-pink-400" />
             <span className="section-label text-pink-300">Coming 2026 · Global Release</span>
+            <div className="h-px w-12 bg-pink-400" />
           </motion.div>
 
           {/* 메인 타이틀 */}
@@ -101,7 +181,7 @@ export default function Home() {
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.7 }}
-            className="flex flex-wrap items-center gap-4 mb-14"
+            className="flex flex-wrap justify-center items-center gap-4 mb-14"
           >
             <button
               onClick={() => setShowPopup(true)}
@@ -126,7 +206,7 @@ export default function Home() {
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-4"
+            className="flex flex-wrap justify-center items-center gap-4"
           >
             <span className="section-label text-white/40">Available on</span>
             <div className="h-4 w-px bg-white/20" />
@@ -191,6 +271,7 @@ export default function Home() {
             >
               {newsData.map((item, i) => (
                 <Image key={item.slug} src={item.image} alt={item.title} fill
+                  sizes="(max-width: 768px) 100vw, 60vw"
                   className={`object-cover transition-all duration-1000 ${activeNews === i ? "opacity-100 scale-100 group-hover:scale-105" : "opacity-0 scale-110"}`}
                 />
               ))}
@@ -310,6 +391,7 @@ export default function Home() {
                     src={char.img}
                     alt={char.name}
                     fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
                     className={`object-contain object-bottom origin-bottom transition-all duration-500 ease-out drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.4)] ${char.scale}`}
                   />
                 </div>
@@ -359,6 +441,7 @@ export default function Home() {
                             src={char.img}
                             alt={char.name}
                             fill
+                            sizes="(max-width: 768px) 80vw, 400px"
                             className={`object-contain object-bottom origin-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] ${char.scale.split(" ")[0]}`}
                           />
                         </div>
@@ -574,6 +657,7 @@ export default function Home() {
                     src={item.img}
                     alt={item.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 group-hover:from-black/80 transition duration-500" />
