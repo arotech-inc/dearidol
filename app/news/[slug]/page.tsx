@@ -19,21 +19,21 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
   }
 
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-20 px-6 md:px-20">
+    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-24 pb-12 px-6 md:px-20">
       <div className="max-w-4xl mx-auto">
 
         {/* 카테고리 뱃지 */}
-        <div className="mb-4">
+        <div className="mb-3">
           <span className="inline-block px-3 py-1 bg-pink-500/20 text-pink-400 text-xs font-bold rounded-full border border-pink-500/30">
             공지사항
           </span>
         </div>
 
         {/* 제목 영역 */}
-        <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">{post.title}</h1>
+        <h1 className="text-2xl md:text-4xl font-bold mb-3 leading-tight">{post.title}</h1>
 
         {/* 메타 정보 바 */}
-        <div className="flex items-center gap-4 text-sm text-white/40 pb-6 mb-8 border-b border-white/10">
+        <div className="flex items-center gap-4 text-xs md:text-sm text-white/40 pb-4 mb-5 border-b border-white/10">
           <div className="flex items-center gap-1.5">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             <span>{post.date}</span>
@@ -43,7 +43,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
         </div>
 
         {/* 썸네일 이미지 */}
-        <div className="mb-10 w-full relative aspect-video rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(236,72,153,0.15)]">
+        <div className="mb-6 w-full relative aspect-video max-h-[45vh] rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(236,72,153,0.15)]">
           <Image
             src={post.image}
             alt={post.title}
@@ -55,8 +55,8 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
         </div>
 
         {/* 본문 */}
-        <div className="bg-white/5 rounded-2xl border border-white/10 p-8 md:p-12 mb-10">
-          <p className="leading-loose whitespace-pre-line text-lg text-white/80">
+        <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8 mb-6">
+          <p className="leading-relaxed whitespace-pre-line text-sm md:text-base text-white/80">
             {post.content}
           </p>
         </div>
@@ -90,7 +90,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
         </div>
 
         {/* 목록보기 버튼 */}
-        <div className="mt-10 text-center">
+        <div className="mt-6 text-center">
           <Link
             href="/news"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-pink-400 text-pink-400 font-semibold text-sm hover:bg-pink-500 hover:text-white transition"

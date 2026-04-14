@@ -19,26 +19,26 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
   const nextChar = currentIndex < characters.length - 1 ? characters[currentIndex + 1] : null;
 
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-32 pb-20 px-6">
+    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-24 pb-12 px-6">
       <div className="max-w-5xl mx-auto">
 
         {/* 상단: 캐릭터 비주얼 + 프로필 */}
-        <div className="grid md:grid-cols-2 gap-10 mb-16">
+        <div className="grid md:grid-cols-[0.8fr_1fr] gap-8 mb-10">
           {/* 이미지 */}
-          <div className={`relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.15)] bg-gradient-to-br ${char.color} bg-opacity-20`}>
+          <div className={`relative aspect-[3/4] max-h-[60vh] mx-auto w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.15)] bg-gradient-to-br ${char.color} bg-opacity-20`}>
             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60" />
             <Image
               src={char.img}
               alt={char.name}
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, 40vw"
               priority
               className={`object-contain object-bottom origin-bottom drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] ${
                 char.id === "haru" || char.id === "yeeun" ? "scale-[1.55]" : "scale-100"
               }`}
             />
-            <div className="absolute top-5 left-5">
-              <span className={`inline-block px-3 py-1.5 bg-gradient-to-r ${char.color} rounded-full text-xs font-bold text-white shadow-lg`}>
+            <div className="absolute top-4 left-4">
+              <span className={`inline-block px-3 py-1 bg-gradient-to-r ${char.color} rounded-full text-xs font-bold text-white shadow-lg`}>
                 {char.role}
               </span>
             </div>
@@ -46,19 +46,19 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
 
           {/* 프로필 정보 */}
           <div className="flex flex-col justify-center">
-            <p className="text-sm text-pink-400/60 font-semibold tracking-widest uppercase mb-2">{char.nameEn}</p>
-            <h1 className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">{char.name}</h1>
-            <p className="text-lg text-white/40 mb-8">{char.role}</p>
+            <p className="text-xs text-pink-400/60 font-semibold tracking-widest uppercase mb-1">{char.nameEn}</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-pink-400 mb-1">{char.name}</h1>
+            <p className="text-sm text-white/40 mb-5">{char.role}</p>
 
-            <p className="text-white/60 leading-relaxed mb-8 text-lg">{char.intro}</p>
+            <p className="text-white/60 leading-relaxed mb-5 text-sm md:text-base">{char.intro}</p>
 
             {/* 프로필 카드 */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-              <h3 className="text-sm font-bold text-pink-400/60 tracking-widest uppercase mb-4">Profile</h3>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
+              <h3 className="text-xs font-bold text-pink-400/60 tracking-widest uppercase mb-3">Profile</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {Object.entries(char.profile).map(([key, value]) => (
                   <div key={key}>
-                    <p className="text-[10px] text-white/30 uppercase tracking-wider mb-1">
+                    <p className="text-[10px] text-white/30 uppercase tracking-wider mb-0.5">
                       {key === "age" ? "나이" : key === "height" ? "키" : key === "birthday" ? "생일" : key === "mbti" ? "MBTI" : "특기"}
                     </p>
                     <p className="text-sm text-white font-semibold">{value}</p>
@@ -70,21 +70,21 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
         </div>
 
         {/* 스토리 본문 */}
-        <div className="mb-16">
-          <div className="flex items-center gap-3 mb-8">
-            <div className={`w-1 h-10 rounded-full bg-gradient-to-b ${char.color}`} />
-            <h2 className="text-2xl font-bold text-white">Story</h2>
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-5">
+            <div className={`w-1 h-8 rounded-full bg-gradient-to-b ${char.color}`} />
+            <h2 className="text-xl font-bold text-white">Story</h2>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12">
-            <p className="text-white/70 leading-loose whitespace-pre-line text-base">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+            <p className="text-white/70 leading-relaxed whitespace-pre-line text-sm md:text-base">
               {char.story}
             </p>
           </div>
         </div>
 
         {/* 이전/다음 캐릭터 */}
-        <div className="border-t border-white/10 pt-6 mb-10">
+        <div className="border-t border-white/10 pt-5 mb-6">
           <div className="grid grid-cols-2 gap-4">
             {prevChar ? (
               <Link href={`/characters/${prevChar.id}`} className="group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500/40 transition">
