@@ -20,10 +20,10 @@ import {
 } from "lucide-react";
 
 const characters = [
-  { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-[1.35] group-hover:scale-[1.48]" },
+  { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
   { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.png", scale: "scale-[1.55] group-hover:scale-[1.7]" },
   { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-[1.55] group-hover:scale-[1.7]" },
-  { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-[1.35] group-hover:scale-[1.48]" },
+  { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
 ];
 
 export default function Home() {

@@ -27,7 +27,14 @@ export default async function CharacterDetailPage({ params }: { params: Promise<
           {/* 이미지 */}
           <div className={`relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.15)] bg-gradient-to-br ${char.color} bg-opacity-20`}>
             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60" />
-            <Image src={char.img} alt={char.name} fill className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]" />
+            <Image
+              src={char.img}
+              alt={char.name}
+              fill
+              className={`object-contain object-bottom origin-bottom drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] ${
+                char.id === "haru" || char.id === "yeeun" ? "scale-[1.55]" : "scale-100"
+              }`}
+            />
             <div className="absolute top-5 left-5">
               <span className={`inline-block px-3 py-1.5 bg-gradient-to-r ${char.color} rounded-full text-xs font-bold text-white shadow-lg`}>
                 {char.role}
