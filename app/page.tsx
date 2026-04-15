@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -31,6 +31,29 @@ export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
   const [mobileCharIndex, setMobileCharIndex] = useState(0);
+
+  // System 비디오 스크롤 연동 (애플 스타일, 데스크톱 전용)
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 769px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // System 비디오: 풀스크린 → 폰 모양 쉬링크 (데스크톱 전용)
+  const systemVideoRef = useRef<HTMLVideoElement>(null);
+  const phoneSectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: phoneProgress } = useScroll({
+    target: phoneSectionRef,
+    offset: ["start start", "end end"],
+  });
+  const phoneWidth = useTransform(phoneProgress, [0, 1], ["100vw", "300px"]);
+  const phoneHeight = useTransform(phoneProgress, [0, 1], ["100vh", "620px"]);
+  const phoneRadius = useTransform(phoneProgress, [0, 1], ["0px", "42px"]);
+  const phoneBorderW = useTransform(phoneProgress, [0, 1], ["0px", "10px"]);
+  const phoneOverlayOpacity = useTransform(phoneProgress, [0, 0.3], [1, 0]);
 
   // 모바일 캐릭터 자동 슬라이드 (3초 간격)
   useEffect(() => {
@@ -508,77 +531,35 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* 메인 비디오 쇼케이스 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative aspect-video w-full overflow-hidden border border-white/10 mb-4 group"
-          >
+          {/* 모바일 전용 간단 비디오 */}
+          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-4">
             <video
               autoPlay
               muted
               loop
               playsInline
+              preload="auto"
               className="absolute inset-0 w-full h-full object-cover"
             >
               <source src="/dance.mp4" type="video/mp4" />
             </video>
-
-            {/* 비디오 오버레이 (모바일은 더 약하게) */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none hidden md:block" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none md:hidden" />
-
-            {/* 프레임 라인 (데스크톱만) */}
-            <div className="absolute inset-4 border border-white/10 pointer-events-none hidden md:block" />
-
-            {/* 좌상단 라벨 (데스크톱만) */}
-            <div className="absolute top-8 left-8 hidden md:flex items-center gap-3">
-              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="font-mono-tight text-xs text-white/70 tracking-widest uppercase">Official Gameplay</span>
-            </div>
-
-            {/* 우상단 타임스탬프 (데스크톱만) */}
-            <div className="absolute top-8 right-8 font-mono-tight text-xs text-white/40 hidden md:block">
-              REC · 00:00
-            </div>
-
-            {/* 좌하단 타이틀 (데스크톱만) */}
-            <div className="absolute bottom-8 left-8 right-8 hidden md:flex items-end justify-between gap-6 flex-wrap">
-              <div>
-                <p className="font-mono-tight text-[10px] text-pink-400 tracking-[0.2em] uppercase mb-2">Game Showcase</p>
-                <h3 className="font-display text-3xl md:text-5xl text-white leading-none">
-                  Dear Idol <span className="gradient-text-pink">Universe</span>
-                </h3>
-              </div>
-              <div className="flex items-center gap-6 text-xs text-white/60 font-mono-tight">
-                <div className="flex items-center gap-2">
-                  <Sparkles size={14} className="text-pink-400" />
-                  <span>LIVE DEMO</span>
-                </div>
-                <div className="h-4 w-px bg-white/20" />
-                <span>4K · HDR</span>
-              </div>
-            </div>
-
-            {/* 모바일 전용 미니 라벨 */}
-            <div className="absolute bottom-3 left-3 right-3 flex md:hidden items-center justify-between gap-2 text-[10px] font-mono-tight">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 text-[10px] font-mono-tight">
               <div className="flex items-center gap-2 text-white/70">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                 <span className="tracking-widest uppercase">Official</span>
               </div>
               <span className="text-pink-400 tracking-widest">LIVE DEMO</span>
             </div>
-          </motion.div>
+          </div>
 
-          {/* 비디오 하단 메타 정보 바 (데스크톱에서만 표시) */}
+          {/* 비디오 하단 메타 정보 바 (모바일 간단 비디오용, 데스크톱에선 별도) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="hidden md:flex items-center justify-between gap-6 py-4 px-6 mb-20 border-x border-b border-white/10 text-xs font-mono-tight text-white/40 flex-wrap"
+            className="hidden items-center justify-between gap-6 py-4 px-6 mb-20 border-x border-b border-white/10 text-xs font-mono-tight text-white/40 flex-wrap"
           >
             <span>SYSTEM_OVERVIEW.MP4</span>
             <div className="flex items-center gap-6">
@@ -589,6 +570,67 @@ export default function Home() {
 
           {/* 모바일 전용 간격 */}
           <div className="md:hidden mb-16" />
+
+          {/* 데스크톱 전용: 풀스크린 → 폰 쉐이프 모핑 비디오 */}
+          {isDesktop && (
+            <div ref={phoneSectionRef} className="hidden md:block relative" style={{ height: "220vh", marginBottom: "8rem" }}>
+              <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+                <motion.div
+                  style={{
+                    width: phoneWidth,
+                    height: phoneHeight,
+                    borderRadius: phoneRadius,
+                    borderWidth: phoneBorderW,
+                  }}
+                  className="relative overflow-hidden border-black bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)] will-change-transform"
+                >
+                  <video
+                    ref={systemVideoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  >
+                    <source src="/dance.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* 풀스크린 상태 오버레이 (진행도에 따라 페이드) */}
+                  <motion.div
+                    style={{ opacity: phoneOverlayOpacity }}
+                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
+                  />
+                  <motion.div
+                    style={{ opacity: phoneOverlayOpacity }}
+                    className="absolute top-8 left-8 flex items-center gap-3 pointer-events-none"
+                  >
+                    <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    <span className="font-mono-tight text-xs text-white/70 tracking-widest uppercase">Official Gameplay</span>
+                  </motion.div>
+                  <motion.div
+                    style={{ opacity: phoneOverlayOpacity }}
+                    className="absolute bottom-8 left-8 right-8 flex items-end justify-between gap-6 flex-wrap pointer-events-none"
+                  >
+                    <div>
+                      <p className="font-mono-tight text-[10px] text-pink-400 tracking-[0.2em] uppercase mb-2">Game Showcase</p>
+                      <h3 className="font-display text-3xl md:text-5xl text-white leading-none">
+                        Dear Idol <span className="gradient-text-pink">Universe</span>
+                      </h3>
+                    </div>
+                    <div className="flex items-center gap-6 text-xs text-white/60 font-mono-tight">
+                      <div className="flex items-center gap-2">
+                        <Sparkles size={14} className="text-pink-400" />
+                        <span>LIVE DEMO</span>
+                      </div>
+                      <div className="h-4 w-px bg-white/20" />
+                      <span>4K · HDR</span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
+            </div>
+          )}
 
           {/* 기능별 이미지 그리드 */}
           <motion.div
