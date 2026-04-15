@@ -206,12 +206,9 @@ export default function Home() {
           <motion.p
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.7 }}
-            className="max-w-xl text-white/60 text-sm md:text-lg leading-relaxed mt-8 mb-10 px-4"
+            className="max-w-2xl text-white/70 text-base md:text-xl font-medium tracking-wide mt-8 mb-10 px-4"
           >
-            <span className="block md:inline">나만의 K-POP 프로덕션을 세우고,</span>{" "}
-            <span className="block md:inline">아이돌을 키우고, 세상에 내보내세요.</span>
-            <span className="hidden md:inline"><br /></span>
-            <span className="block mt-2 md:mt-0 md:inline">육성 · 리듬 · MV · 소셜까지 — 하나의 세계로.</span>
+            당신의 손끝에서, K-POP 스타가 태어난다.
           </motion.p>
 
           {/* CTA 그룹 */}
@@ -264,8 +261,7 @@ export default function Home() {
         </motion.div>
 
         {/* 스크롤 힌트 */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-          <span className="section-label text-white/40 text-[10px]">Scroll</span>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
           <ChevronDown size={18} className="text-white/40 animate-bounce" />
         </div>
       </section>
