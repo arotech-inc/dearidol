@@ -51,11 +51,27 @@ export default function Home() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const phoneWidth = useTransform(phoneProgress, [0, 1], [winSize.w, 300]);
-  const phoneHeight = useTransform(phoneProgress, [0, 1], [winSize.h, 620]);
-  const phoneRadius = useTransform(phoneProgress, [0, 1], [0, 42]);
-  const phoneBorderW = useTransform(phoneProgress, [0, 1], [0, 10]);
-  const phoneOverlayOpacity = useTransform(phoneProgress, [0, 0.3], [1, 0]);
+  // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
+  const phoneWidth = useTransform(
+    phoneProgress,
+    [0, 0.2, 0.5, 0.75, 1],
+    [winSize.w, winSize.w - 60, winSize.w * 0.72, 1100, 720]
+  );
+  const phoneHeight = useTransform(
+    phoneProgress,
+    [0, 0.2, 0.5, 0.75, 1],
+    [winSize.h, winSize.h - 60, winSize.h * 0.72, 520, 340]
+  );
+  const phoneRadius = useTransform(
+    phoneProgress,
+    [0, 0.2, 0.5, 0.75, 1],
+    [0, 14, 24, 30, 36]
+  );
+  const phoneBorderW = useTransform(
+    phoneProgress,
+    [0, 0.2, 0.5, 1],
+    [0, 6, 8, 10]
+  );
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
   useEffect(() => {
@@ -414,9 +430,9 @@ export default function Home() {
           <div className="md:hidden mb-16" />
         </div>
 
-        {/* 데스크톱 전용: 풀스크린 → 폰 쉐이프 모핑 비디오 (max-w 래퍼 밖, 풀위드) */}
+        {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full my-16" style={{ height: "220vh" }}>
+          <div ref={phoneSectionRef} className="relative w-full my-16" style={{ height: "280vh" }}>
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
               <motion.div
                 style={{
@@ -439,37 +455,6 @@ export default function Home() {
                   <source src="/dance.mp4" type="video/mp4" />
                 </video>
 
-                {/* 풀스크린 상태 오버레이 (진행도에 따라 페이드) */}
-                <motion.div
-                  style={{ opacity: phoneOverlayOpacity }}
-                  className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
-                />
-                <motion.div
-                  style={{ opacity: phoneOverlayOpacity }}
-                  className="absolute top-8 left-8 flex items-center gap-3 pointer-events-none"
-                >
-                  <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <span className="font-mono-tight text-xs text-white/70 tracking-widest uppercase">Official Gameplay</span>
-                </motion.div>
-                <motion.div
-                  style={{ opacity: phoneOverlayOpacity }}
-                  className="absolute bottom-8 left-8 right-8 flex items-end justify-between gap-6 flex-wrap pointer-events-none"
-                >
-                  <div>
-                    <p className="font-mono-tight text-[10px] text-pink-400 tracking-[0.2em] uppercase mb-2">Game Showcase</p>
-                    <h3 className="font-display text-3xl md:text-5xl text-white leading-none">
-                      Dear Idol <span className="gradient-text-pink">Universe</span>
-                    </h3>
-                  </div>
-                  <div className="flex items-center gap-6 text-xs text-white/60 font-mono-tight">
-                    <div className="flex items-center gap-2">
-                      <Sparkles size={14} className="text-pink-400" />
-                      <span>LIVE DEMO</span>
-                    </div>
-                    <div className="h-4 w-px bg-white/20" />
-                    <span>4K · HDR</span>
-                  </div>
-                </motion.div>
               </motion.div>
             </div>
           </div>
