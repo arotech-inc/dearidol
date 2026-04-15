@@ -41,10 +41,20 @@ export default function Home() {
     target: phoneSectionRef,
     offset: ["start start", "end end"],
   });
-  const phoneWidth = useTransform(phoneProgress, [0, 1], ["100vw", "300px"]);
-  const phoneHeight = useTransform(phoneProgress, [0, 1], ["100vh", "620px"]);
-  const phoneRadius = useTransform(phoneProgress, [0, 1], ["0px", "42px"]);
-  const phoneBorderW = useTransform(phoneProgress, [0, 1], ["0px", "10px"]);
+
+  // 뷰포트 크기를 px로 추적 (useTransform 유닛 불일치 방지)
+  const [winSize, setWinSize] = useState({ w: 1920, h: 1080 });
+  useEffect(() => {
+    const update = () => setWinSize({ w: window.innerWidth, h: window.innerHeight });
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const phoneWidth = useTransform(phoneProgress, [0, 1], [winSize.w, 300]);
+  const phoneHeight = useTransform(phoneProgress, [0, 1], [winSize.h, 620]);
+  const phoneRadius = useTransform(phoneProgress, [0, 1], [0, 42]);
+  const phoneBorderW = useTransform(phoneProgress, [0, 1], [0, 10]);
   const phoneOverlayOpacity = useTransform(phoneProgress, [0, 0.3], [1, 0]);
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
@@ -415,7 +425,7 @@ export default function Home() {
                   borderRadius: phoneRadius,
                   borderWidth: phoneBorderW,
                 }}
-                className="relative overflow-hidden border-black bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)] will-change-transform"
+                className="relative overflow-hidden border-black bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)] will-change-transform shrink-0"
               >
                 <video
                   ref={systemVideoRef}
