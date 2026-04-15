@@ -42,35 +42,50 @@ export default function Home() {
     offset: ["start start", "end end"],
   });
 
-  // 뷰포트 크기를 px로 추적 (useTransform 유닛 불일치 방지)
-  const [winSize, setWinSize] = useState({ w: 1920, h: 1080 });
+  // 뷰포트 크기를 ref로 추적 (useTransform callback이 항상 최신값 읽도록)
+  const winSizeRef = useRef({ w: 1920, h: 1080 });
   useEffect(() => {
-    const update = () => setWinSize({ w: window.innerWidth, h: window.innerHeight });
+    const update = () => {
+      winSizeRef.current = { w: window.innerWidth, h: window.innerHeight };
+    };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  // 선형 보간 헬퍼
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  const multiLerp = (v: number, stops: number[], values: number[]) => {
+    for (let i = 0; i < stops.length - 1; i++) {
+      if (v <= stops[i + 1]) {
+        const t = (v - stops[i]) / (stops[i + 1] - stops[i]);
+        return lerp(values[i], values[i + 1], Math.max(0, Math.min(1, t)));
+      }
+    }
+    return values[values.length - 1];
+  };
+
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
-  const phoneWidth = useTransform(
-    phoneProgress,
-    [0, 0.2, 0.5, 0.75, 1],
-    [winSize.w, winSize.w - 60, winSize.w * 0.72, 1100, 720]
+  const phoneWidth = useTransform(phoneProgress, (v) => {
+    const w = winSizeRef.current.w;
+    return multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [w, w - 60, w * 0.72, 1100, 720]);
+  });
+  const phoneHeight = useTransform(phoneProgress, (v) => {
+    const h = winSizeRef.current.h;
+    return multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [h, h - 60, h * 0.72, 520, 340]);
+  });
+  const phoneRadius = useTransform(phoneProgress, (v) =>
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
   );
-  const phoneHeight = useTransform(
-    phoneProgress,
-    [0, 0.2, 0.5, 0.75, 1],
-    [winSize.h, winSize.h - 60, winSize.h * 0.72, 520, 340]
+  const phoneBorderW = useTransform(phoneProgress, (v) =>
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 10, 16, 20, 24])
   );
-  const phoneRadius = useTransform(
-    phoneProgress,
-    [0, 0.2, 0.5, 0.75, 1],
-    [0, 14, 24, 30, 36]
+  // Dynamic Island (휴대폰 상단 노치) — 작아질수록 나타남
+  const notchOpacity = useTransform(phoneProgress, (v) =>
+    multiLerp(v, [0, 0.3, 0.5], [0, 0, 1])
   );
-  const phoneBorderW = useTransform(
-    phoneProgress,
-    [0, 0.2, 0.5, 1],
-    [0, 6, 8, 10]
+  const notchWidth = useTransform(phoneProgress, (v) =>
+    multiLerp(v, [0.3, 1], [40, 110])
   );
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
@@ -455,6 +470,14 @@ export default function Home() {
                   <source src="/dance.mp4" type="video/mp4" />
                 </video>
 
+                {/* Dynamic Island (가로 폰에서 좌측 중앙) */}
+                <motion.div
+                  style={{
+                    opacity: notchOpacity,
+                    width: notchWidth,
+                  }}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 h-7 bg-black rounded-full pointer-events-none z-10"
+                />
               </motion.div>
             </div>
           </div>
