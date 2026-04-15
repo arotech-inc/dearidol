@@ -397,7 +397,9 @@ export default function Home() {
               </h2>
             </div>
             <p className="text-white/50 text-lg leading-relaxed max-w-lg">
-              아이돌은 소유하는 것이 아니라 창조하는 것. 고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
+              아이돌은 소유하는 것이 아니라 창조하는 것.
+              <br />
+              고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
               당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
             </p>
           </motion.div>
