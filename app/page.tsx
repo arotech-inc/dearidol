@@ -396,11 +396,13 @@ export default function Home() {
                 <span className="gradient-text-gold">내 손으로 만든 빛</span>
               </h2>
             </div>
-            <p className="text-white/50 text-lg leading-relaxed max-w-lg">
-              아이돌은 소유하는 것이 아니라 창조하는 것.
-              <br />
-              고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
-              당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+              <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
+              <span className="block">
+                고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
+                <br className="hidden md:inline" />
+                당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
+              </span>
             </p>
           </motion.div>
 
