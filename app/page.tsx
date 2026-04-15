@@ -42,11 +42,16 @@ export default function Home() {
     offset: ["start start", "end end"],
   });
 
-  // 뷰포트 크기를 ref로 추적 (useTransform callback이 항상 최신값 읽도록)
+  // 뷰포트 크기를 ref로 추적 (clientWidth/Height로 스크롤바 제외 실제 가시영역 사용)
   const winSizeRef = useRef({ w: 1920, h: 1080 });
+  const [winReady, setWinReady] = useState(0);
   useEffect(() => {
     const update = () => {
-      winSizeRef.current = { w: window.innerWidth, h: window.innerHeight };
+      winSizeRef.current = {
+        w: document.documentElement.clientWidth,
+        h: document.documentElement.clientHeight,
+      };
+      setWinReady((n) => n + 1); // useTransform 재계산 트리거
     };
     update();
     window.addEventListener("resize", update);
@@ -87,6 +92,15 @@ export default function Home() {
   const notchWidth = useTransform(phoneProgress, (v) =>
     multiLerp(v, [0.3, 1], [40, 110])
   );
+
+  // 폰 프레임의 box-shadow도 progress에 따라 (풀스크린일 땐 아무 효과 없음)
+  const phoneShadow = useTransform(phoneProgress, (v) => {
+    const t = Math.min(1, v / 0.2); // 20% 스크롤 시점부터 프레임 효과 full
+    const highlightAlpha = 0.08 * t;
+    const innerAlpha = 0.06 * t;
+    const dropAlpha = 0.6 * t;
+    return `0 0 0 1px rgba(255,255,255,${highlightAlpha}), 0 30px 80px rgba(0,0,0,${dropAlpha}), inset 0 0 0 1px rgba(255,255,255,${innerAlpha})`;
+  });
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
   useEffect(() => {
@@ -390,7 +404,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">03 / Core System</span>
+                <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
@@ -450,14 +464,16 @@ export default function Home() {
           <div ref={phoneSectionRef} className="relative w-full my-16" style={{ height: "280vh" }}>
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
               <motion.div
+                key={winReady}
                 style={{
                   width: phoneWidth,
                   height: phoneHeight,
                   borderRadius: phoneRadius,
                   borderWidth: phoneBorderW,
                   borderColor: "#3a3a3c",
+                  boxShadow: phoneShadow,
                 }}
-                className="relative overflow-hidden bg-[#3a3a3c] shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_30px_80px_rgba(0,0,0,0.6),inset_0_0_0_1px_rgba(255,255,255,0.06)] will-change-transform shrink-0"
+                className="relative overflow-hidden bg-[#3a3a3c] will-change-transform shrink-0"
               >
                 <video
                   ref={systemVideoRef}
