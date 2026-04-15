@@ -392,13 +392,13 @@ export default function Home() {
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
-                아이돌 산업<br />
-                <span className="gradient-text-gold">전체를 플레이</span>
+                처음부터 끝까지,<br />
+                <span className="gradient-text-gold">내 손으로 만든 빛</span>
               </h2>
             </div>
             <p className="text-white/50 text-lg leading-relaxed max-w-lg">
-              하나의 게임에 담긴 아이돌 세계 — 프로덕션 경영부터 스테이지 퍼포먼스, 그리고 글로벌 팬덤 교류까지.
-              디어 아이돌은 K-POP의 모든 단면을 플레이 가능한 경험으로 풀어냈습니다.
+              아이돌은 소유하는 것이 아니라 창조하는 것. 고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
+              당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
             </p>
           </motion.div>
 
