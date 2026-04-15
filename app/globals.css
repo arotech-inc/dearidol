@@ -24,6 +24,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-feature-settings: "ss01", "cv01";
+  overflow-x: hidden;
 }
 
 /* 디스플레이 폰트 (히어로, 큰 제목용) */

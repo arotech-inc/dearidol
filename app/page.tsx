@@ -139,7 +139,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-[#0a0a0f] text-white overflow-hidden">
+    <main className="bg-[#0a0a0f] text-white">
 
       {/* ================= HERO ================= */}
       <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden">
