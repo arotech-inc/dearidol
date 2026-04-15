@@ -42,22 +42,6 @@ export default function Home() {
     offset: ["start start", "end end"],
   });
 
-  // 뷰포트 크기를 ref로 추적 (clientWidth/Height로 스크롤바 제외 실제 가시영역 사용)
-  const winSizeRef = useRef({ w: 1920, h: 1080 });
-  const [winReady, setWinReady] = useState(0);
-  useEffect(() => {
-    const update = () => {
-      winSizeRef.current = {
-        w: document.documentElement.clientWidth,
-        h: document.documentElement.clientHeight,
-      };
-      setWinReady((n) => n + 1); // useTransform 재계산 트리거
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
   // 선형 보간 헬퍼
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
   const multiLerp = (v: number, stops: number[], values: number[]) => {
@@ -71,14 +55,13 @@ export default function Home() {
   };
 
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
-  const phoneWidth = useTransform(phoneProgress, (v) => {
-    const w = winSizeRef.current.w;
-    return multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [w, w - 60, w * 0.72, 1100, 720]);
-  });
-  const phoneHeight = useTransform(phoneProgress, (v) => {
-    const h = winSizeRef.current.h;
-    return multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [h, h - 60, h * 0.72, 520, 340]);
-  });
+  // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
+  const phoneWidth = useTransform(phoneProgress, (v) =>
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
+  );
+  const phoneHeight = useTransform(phoneProgress, (v) =>
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 34])}vh`
+  );
   const phoneRadius = useTransform(phoneProgress, (v) =>
     multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
   );
@@ -138,7 +121,8 @@ export default function Home() {
       const sections = getSections();
       if (sections.length === 0) return false;
 
-      const current = sections[getCurrentIndex(sections)];
+      const currentIdx = getCurrentIndex(sections);
+      const current = sections[currentIdx];
       const viewportH = window.innerHeight;
       const scrollY = window.scrollY;
       const sectionTop = current.offsetTop;
@@ -151,7 +135,11 @@ export default function Home() {
         if (deltaY < 0 && scrollY > sectionTop + 5) return false;
       }
 
-      scrollToSection(getCurrentIndex(sections) + (deltaY > 0 ? 1 : -1));
+      // 스냅 대상 섹션이 없으면(맨 위/아래) 네이티브 스크롤 허용 → 헤더/푸터 영역 접근 가능
+      const nextIdx = currentIdx + (deltaY > 0 ? 1 : -1);
+      if (nextIdx < 0 || nextIdx >= sections.length) return false;
+
+      scrollToSection(nextIdx);
       return true;
     };
 
@@ -464,7 +452,6 @@ export default function Home() {
           <div ref={phoneSectionRef} className="relative w-full my-16" style={{ height: "280vh" }}>
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
               <motion.div
-                key={winReady}
                 style={{
                   width: phoneWidth,
                   height: phoneHeight,
