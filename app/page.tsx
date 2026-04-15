@@ -455,8 +455,9 @@ export default function Home() {
                   height: phoneHeight,
                   borderRadius: phoneRadius,
                   borderWidth: phoneBorderW,
+                  borderColor: "#3a3a3c",
                 }}
-                className="relative overflow-hidden border-black bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)] will-change-transform shrink-0"
+                className="relative overflow-hidden bg-[#3a3a3c] shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_30px_80px_rgba(0,0,0,0.6),inset_0_0_0_1px_rgba(255,255,255,0.06)] will-change-transform shrink-0"
               >
                 <video
                   ref={systemVideoRef}
