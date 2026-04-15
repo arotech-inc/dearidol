@@ -19,18 +19,10 @@ import {
   Play,
 } from "lucide-react";
 
-const characters = [
-  { id: "iro", name: "이로", nameEn: "IRO", role: "Rapper", num: "01", img: "/character1.png", scale: "scale-100 group-hover:scale-110" },
-  { id: "haru", name: "하루", nameEn: "HARU", role: "Sub Vocal", num: "02", img: "/character2.png", scale: "scale-[1.55] group-hover:scale-[1.7]" },
-  { id: "yeeun", name: "예은", nameEn: "YEEUN", role: "Main Vocal", num: "03", img: "/character3.png", scale: "scale-[1.55] group-hover:scale-[1.7]" },
-  { id: "jiwon", name: "지원", nameEn: "JIWON", role: "Main Dancer", num: "04", img: "/character4.png", scale: "scale-100 group-hover:scale-110" },
-];
-
 export default function Home() {
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
-  const [mobileCharIndex, setMobileCharIndex] = useState(0);
 
   // System 비디오 스크롤 연동 (애플 스타일, 데스크톱 전용)
   const [isDesktop, setIsDesktop] = useState(false);
@@ -54,14 +46,6 @@ export default function Home() {
   const phoneRadius = useTransform(phoneProgress, [0, 1], ["0px", "42px"]);
   const phoneBorderW = useTransform(phoneProgress, [0, 1], ["0px", "10px"]);
   const phoneOverlayOpacity = useTransform(phoneProgress, [0, 0.3], [1, 0]);
-
-  // 모바일 캐릭터 자동 슬라이드 (3초 간격)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setMobileCharIndex((prev) => (prev + 1) % characters.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
   useEffect(() => {
@@ -343,158 +327,6 @@ export default function Home() {
                     }`} />
                   </div>
                 </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ================= CHARACTERS ================= */}
-      <section id="characters" className="snap-section relative py-20 md:py-24 overflow-hidden bg-gradient-to-b from-[#0a0a0f] via-[#13111a] to-[#0a0a0f]">
-        {/* 배경 조명 */}
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[140px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[140px]" />
-
-        {/* 거대 배경 텍스트 (데스크톱만) */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 pointer-events-none select-none hidden md:block">
-          <h2 className="font-display text-[clamp(8rem,18vw,18rem)] text-white/[0.03] leading-none tracking-tighter whitespace-nowrap">
-            CHARACTERS
-          </h2>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mb-10 text-center"
-          >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="h-px w-12 bg-pink-400/40" />
-              <span className="section-label text-pink-400">02 / Characters</span>
-              <div className="h-px w-12 bg-pink-400/40" />
-            </div>
-            <h2 className="font-display text-5xl md:text-7xl leading-none">
-              당신의 <span className="gradient-text-pink">아이돌</span>
-            </h2>
-            <p className="text-white/40 mt-6 max-w-md mx-auto text-sm">
-              4명의 멤버, 각자의 이야기. 클릭해서 그들의 세계로 들어가보세요.
-            </p>
-          </motion.div>
-
-          {/* 데스크톱: 4명 일렬 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="hidden md:flex justify-center items-end gap-2 md:gap-4 max-w-6xl mx-auto"
-          >
-            {characters.map((char) => (
-              <Link
-                key={char.id}
-                href={`/characters/${char.id}`}
-                className="group flex-1 flex flex-col items-center cursor-pointer"
-              >
-                <div className="relative w-full aspect-[3/4] flex items-end justify-center overflow-visible">
-                  {/* 번호 배경 */}
-                  <span className="absolute top-4 left-1/2 -translate-x-1/2 font-display text-[5rem] lg:text-[6rem] text-white/[0.05] leading-none select-none pointer-events-none transition-all duration-500 group-hover:text-pink-400/15">
-                    {char.num}
-                  </span>
-                  <Image
-                    src={char.img}
-                    alt={char.name}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className={`object-contain object-bottom origin-bottom transition-all duration-500 ease-out drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_40px_rgba(236,72,153,0.4)] ${char.scale}`}
-                  />
-                </div>
-
-                <div className="mt-6 text-center">
-                  <span className="font-mono-tight text-[10px] text-pink-400 block mb-2">
-                    {char.role}
-                  </span>
-                  <p className="font-display text-2xl lg:text-3xl text-white group-hover:gradient-text-pink transition">
-                    {char.nameEn}
-                  </p>
-                  <p className="text-xs text-white/40 mt-1 font-medium">{char.name}</p>
-                </div>
-              </Link>
-            ))}
-          </motion.div>
-
-          {/* 모바일: 1명씩 자동 슬라이드 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="md:hidden relative max-w-xs mx-auto"
-          >
-            <div className="relative aspect-[3/4] w-full overflow-hidden">
-              <AnimatePresence mode="wait">
-                {characters.map((char, i) =>
-                  i === mobileCharIndex ? (
-                    <motion.div
-                      key={char.id}
-                      initial={{ opacity: 0, x: 40 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -40 }}
-                      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                      className="absolute inset-0"
-                    >
-                      <Link
-                        href={`/characters/${char.id}`}
-                        className="group flex flex-col items-center w-full h-full cursor-pointer"
-                      >
-                        <div className="relative w-full flex-1 flex items-end justify-center overflow-visible">
-                          <Image
-                            src={char.img}
-                            alt={char.name}
-                            fill
-                            sizes="(max-width: 768px) 80vw, 400px"
-                            className={`object-contain object-bottom origin-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] ${char.scale.split(" ")[0]}`}
-                          />
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ) : null
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* 이름/역할 */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={characters[mobileCharIndex].id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-                className="mt-4 text-center"
-              >
-                <span className="font-mono-tight text-[10px] text-pink-400 block mb-1">
-                  {characters[mobileCharIndex].role}
-                </span>
-                <p className="font-display text-3xl gradient-text-pink">
-                  {characters[mobileCharIndex].nameEn}
-                </p>
-                <p className="text-sm text-white/40 mt-1 font-medium">{characters[mobileCharIndex].name}</p>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* 인디케이터 */}
-            <div className="flex justify-center gap-2 mt-5">
-              {characters.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setMobileCharIndex(i)}
-                  aria-label={`Character ${i + 1}`}
-                  className={`h-1 rounded-full transition-all duration-500 ${
-                    i === mobileCharIndex ? "w-8 bg-pink-400" : "w-4 bg-white/20"
-                  }`}
-                />
               ))}
             </div>
           </motion.div>
