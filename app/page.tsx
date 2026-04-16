@@ -57,10 +57,10 @@ export default function Home() {
   // 가로 폰 → 중간 크기 → 베젤만 → 풀스크린 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [28, 50, 70, 96, 100])}vw`
+    `${multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [22, 44, 66, 94, 100])}vw`
   );
   const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [22, 44, 66, 94, 100])}vh`
+    `${multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [18, 38, 60, 92, 100])}vh`
   );
   const phoneRadius = useTransform(phoneProgress, (v) =>
     multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [64, 54, 42, 24, 0])
@@ -83,6 +83,7 @@ export default function Home() {
   const titleY = useTransform(phoneProgress, (v) =>
     `${multiLerp(v, [0, 0.3], [0, -60])}px`
   );
+
 
   // 폰 프레임의 box-shadow — 처음에 프레임 효과 있고 풀스크린 되면 사라짐
   const phoneShadow = useTransform(phoneProgress, (v) => {
@@ -486,7 +487,7 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* 영상 — 중앙 고정, 그 자리에서 확대 */}
+              {/* 영상 — 타이틀 아래 고정, 그 자리에서 확대되면서 중앙으로 이동 */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
                   style={{
