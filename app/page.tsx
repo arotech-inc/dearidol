@@ -377,7 +377,7 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-24 md:pt-28 pb-0">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-48 md:pt-56 pb-0">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
