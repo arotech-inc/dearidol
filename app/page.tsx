@@ -267,7 +267,7 @@ export default function Home() {
       </section>
 
       {/* ================= NEWS ================= */}
-      <section id="news" className="snap-section relative py-20 md:py-24 overflow-hidden noise-bg">
+      <section id="news" className="snap-section relative pt-40 pb-20 md:pt-48 md:pb-24 overflow-hidden noise-bg">
         {/* 배경 */}
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
