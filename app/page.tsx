@@ -450,7 +450,7 @@ export default function Home() {
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full mb-32" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+          <div ref={phoneSectionRef} className="relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
             <div className="sticky top-0 h-screen w-full overflow-hidden">
               {/* 영상 — 중앙 고정, 그 자리에서 확대 */}
               <div className="absolute inset-0 flex items-center justify-center">
