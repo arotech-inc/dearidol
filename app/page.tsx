@@ -54,32 +54,32 @@ export default function Home() {
     return values[values.length - 1];
   };
 
-  // 가로 폰 → 중간 크기 → 베젤만 → 풀스크린 (4단계)
+  // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [22, 44, 66, 94, 100])}vw`
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
   );
   const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [18, 38, 60, 92, 100])}vh`
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 34])}vh`
   );
   const phoneRadius = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [64, 54, 42, 24, 0])
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
   );
   const phoneBorderW = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.25, 0.5, 0.8, 1], [24, 20, 16, 10, 0])
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 10, 16, 20, 24])
   );
-  // Dynamic Island (휴대폰 노치) — 커질수록 사라짐
+  // Dynamic Island (휴대폰 상단 노치) — 작아질수록 나타남
   const notchOpacity = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.5, 0.7], [1, 1, 0])
+    multiLerp(v, [0, 0.3, 0.5], [0, 0, 1])
   );
   const notchWidth = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.7], [110, 40])
+    multiLerp(v, [0.3, 1], [40, 110])
   );
 
 
-  // 폰 프레임의 box-shadow — 처음에 프레임 효과 있고 풀스크린 되면 사라짐
+  // 폰 프레임의 box-shadow도 progress에 따라 (풀스크린일 땐 아무 효과 없음)
   const phoneShadow = useTransform(phoneProgress, (v) => {
-    const t = 1 - Math.min(1, Math.max(0, (v - 0.7) / 0.3)); // 70%~100% 구간에서 fade out
+    const t = Math.min(1, v / 0.2); // 20% 스크롤 시점부터 프레임 효과 full
     const highlightAlpha = 0.08 * t;
     const innerAlpha = 0.06 * t;
     const dropAlpha = 0.6 * t;
