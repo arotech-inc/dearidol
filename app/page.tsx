@@ -76,14 +76,6 @@ export default function Home() {
     multiLerp(v, [0, 0.7], [110, 40])
   );
 
-  // 타이틀 — 스크롤 시작하면 위로 페이드아웃
-  const titleOpacity = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.15, 0.3], [1, 0.6, 0])
-  );
-  const titleY = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.3], [0, -80])}px`
-  );
-
   // 폰 프레임의 box-shadow — 처음에 프레임 효과 있고 풀스크린 되면 사라짐
   const phoneShadow = useTransform(phoneProgress, (v) => {
     const t = 1 - Math.min(1, Math.max(0, (v - 0.7) / 0.3)); // 70%~100% 구간에서 fade out
@@ -385,14 +377,14 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-40 md:pt-48 pb-0 md:hidden">
-          {/* 모바일 전용 섹션 타이틀 */}
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-40 md:pt-48 pb-0">
+          {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid gap-10"
+            className="grid md:grid-cols-2 gap-20 items-end"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -457,35 +449,8 @@ export default function Home() {
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full mb-32" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+          <div ref={phoneSectionRef} className="relative w-full mt-8 mb-32" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden p-0">
-              {/* 데스크톱 타이틀 — 영상과 함께 sticky, 스크롤 시 위로 페이드아웃 */}
-              <motion.div
-                style={{ opacity: titleOpacity, y: titleY }}
-                className="absolute top-40 left-0 right-0 z-20 max-w-7xl mx-auto px-8 pointer-events-none"
-              >
-                <div className="grid md:grid-cols-2 gap-20 items-end">
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="section-label text-pink-400">02 / Core System</span>
-                      <div className="h-px w-12 bg-pink-400/30" />
-                    </div>
-                    <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
-                      처음부터 끝까지,<br />
-                      <span className="gradient-text-gold">내 손으로 만든 빛</span>
-                    </h2>
-                  </div>
-                  <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-                    <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
-                    <span className="block">
-                      고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
-                      <br className="hidden md:inline" />
-                      당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
-                    </span>
-                  </p>
-                </div>
-              </motion.div>
-
               <motion.div
                 style={{
                   width: phoneWidth,
