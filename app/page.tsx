@@ -449,7 +449,7 @@ export default function Home() {
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full -mt-4 mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+          <div ref={phoneSectionRef} className="relative w-full -mt-4 mb-32" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
             <div className="sticky top-0 h-screen w-full flex items-start justify-center overflow-hidden p-0 pt-40">
               <motion.div
                 style={{
@@ -487,7 +487,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 -mt-4">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           {/* 기능별 이미지 그리드 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
