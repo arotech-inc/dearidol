@@ -377,7 +377,7 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-48 md:pt-56 pb-0">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-40 md:pt-48 pb-0">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -449,8 +449,8 @@ export default function Home() {
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full -mt-4 mb-32" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
-            <div className="sticky top-0 h-screen w-full flex items-start justify-center overflow-hidden p-0 pt-16">
+          <div ref={phoneSectionRef} className="relative w-full mt-8 mb-32" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+            <div className="sticky top-0 h-screen w-full flex items-start justify-center overflow-hidden p-0 pt-8">
               <motion.div
                 style={{
                   width: phoneWidth,
