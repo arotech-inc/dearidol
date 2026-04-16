@@ -530,7 +530,7 @@ export default function Home() {
                 title: "MV 제작 & 공유",
                 desc: "카메라 워크와 안무를 직접 연출하는 나만의 뮤직비디오.",
                 accent: "text-amber-400",
-                img: "/music-video.png",
+                img: "/dearidol-hero.png",
                 tag: "MV Studio",
               },
             ].map((item, i) => (
