@@ -377,14 +377,14 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 py-20 md:py-24">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-24 md:pt-28 pb-0">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-20 mb-10 items-end"
+            className="grid md:grid-cols-2 gap-20 items-end"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -449,8 +449,8 @@ export default function Home() {
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden p-0">
+          <div ref={phoneSectionRef} className="relative w-full -mt-4 mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+            <div className="sticky top-0 h-screen w-full flex items-start justify-center overflow-hidden p-0 pt-40">
               <motion.div
                 style={{
                   width: phoneWidth,
@@ -488,23 +488,21 @@ export default function Home() {
         )}
 
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10 -mt-4">
-
-          {/* 메인 특징: 2열 대형 카드 */}
+          {/* 기능별 이미지 그리드 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5"
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
           >
             {[
               {
                 Icon: Building2,
                 num: "01",
                 title: "프로덕션 경영",
-                desc: "나만의 3D 프로덕션 공간을 꾸미고 확장하세요. 사무실, 연습실, 촬영실이 성장과 함께 업그레이드됩니다.",
-                detail: "프로덕션이 커질수록 건물 외관이 변하고, 방문 가능한 공간이 늘어납니다.",
-                accent: "pink",
+                desc: "3D 사무실을 꾸미고 확장하며 소속사를 성장시키세요.",
+                accent: "text-pink-400",
                 img: "/design.png",
                 tag: "Management",
               },
@@ -512,88 +510,71 @@ export default function Home() {
                 Icon: Shirt,
                 num: "02",
                 title: "아이돌 패션",
-                desc: "헤어, 얼굴, 상·하의, 신발, 악세서리까지 파츠별 커스터마이징. 수많은 아이돌의 코디를 직접 디자인하세요.",
-                detail: "시즌·테마·콜라보 의상으로 수집 욕구를 자극하는 표현 소비 BM.",
-                accent: "purple",
+                desc: "헤어부터 악세서리까지, 파츠 단위로 무한 코디.",
+                accent: "text-purple-400",
                 img: "/idol-design.png",
                 tag: "Fashion",
               },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-white/20 transition duration-500 cursor-pointer"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image src={item.img} alt={item.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20 group-hover:from-black/90 transition duration-500" />
-
-                  <span className="absolute top-4 right-5 font-display text-6xl text-white/[0.07]">{item.num}</span>
-
-                  <div className={`absolute top-5 left-5 inline-flex items-center justify-center w-12 h-12 rounded-xl border border-white/20 backdrop-blur-md bg-black/40 text-${item.accent}-400 group-hover:border-${item.accent}-400/50 group-hover:shadow-[0_0_30px] group-hover:shadow-${item.accent}-500/30 transition duration-500`}>
-                    <item.Icon size={22} strokeWidth={1.5} />
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em] uppercase block mb-3">{item.tag}</span>
-                    <h3 className={`text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-${item.accent}-300 transition`}>{item.title}</h3>
-                    <p className="text-sm text-white/50 leading-relaxed mb-2 max-w-lg">{item.desc}</p>
-                    <p className="text-xs text-white/30 leading-relaxed max-w-lg">{item.detail}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* 서브 특징: 2열 하단 카드 */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5"
-          >
-            {[
               {
                 Icon: Music2,
                 num: "03",
                 title: "리듬 & 댄스카드",
-                desc: "K-POP 음악에 맞춰 댄스 카드를 전략적으로 발동하는 신개념 리듬게임. 단순 노트가 아닌 카드 효과와 판정 타이밍의 조합.",
-                detail: "팀전 · 리그전 · 레이드전 등 다양한 대전 모드 확장 예정.",
-                accent: "cyan",
+                desc: "K-POP에 맞춰 전략적으로 카드를 발동하는 신개념 리듬게임.",
+                accent: "text-cyan-400",
                 img: "/dance card.png",
-                tag: "Rhythm Battle",
+                tag: "Rhythm",
               },
               {
                 Icon: Clapperboard,
                 num: "04",
                 title: "MV 제작 & 공유",
-                desc: "3D 댄스 모션 카드로 안무를 구성하고, 카메라 워크와 컷 전환을 직접 연출하세요. 유저가 '플레이어'이자 '크리에이터'.",
-                detail: "제작한 MV를 커뮤니티에 공유하고 평가받는 소셜 콘텐츠.",
-                accent: "amber",
+                desc: "카메라 워크와 안무를 직접 연출하는 나만의 뮤직비디오.",
+                accent: "text-amber-400",
                 img: "/music-video.png",
                 tag: "MV Studio",
               },
             ].map((item, i) => (
               <div
                 key={i}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-white/20 transition duration-500 cursor-pointer"
+                className="group relative overflow-hidden border border-white/10 hover:border-white/30 transition duration-500 cursor-pointer"
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image src={item.img} alt={item.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20 group-hover:from-black/90 transition duration-500" />
+                {/* 이미지 영역 */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 group-hover:from-black/80 transition duration-500" />
 
-                  <span className="absolute top-4 right-5 font-display text-6xl text-white/[0.07]">{item.num}</span>
+                  {/* 거대 번호 */}
+                  <span className="absolute top-3 right-3 font-display text-4xl text-white/20 group-hover:text-white/50 transition duration-500">
+                    {item.num}
+                  </span>
 
-                  <div className={`absolute top-5 left-5 inline-flex items-center justify-center w-12 h-12 rounded-xl border border-white/20 backdrop-blur-md bg-black/40 text-${item.accent}-400 group-hover:border-${item.accent}-400/50 group-hover:shadow-[0_0_30px] group-hover:shadow-${item.accent}-500/30 transition duration-500`}>
-                    <item.Icon size={22} strokeWidth={1.5} />
+                  {/* 아이콘 */}
+                  <div className={`absolute top-4 left-4 inline-flex items-center justify-center w-11 h-11 rounded-xl border border-white/20 backdrop-blur-md bg-black/30 ${item.accent} group-hover:border-current group-hover:shadow-[0_0_25px_currentColor] transition duration-500`}>
+                    <item.Icon size={20} strokeWidth={1.5} />
                   </div>
 
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em] uppercase block mb-3">{item.tag}</span>
-                    <h3 className={`text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-${item.accent}-300 transition`}>{item.title}</h3>
-                    <p className="text-sm text-white/50 leading-relaxed mb-2 max-w-lg">{item.desc}</p>
-                    <p className="text-xs text-white/30 leading-relaxed max-w-lg">{item.detail}</p>
+                  {/* 하단 태그 */}
+                  <div className="absolute bottom-3 left-3 font-mono-tight text-[10px] text-white/70 tracking-[0.2em] uppercase">
+                    {item.tag}
                   </div>
+                </div>
+
+                {/* 텍스트 영역 */}
+                <div className="p-6 bg-[#0a0a0f] group-hover:bg-[#13111a] transition duration-500">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="font-mono-tight text-[10px] text-white/30">FEATURE.{item.num}</span>
+                    <div className="h-px flex-1 bg-white/10" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-pink-300 transition">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -604,23 +585,16 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-r from-pink-500/10 via-purple-500/5 to-transparent p-8 md:p-10 flex items-center gap-8 flex-wrap hover:border-pink-500/30 hover:shadow-[0_0_40px_rgba(236,72,153,0.1)] transition duration-500"
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="mt-10 p-8 md:p-10 border border-white/10 bg-gradient-to-r from-white/[0.02] to-transparent flex items-center gap-6 flex-wrap"
           >
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
-              <Globe2 size={28} strokeWidth={1.5} className="text-white" />
-            </div>
+            <Globe2 size={36} strokeWidth={1.2} className="text-pink-400 shrink-0" />
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-2">
-                <h4 className="text-white font-bold text-xl">Social Meta</h4>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-pink-500/20 text-pink-400 text-[10px] font-bold tracking-wider">
-                  <Sparkles size={10} /> LIVE
-                </span>
-              </div>
-              <p className="text-sm text-white/50 leading-relaxed">
-                다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요.
-                부러움과 과시가 자연스럽게 발생하는 — 게임이 곧 전시 공간이자 SNS.
-              </p>
+              <h4 className="text-white font-bold text-lg mb-1">Social Meta</h4>
+              <p className="text-sm text-white/50">다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요.</p>
+            </div>
+            <div className="flex items-center gap-2 text-white/30 text-xs font-mono-tight">
+              <Sparkles size={14} /> LIVE
             </div>
           </motion.div>
 
