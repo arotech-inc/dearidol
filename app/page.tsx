@@ -267,7 +267,7 @@ export default function Home() {
       </section>
 
       {/* ================= NEWS ================= */}
-      <section id="news" className="snap-section relative pt-40 pb-20 md:pt-48 md:pb-24 overflow-hidden noise-bg">
+      <section id="news" className="snap-section relative min-h-screen pt-40 pb-20 md:pt-48 md:pb-24 overflow-hidden noise-bg">
         {/* 배경 */}
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
@@ -373,18 +373,18 @@ export default function Home() {
       </section>
 
       {/* ================= SYSTEM ================= */}
-      <section id="system" className="snap-section relative py-20 md:py-24 bg-[#0a0a0f]">
+      <section id="system" className="snap-section relative min-h-screen bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 py-20 md:py-24">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-[1fr_1.3fr] gap-12 mb-10 items-end"
+            className="grid md:grid-cols-2 gap-20 mb-10 items-end"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -396,7 +396,7 @@ export default function Home() {
                 <span className="gradient-text-gold">내 손으로 만든 빛</span>
               </h2>
             </div>
-            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl md:ml-auto">
               <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
               <span className="block">
                 고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
@@ -449,8 +449,8 @@ export default function Home() {
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full my-16" style={{ height: "280vh" }}>
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+          <div ref={phoneSectionRef} className="relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden p-0">
               <motion.div
                 style={{
                   width: phoneWidth,
@@ -487,7 +487,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 -mt-4">
           {/* 기능별 이미지 그리드 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
