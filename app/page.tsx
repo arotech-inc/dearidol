@@ -209,7 +209,7 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="max-w-2xl text-white/70 text-base md:text-xl font-medium tracking-wide mt-8 mb-10 px-4"
           >
-            당신의 손끝에서, K-POP 스타가 태어난다.
+            가장 화려한 피날레, 당신의 손끝에서 완성되다.
           </motion.p>
 
           {/* CTA 그룹 */}
