@@ -57,23 +57,23 @@ export default function Home() {
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
+    `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 96, 72, 58, 40, 40])}vw`
   );
   const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 34])}vh`
+    `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 94, 70, 52, 34, 34])}vh`
   );
   const phoneRadius = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
+    multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [0, 24, 42, 54, 64, 64])
   );
   const phoneBorderW = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 10, 16, 20, 24])
+    multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [0, 10, 16, 20, 24, 24])
   );
   // Dynamic Island (휴대폰 상단 노치) — 작아질수록 나타남
   const notchOpacity = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.3, 0.5], [0, 0, 1])
+    multiLerp(v, [0, 0.25, 0.45, 1], [0, 0, 1, 1])
   );
   const notchWidth = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0.3, 1], [40, 110])
+    multiLerp(v, [0.25, 0.7, 1], [40, 110, 110])
   );
 
 
@@ -378,76 +378,6 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-40 md:pt-48 pb-0">
-          {/* 섹션 타이틀 */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-20 items-end"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">02 / Core System</span>
-                <div className="h-px w-12 bg-pink-400/30" />
-              </div>
-              <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
-                처음부터 끝까지,<br />
-                <span className="gradient-text-gold">내 손으로 만든 빛</span>
-              </h2>
-            </div>
-            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
-              <span className="block">
-                고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
-                <br className="hidden md:inline" />
-                당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
-              </span>
-            </p>
-          </motion.div>
-
-          {/* 모바일 전용 간단 비디오 */}
-          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-4 mt-12">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="/dance.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 text-[10px] font-mono-tight">
-              <div className="flex items-center gap-2 text-white/70">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                <span className="tracking-widest uppercase">Official</span>
-              </div>
-              <span className="text-pink-400 tracking-widest">LIVE DEMO</span>
-            </div>
-          </div>
-
-          {/* 비디오 하단 메타 정보 바 (모바일 간단 비디오용, 데스크톱에선 별도) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="hidden items-center justify-between gap-6 py-4 px-6 mb-20 border-x border-b border-white/10 text-xs font-mono-tight text-white/40 flex-wrap"
-          >
-            <span>SYSTEM_OVERVIEW.MP4</span>
-            <div className="flex items-center gap-6">
-              <span>4 FEATURES</span>
-              <span className="text-pink-400">● RECORDING</span>
-            </div>
-          </motion.div>
-
-          {/* 모바일 전용 간격 */}
-          <div className="md:hidden mb-16" />
-        </div>
-
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         {isDesktop && (
           <div ref={phoneSectionRef} className="relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
@@ -491,7 +421,43 @@ export default function Home() {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-20 md:pt-24">
+          {/* 섹션 타이틀 */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-2 gap-20 items-end mb-16"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">02 / Core System</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
+                처음부터 끝까지,<br />
+                <span className="gradient-text-gold">내 손으로 만든 빛</span>
+              </h2>
+            </div>
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+              <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
+              <span className="block">
+                고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
+                <br className="hidden md:inline" />
+                당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
+              </span>
+            </p>
+          </motion.div>
+
+          {/* 모바일 전용 간단 비디오 */}
+          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-16">
+            <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
+              <source src="/dance.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+          </div>
+
           {/* 기능별 이미지 그리드 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
