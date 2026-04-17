@@ -24,17 +24,7 @@ export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
 
-  // System 비디오 스크롤 연동 (애플 스타일, 데스크톱 전용)
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 769px)");
-    const update = () => setIsDesktop(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  // System 비디오: 풀스크린 → 폰 모양 쉬링크 (데스크톱 전용)
+  // System 비디오: 풀스크린 → 폰 모양 쉬링크
   const systemVideoRef = useRef<HTMLVideoElement>(null);
   const phoneSectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: phoneProgress } = useScroll({
@@ -379,22 +369,21 @@ export default function Home() {
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
-        {isDesktop && (
-          <div ref={phoneSectionRef} className="relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
-              {/* 영상 — 중앙 고정, 그 자리에서 확대 */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  style={{
-                    width: phoneWidth,
-                    height: phoneHeight,
-                    borderRadius: phoneRadius,
-                    borderWidth: phoneBorderW,
-                    borderColor: "#3a3a3c",
-                    boxShadow: phoneShadow,
-                  }}
-                  className="relative overflow-hidden bg-[#3a3a3c] will-change-transform shrink-0"
-                >
+        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+          <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                style={{
+                  width: phoneWidth,
+                  height: phoneHeight,
+                  borderRadius: phoneRadius,
+                  borderWidth: phoneBorderW,
+                  borderStyle: "solid",
+                  borderColor: "#3a3a3c",
+                  boxShadow: phoneShadow,
+                }}
+                className="relative overflow-hidden bg-[#3a3a3c] will-change-transform shrink-0"
+              >
                 <video
                   ref={systemVideoRef}
                   autoPlay
@@ -416,10 +405,9 @@ export default function Home() {
                   className="absolute left-2 top-1/2 -translate-y-1/2 h-7 bg-black rounded-full pointer-events-none z-10"
                 />
               </motion.div>
-              </div>
             </div>
           </div>
-        )}
+        </div>
 
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-20 md:pt-24">
           {/* 섹션 타이틀 */}
