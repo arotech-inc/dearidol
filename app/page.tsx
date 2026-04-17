@@ -251,11 +251,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3">
               <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
                 className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-                <Image src="/googleplay.png" alt="Google Play" width={140} height={45} className="w-[120px] md:w-[140px] h-auto" />
+                <Image src="/googleplay.png" alt="Google Play" width={160} height={52} className="w-[150px] md:w-[160px] h-auto" />
               </a>
               <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
                 className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-                <Image src="/appstore.png" alt="App Store" width={140} height={45} className="w-[120px] md:w-[140px] h-auto" />
+                <Image src="/appstore.png" alt="App Store" width={160} height={52} className="w-[150px] md:w-[160px] h-auto" />
               </a>
             </div>
           </motion.div>
