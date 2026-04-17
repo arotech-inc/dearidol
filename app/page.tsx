@@ -367,7 +367,7 @@ export default function Home() {
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
-        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-8" style={{ height: "140vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-0" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               {/* 폰 프레임 래퍼 (버튼은 여기에, overflow 영향 안 받음) */}
@@ -442,7 +442,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-20 md:pt-24">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-10 md:pt-12">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
