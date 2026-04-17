@@ -50,7 +50,7 @@ export default function Home() {
     `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 96, 72, 58, 40, 40])}vw`
   );
   const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 94, 70, 52, 34, 34])}vh`
+    `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 94, 70, 52, 40, 40])}vh`
   );
   const phoneRadius = useTransform(phoneProgress, (v) =>
     multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [0, 24, 42, 54, 64, 64])
