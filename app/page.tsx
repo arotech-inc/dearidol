@@ -56,7 +56,7 @@ export default function Home() {
     multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
   );
   const phoneBorderW = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 3, 5, 6, 8])
+    v > 0.05 ? 8 : 0
   );
   // Dynamic Island + 버튼 — 테두리 생기는 순간 한번에 나타남
   const notchOpacity = useTransform(phoneProgress, (v) =>
@@ -367,7 +367,7 @@ export default function Home() {
         <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
-        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-8" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               {/* 폰 프레임 래퍼 (버튼은 여기에, overflow 영향 안 받음) */}
