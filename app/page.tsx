@@ -47,23 +47,23 @@ export default function Home() {
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 96, 72, 58, 40, 40])}vw`
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
   );
   const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [100, 94, 70, 52, 40, 40])}vh`
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 40])}vh`
   );
   const phoneRadius = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [0, 24, 42, 54, 64, 64])
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
   );
   const phoneBorderW = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.15, 0.35, 0.55, 0.7, 1], [0, 10, 16, 20, 24, 24])
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 3, 5, 6, 8])
   );
   // Dynamic Island (휴대폰 상단 노치) — 작아질수록 나타남
   const notchOpacity = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.25, 0.45, 1], [0, 0, 1, 1])
+    multiLerp(v, [0, 0.3, 0.5], [0, 0, 1])
   );
   const notchWidth = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0.25, 0.7, 1], [40, 110, 110])
+    multiLerp(v, [0.3, 1], [40, 110])
   );
 
 
@@ -379,7 +379,7 @@ export default function Home() {
                   borderRadius: phoneRadius,
                   borderWidth: phoneBorderW,
                   borderStyle: "solid",
-                  borderColor: "#3a3a3c",
+                  borderColor: "#7a8ba8",
                   boxShadow: phoneShadow,
                 }}
                 className="relative overflow-hidden bg-[#3a3a3c] will-change-transform shrink-0"
