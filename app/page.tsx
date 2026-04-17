@@ -49,9 +49,11 @@ export default function Home() {
   const phoneWidth = useTransform(phoneProgress, (v) =>
     `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
   );
-  const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 40])}vh`
-  );
+  const phoneHeight = useTransform(phoneProgress, (v) => {
+    if (v <= 0.05) return "100vh"; // 풀스크린일 때만 vh
+    const w = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
+    return `${w * 9 / 16}vw`; // 이후엔 16:9 비율 유지 (vw 기반)
+  });
   const phoneRadius = useTransform(phoneProgress, (v) =>
     multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 24, 42, 54, 64])
   );
