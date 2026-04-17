@@ -49,9 +49,11 @@ export default function Home() {
   const phoneWidth = useTransform(phoneProgress, (v) =>
     `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
   );
-  const phoneHeight = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 40])}vh`
-  );
+  const phoneHeight = useTransform(phoneProgress, (v) => {
+    if (v <= 0.05) return "100vh";
+    const w = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
+    return `${w * 0.55}vw`;
+  });
   const phoneRadius = useTransform(phoneProgress, (v) => {
     const r = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 1, 2, 3, 3.5]);
     return `${r}vw`;
