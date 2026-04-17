@@ -62,9 +62,7 @@ export default function Home() {
   const notchOpacity = useTransform(phoneProgress, (v) =>
     v > 0.05 ? 1 : 0
   );
-  const notchWidth = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0.3, 1], [40, 110])
-  );
+
 
 
   // 폰 프레임의 box-shadow도 progress에 따라 (풀스크린일 땐 아무 효과 없음)
@@ -372,62 +370,72 @@ export default function Home() {
         <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-8" style={{ height: "280vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
+              {/* 폰 프레임 래퍼 (버튼은 여기에, overflow 영향 안 받음) */}
               <motion.div
                 style={{
                   width: phoneWidth,
                   height: phoneHeight,
                   borderRadius: phoneRadius,
-                  borderWidth: phoneBorderW,
-                  borderStyle: "solid",
-                  borderColor: "#7a8ba8",
-                  boxShadow: phoneShadow,
                 }}
-                className="relative overflow-hidden bg-[#3a3a3c] will-change-transform shrink-0"
+                className="relative will-change-transform shrink-0"
               >
-                <video
-                  ref={systemVideoRef}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="absolute inset-0 w-full h-full object-cover"
-                >
-                  <source src="/dance.mp4" type="video/mp4" />
-                </video>
-
-                {/* Dynamic Island (상단 중앙) */}
+                {/* 화면 영역 (overflow-hidden은 여기만) */}
                 <motion.div
                   style={{
-                    opacity: notchOpacity,
-                    width: notchWidth,
+                    borderWidth: phoneBorderW,
+                    borderStyle: "solid",
+                    borderColor: "#7a8ba8",
+                    borderRadius: phoneRadius,
+                    boxShadow: phoneShadow,
                   }}
-                  className="absolute top-[6px] left-1/2 -translate-x-1/2 h-[28px] bg-black rounded-full pointer-events-none z-10"
-                />
-
-                {/* 홈 인디케이터 (하단 바) */}
-                <motion.div
-                  style={{ opacity: notchOpacity }}
-                  className="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[120px] h-[5px] bg-white/70 rounded-full pointer-events-none z-10"
-                />
-
-                {/* 프레임 하이라이트 (상단 광택) */}
-                <motion.div
-                  style={{ opacity: notchOpacity }}
-                  className="absolute inset-0 pointer-events-none z-10 rounded-[inherit]"
+                  className="absolute inset-0 overflow-hidden bg-[#1a1a1e]"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] via-transparent to-transparent" />
-                </motion.div>
-                {/* 좌측 버튼들 (무음 스위치 + 볼륨) */}
-                <motion.div style={{ opacity: notchOpacity }} className="absolute left-[-4px] top-0 bottom-0 pointer-events-none z-20">
-                  <div className="absolute top-[18%] w-[4px] h-[28px] bg-[#6a7b98] rounded-l-sm shadow-[inset_1px_0_0_rgba(255,255,255,0.2)]" />
-                  <div className="absolute top-[30%] w-[4px] h-[44px] bg-[#6a7b98] rounded-l-sm shadow-[inset_1px_0_0_rgba(255,255,255,0.2)]" />
-                  <div className="absolute top-[42%] w-[4px] h-[44px] bg-[#6a7b98] rounded-l-sm shadow-[inset_1px_0_0_rgba(255,255,255,0.2)]" />
+                  <video
+                    ref={systemVideoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  >
+                    <source src="/dance.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* Dynamic Island (가로 모드 — 좌측 중앙) */}
+                  <motion.div
+                    style={{ opacity: notchOpacity }}
+                    className="absolute left-[6px] top-1/2 -translate-y-1/2 w-[28px] h-[100px] bg-black rounded-full pointer-events-none z-10"
+                  />
+
+                  {/* 홈 인디케이터 (가로 모드 — 하단 중앙 가로 바) */}
+                  <motion.div
+                    style={{ opacity: notchOpacity }}
+                    className="absolute bottom-[6px] left-1/2 -translate-x-1/2 w-[120px] h-[5px] bg-white/70 rounded-full pointer-events-none z-10"
+                  />
+
+                  {/* 프레임 광택 */}
+                  <motion.div
+                    style={{ opacity: notchOpacity }}
+                    className="absolute inset-0 pointer-events-none z-10 rounded-[inherit]"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent" />
+                  </motion.div>
                 </motion.div>
 
-                {/* 우측 전원 버튼 */}
-                <motion.div style={{ opacity: notchOpacity }} className="absolute right-[-4px] top-0 bottom-0 pointer-events-none z-20">
-                  <div className="absolute top-[26%] w-[4px] h-[60px] bg-[#6a7b98] rounded-r-sm shadow-[inset_-1px_0_0_rgba(255,255,255,0.2)]" />
+                {/* 상단 버튼들 (가로 모드: 세로의 좌측 = 가로의 상단) */}
+                <motion.div style={{ opacity: notchOpacity }} className="absolute top-[-4px] left-0 right-0 pointer-events-none z-20">
+                  {/* 무음 스위치 */}
+                  <div className="absolute left-[18%] h-[4px] w-[28px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                  {/* 볼륨 업 */}
+                  <div className="absolute left-[26%] h-[4px] w-[44px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                  {/* 볼륨 다운 */}
+                  <div className="absolute left-[36%] h-[4px] w-[44px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                </motion.div>
+
+                {/* 하단 전원 버튼 (가로 모드: 세로의 우측 = 가로의 하단) */}
+                <motion.div style={{ opacity: notchOpacity }} className="absolute bottom-[-4px] left-0 right-0 pointer-events-none z-20">
+                  <div className="absolute right-[26%] h-[4px] w-[60px] bg-[#6a7b98] rounded-b-sm shadow-[inset_0_-1px_0_rgba(255,255,255,0.2)]" />
                 </motion.div>
               </motion.div>
             </div>
