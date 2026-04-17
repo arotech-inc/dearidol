@@ -47,13 +47,11 @@ export default function Home() {
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 85, 78, 72])}vw`
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
   );
-  const phoneHeight = useTransform(phoneProgress, (v) => {
-    if (v <= 0.05) return "100vh"; // 풀스크린일 때만 vh
-    const w = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 85, 78, 72]);
-    return `${w * 10 / 16}vw`; // 16:10 비율 유지
-  });
+  const phoneHeight = useTransform(phoneProgress, (v) =>
+    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 94, 70, 52, 40])}vh`
+  );
   const phoneRadius = useTransform(phoneProgress, (v) => {
     const r = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 1, 2, 3, 3.5]);
     return `${r}vw`;
