@@ -408,7 +408,7 @@ export default function Home() {
           </motion.div>
 
           {/* 모바일 전용 간단 비디오 */}
-          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-4">
+          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-4 mt-12">
             <video
               autoPlay
               muted
