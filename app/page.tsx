@@ -44,22 +44,23 @@ export default function Home() {
     return values[values.length - 1];
   };
 
-  // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
-  // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
-  const phoneWidth = useTransform(phoneProgress, (v) => {
-    if (v <= 0.05) return "100vw";
-    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 75, 62, 50]);
-    return `max(${vw}vw, 850px)`;
-  });
-  const phoneHeight = useTransform(phoneProgress, (v) => {
-    if (v <= 0.05) return "100vh";
-    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 75, 62, 50]);
-    return `max(${vw * 0.53}vw, 450px)`;
-  });
-  const phoneRadius = useTransform(phoneProgress, (v) => {
-    const r = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 1, 2, 3, 3.5]);
-    return `${r}vw`;
-  });
+  // Apple 스타일: 고정 크기 + transform scale 애니메이션
+  // 폰은 고정 850×450px, scale만 변해서 비율이 절대 안 틀어짐
+  const [scaleMax, setScaleMax] = useState(3);
+  useEffect(() => {
+    const compute = () => {
+      // 뷰포트를 꽉 채우려면 가로/세로 중 더 큰 비율로 스케일
+      const sx = window.innerWidth / 850;
+      const sy = window.innerHeight / 420;
+      setScaleMax(Math.max(sx, sy));
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+  const phoneScale = useTransform(phoneProgress, (v) =>
+    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [scaleMax, scaleMax * 0.98, scaleMax * 0.7, scaleMax * 0.4, 1])
+  );
   const phoneBorderW = useTransform(phoneProgress, (v) =>
     v > 0.05 ? 8 : 0
   );
@@ -375,13 +376,9 @@ export default function Home() {
         <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-0" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
-              {/* 폰 프레임 래퍼 (버튼은 여기에, overflow 영향 안 받음) */}
+              {/* 폰 프레임 래퍼 — 고정 크기 + scale 애니메이션 (Apple 스타일) */}
               <motion.div
-                style={{
-                  width: phoneWidth,
-                  height: phoneHeight,
-                  borderRadius: phoneRadius,
-                }}
+                style={{ scale: phoneScale, width: "850px", height: "420px", borderRadius: "48px" }}
                 className="relative will-change-transform shrink-0"
               >
                 {/* 화면 영역 (overflow-hidden은 여기만) */}
@@ -390,7 +387,7 @@ export default function Home() {
                     borderWidth: phoneBorderW,
                     borderStyle: "solid",
                     borderColor: "#7a8ba8",
-                    borderRadius: phoneRadius,
+                    borderRadius: "48px",
                     boxShadow: phoneShadow,
                   }}
                   className="absolute inset-0 overflow-hidden bg-[#1a1a1e]"
