@@ -444,7 +444,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-10 md:pt-12">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-2 md:pt-4">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
