@@ -47,16 +47,15 @@ export default function Home() {
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) => {
+    if (v <= 0.05) return "100vw";
     const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
-    // 최소 크기 단계에서 절대 픽셀 하한 (창 작아져도 유지)
-    const minPx = multiLerp(v, [0.5, 1], [0, 720]);
-    return `max(${vw}vw, ${minPx}px)`;
+    // 큰 화면에선 vw, 작은 화면에선 720px 하한 (단조 감소)
+    return `max(${vw}vw, 720px)`;
   });
   const phoneHeight = useTransform(phoneProgress, (v) => {
     if (v <= 0.05) return "100vh";
     const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
-    const minPx = multiLerp(v, [0.5, 1], [0, 720 * 0.55]);
-    return `max(${vw * 0.55}vw, ${minPx}px)`;
+    return `max(${vw * 0.55}vw, 396px)`;
   });
   const phoneRadius = useTransform(phoneProgress, (v) => {
     const r = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 1, 2, 3, 3.5]);
@@ -68,6 +67,14 @@ export default function Home() {
   // Dynamic Island + 버튼 — 테두리 생기는 순간 한번에 나타남
   const notchOpacity = useTransform(phoneProgress, (v) =>
     v > 0.05 ? 1 : 0
+  );
+
+  // 타이틀 오버레이 — 최소 크기 근처에서 위에서 스르륵 내려옴
+  const titleOpacity = useTransform(phoneProgress, (v) =>
+    multiLerp(v, [0.75, 0.9, 1], [0, 0.5, 1])
+  );
+  const titleY = useTransform(phoneProgress, (v) =>
+    `${multiLerp(v, [0.75, 1], [-60, 0])}px`
   );
 
 
@@ -376,6 +383,33 @@ export default function Home() {
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
         <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-0" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
+            {/* 타이틀 오버레이 — 최소 크기 도달 시 위에서 스르륵 내려옴 */}
+            <motion.div
+              style={{ opacity: titleOpacity, y: titleY }}
+              className="absolute top-0 left-0 right-0 z-30 pt-12 px-8 pointer-events-none"
+            >
+              <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-end">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="section-label text-pink-400">02 / Core System</span>
+                    <div className="h-px w-12 bg-pink-400/30" />
+                  </div>
+                  <h2 className="font-display text-4xl md:text-5xl leading-[0.9]">
+                    처음부터 끝까지,<br />
+                    <span className="gradient-text-gold">내 손으로 만든 빛</span>
+                  </h2>
+                </div>
+                <p className="text-white/50 text-sm md:text-base leading-relaxed max-w-xl">
+                  <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
+                  <span className="block">
+                    고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
+                    <br className="hidden md:inline" />
+                    당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
+                  </span>
+                </p>
+              </div>
+            </motion.div>
+
             <div className="absolute inset-0 flex items-center justify-center">
               {/* 폰 프레임 래퍼 (버튼은 여기에, overflow 영향 안 받음) */}
               <motion.div
