@@ -48,13 +48,13 @@ export default function Home() {
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
   const phoneWidth = useTransform(phoneProgress, (v) => {
     if (v <= 0.05) return "100vw";
-    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 85, 75, 65]);
-    return `max(${vw}vw, 1100px)`;
+    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 75, 62, 50]);
+    return `max(${vw}vw, 850px)`;
   });
   const phoneHeight = useTransform(phoneProgress, (v) => {
     if (v <= 0.05) return "100vh";
-    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 85, 75, 65]);
-    return `max(${vw * 0.52}vw, 572px)`;
+    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 75, 62, 50]);
+    return `max(${vw * 0.53}vw, 450px)`;
   });
   const phoneRadius = useTransform(phoneProgress, (v) => {
     const r = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 1, 2, 3, 3.5]);
