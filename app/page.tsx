@@ -458,7 +458,7 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] whitespace-nowrap">
                 처음부터 끝까지,<br />
                 <span className="gradient-text-gold">내 손으로 만든 빛</span>
               </h2>
