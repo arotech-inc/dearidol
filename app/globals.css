@@ -32,6 +32,8 @@ body {
   font-family: var(--font-geist-sans), sans-serif;
   font-weight: 900;
   letter-spacing: -0.04em;
+  word-break: keep-all; /* 한글 단어 단위 줄바꿈 */
+  overflow-wrap: break-word;
 }
 
 /* 모노스페이스 (코드 느낌 라벨) */

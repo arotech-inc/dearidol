@@ -104,9 +104,9 @@ export default function Home() {
       const sections = getSections();
       if (i < 0 || i >= sections.length) return;
       isAnimating = true;
-      lockUntil = Date.now() + 900;
+      lockUntil = Date.now() + 1400; // 섹션 도착 후 잠시 머물 수 있도록
       window.scrollTo({ top: sections[i].offsetTop, behavior: "smooth" });
-      setTimeout(() => { isAnimating = false; }, 900);
+      setTimeout(() => { isAnimating = false; }, 1400);
     };
 
     const handleDelta = (deltaY: number) => {
@@ -280,7 +280,7 @@ export default function Home() {
                 <span className="section-label text-pink-400">01 / News</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display text-5xl md:text-6xl leading-none">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
                 Latest <span className="gradient-text-pink">Updates</span>
               </h2>
             </div>
@@ -458,7 +458,7 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display text-5xl md:text-6xl leading-[0.9]">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
                 처음부터 끝까지,<br />
                 <span className="gradient-text-gold">내 손으로 만든 빛</span>
               </h2>
