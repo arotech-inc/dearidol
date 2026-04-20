@@ -46,13 +46,17 @@ export default function Home() {
 
   // 풀스크린 → 베젤만 생김 → 중간 크기 → 가로 폰 (4단계)
   // vw/vh 단위로 통일해서 브라우저/스크롤바 차이에 영향 없도록
-  const phoneWidth = useTransform(phoneProgress, (v) =>
-    `${multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40])}vw`
-  );
+  const phoneWidth = useTransform(phoneProgress, (v) => {
+    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
+    // 최소 크기 단계에서 절대 픽셀 하한 (창 작아져도 유지)
+    const minPx = multiLerp(v, [0.5, 1], [0, 720]);
+    return `max(${vw}vw, ${minPx}px)`;
+  });
   const phoneHeight = useTransform(phoneProgress, (v) => {
     if (v <= 0.05) return "100vh";
-    const w = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
-    return `${w * 0.55}vw`;
+    const vw = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [100, 96, 72, 58, 40]);
+    const minPx = multiLerp(v, [0.5, 1], [0, 720 * 0.55]);
+    return `max(${vw * 0.55}vw, ${minPx}px)`;
   });
   const phoneRadius = useTransform(phoneProgress, (v) => {
     const r = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [0, 1, 2, 3, 3.5]);
