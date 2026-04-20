@@ -58,9 +58,17 @@ export default function Home() {
     window.addEventListener("resize", compute);
     return () => window.removeEventListener("resize", compute);
   }, []);
-  const phoneScale = useTransform(phoneProgress, (v) =>
-    multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [scaleMax, scaleMax * 0.98, scaleMax * 0.7, scaleMax * 0.4, 1])
-  );
+  const phoneScale = useTransform(phoneProgress, (v) => {
+    // 최소 1로 하한 — 단조 감소 보장 (바운스 방지)
+    const s = multiLerp(v, [0, 0.2, 0.5, 0.75, 1], [
+      scaleMax,
+      Math.max(scaleMax * 0.98, 1),
+      Math.max(scaleMax * 0.7, 1),
+      Math.max(scaleMax * 0.4, 1),
+      1,
+    ]);
+    return s;
+  });
   const phoneBorderW = useTransform(phoneProgress, (v) =>
     v > 0.05 ? 8 : 0
   );
@@ -444,7 +452,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-2 md:pt-4">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-2 md:pt-4 md:-mt-[25vh]">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
