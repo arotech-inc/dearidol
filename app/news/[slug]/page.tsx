@@ -57,7 +57,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
         {/* 본문 */}
         <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8 mb-6">
           <p className="leading-relaxed whitespace-pre-line text-sm md:text-base text-white/80">
-            {post.content}
+            {post.content.split("\n").map((l) => l.trim()).filter(Boolean).join("\n")}
           </p>
         </div>
 
