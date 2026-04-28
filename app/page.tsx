@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,6 @@ import {
   ChevronDown,
   Sparkles,
   Play,
-  Pause,
   Users,
   Layers,
   Sofa,
@@ -37,6 +36,28 @@ export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
   const [playingTrack, setPlayingTrack] = useState<number | null>(null);
+
+  // 50 카운트업 (Idol Management 섹션)
+  const counterRef = useRef<HTMLDivElement>(null);
+  const counterInView = useInView(counterRef, { amount: 0.5 });
+  const [statCount, setStatCount] = useState(1);
+  useEffect(() => {
+    if (!counterInView) {
+      setStatCount(1);
+      return;
+    }
+    const start = performance.now();
+    const duration = 1500;
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setStatCount(Math.round(1 + (50 - 1) * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [counterInView]);
 
   // System 비디오: 풀스크린 → 폰 모양 쉬링크
   const systemVideoRef = useRef<HTMLVideoElement>(null);
@@ -444,7 +465,7 @@ export default function Home() {
           >
             <div className="flex items-center justify-center gap-3 mb-5">
               <div className="h-px w-10 bg-pink-400/50" />
-              <span className="section-label text-pink-400">02 / About</span>
+              <span className="section-label text-pink-400">01 / About</span>
               <div className="h-px w-10 bg-pink-400/50" />
             </div>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-8">
@@ -536,12 +557,12 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">03 / Core System</span>
+                <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                여섯 개의 기둥,<br />
-                <span className="gradient-text-pink">하나의 라이브 서비스</span>
+                K-POP 프로덕션의 모든 순간,<br />
+                <span className="gradient-text-pink">라이브 서비스의 6가지 코어</span>
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
@@ -586,17 +607,38 @@ export default function Home() {
                     {p.desc}
                   </p>
 
-                  {/* 점선 박스 placeholder */}
-                  <div className={`relative aspect-[4/3] border-2 border-dashed ${p.border} ${p.bg} flex flex-col items-center justify-center`}>
-                    <div className={`w-14 h-14 rounded-full border-2 ${p.ring} flex items-center justify-center mb-5`}>
-                      <div className={`w-6 h-6 rounded-full ${p.dot}`} />
+                  {/* 점선 박스 placeholder — HUD 스타일 */}
+                  <div className={`relative aspect-[4/3] border border-dashed ${p.border} ${p.bg} flex flex-col items-center justify-center overflow-hidden`}>
+                    {/* 배경 그리드 */}
+                    <div className="absolute inset-0 grid-pattern opacity-40" />
+
+                    {/* 코너 마커 (HUD 느낌) */}
+                    <div className={`absolute top-1.5 left-1.5 w-3 h-3 border-l border-t ${p.border} opacity-80`} />
+                    <div className={`absolute top-1.5 right-1.5 w-3 h-3 border-r border-t ${p.border} opacity-80`} />
+                    <div className={`absolute bottom-1.5 left-1.5 w-3 h-3 border-l border-b ${p.border} opacity-80`} />
+                    <div className={`absolute bottom-1.5 right-1.5 w-3 h-3 border-r border-b ${p.border} opacity-80`} />
+
+                    {/* 호버 시 스캔라인 */}
+                    <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none">
+                      <div className={`absolute inset-x-0 h-[40%] scan-line bg-gradient-to-b from-transparent via-white/[0.05] to-transparent`} />
                     </div>
-                    <p className="text-white/60 text-xs font-bold px-4 text-center">
-                      {p.title} — UI 스크린샷
-                    </p>
-                    <p className="text-white/30 text-[9px] tracking-[0.3em] mt-2">
-                      GAMEPLAY / UI SCREENSHOT
-                    </p>
+
+                    {/* 메인 시각 요소 */}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="relative w-14 h-14 mb-5">
+                        <div className={`absolute inset-0 rounded-full ${p.dot} blur-2xl glow-pulse`} />
+                        <div className={`relative w-full h-full rounded-full border ${p.ring} flex items-center justify-center backdrop-blur-sm bg-black/20`}>
+                          <p.Icon size={22} strokeWidth={1.5} className={p.accent} />
+                        </div>
+                      </div>
+
+                      <p className={`font-mono-tight text-[9px] tracking-[0.3em] ${p.accent} mb-2`}>
+                        PREVIEW · {p.num}
+                      </p>
+                      <p className="text-white/60 text-[11px] font-bold px-4 text-center leading-relaxed">
+                        {p.title}
+                      </p>
+                    </div>
                   </div>
 
                   {/* 하단 태그 */}
@@ -613,13 +655,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= GAME MODES (with Phone Video Morphing) ================= */}
-      <section id="modes" className="snap-section relative min-h-screen bg-[#0a0a0f]">
+      {/* ================= PHONE VIDEO MORPHING (데스크톱 시각 효과) ================= */}
+      <section className="snap-section hidden md:block relative bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
-        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-0" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+        <div ref={phoneSectionRef} className="relative w-full" style={{ height: "180vh", width: "100vw" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               {/* 폰 프레임 래퍼 — 고정 크기 + scale 애니메이션 (Apple 스타일) */}
@@ -690,7 +731,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-2 md:pt-4 md:-mt-[20vh] pb-24">
+      </section>
+
+      {/* ================= GAME MODES ================= */}
+      <section id="modes" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f]">
+        <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -701,7 +749,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">04 / Game Modes</span>
+                <span className="section-label text-pink-400">03 / Game Modes</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -734,8 +782,10 @@ export default function Home() {
             {gameModes.map((m, i) => (
               <div
                 key={i}
-                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 p-7"
+                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 hover:bg-white/[0.04] transition duration-500 p-7"
               >
+                {/* 호버 시 상단 라인 글로우 */}
+                <div className={`absolute inset-x-6 -top-1 h-2 ${m.bar} blur-md opacity-0 group-hover:opacity-100 transition duration-500`} />
                 <div className={`absolute top-0 left-0 right-0 h-0.5 ${m.bar}`} />
 
                 <div className="flex items-center justify-between mb-7">
@@ -745,7 +795,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center text-center mb-6">
-                  <div className={`mb-5 ${m.accent} group-hover:scale-110 transition duration-500`}>
+                  <div className={`mb-5 ${m.accent} group-hover:scale-110 group-hover:drop-shadow-[0_0_18px_currentColor] transition duration-500`}>
                     <m.Icon size={44} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-white text-xl font-bold mb-2">
@@ -796,12 +846,13 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">05 / Idol Management</span>
+                <span className="section-label text-pink-400">04 / Idol Management</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
                 5대 카테고리,<br />
-                <span className="gradient-text-pink">50개 세부 스탯의 깊은 육성</span>
+                50개의 세부 스탯으로<br />
+                <span className="gradient-text-pink">깊은 육성</span>
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
@@ -821,8 +872,8 @@ export default function Home() {
             {/* 50 SUB-STATS 카드 */}
             <div className="relative bg-white/[0.02] border border-white/10 p-10 md:p-12 flex flex-col items-center justify-center text-center">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-pink-400" />
-              <div className="font-display gradient-text-pink leading-none text-[8rem] md:text-[10rem]">
-                50
+              <div ref={counterRef} className="font-display gradient-text-pink leading-none text-[8rem] md:text-[10rem] tabular-nums">
+                {statCount}
               </div>
               <div className="mt-3 mb-2 flex items-center gap-3">
                 <div className="h-px w-8 bg-pink-400/40" />
@@ -956,7 +1007,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">06 / Soundtrack</span>
+                <span className="section-label text-pink-400">05 / Soundtrack</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -998,21 +1049,36 @@ export default function Home() {
                   onClick={() => setPlayingTrack(isPlaying ? null : t.id)}
                 >
                   <button
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
+                    className={`relative w-10 h-10 rounded-full flex items-center justify-center transition ${
                       isPlaying
                         ? "bg-pink-400 text-black"
                         : "bg-white/[0.06] text-white/70 group-hover:bg-white group-hover:text-black"
                     }`}
                   >
-                    {isPlaying ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" className="ml-0.5" />}
+                    {isPlaying ? (
+                      <div className="flex items-end justify-center gap-[2px] h-3.5 w-4">
+                        {[0, 1, 2, 3, 4].map((b) => (
+                          <span key={b} className="eq-bar w-[2px] h-full bg-current rounded-sm" />
+                        ))}
+                      </div>
+                    ) : (
+                      <Play size={14} fill="currentColor" className="ml-0.5" />
+                    )}
                   </button>
                   <span className={`font-mono-tight text-sm ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
                     {String(t.id).padStart(2, "0")}
                   </span>
                   <div className="min-w-0">
-                    <p className={`text-base md:text-lg font-bold truncate ${isPlaying ? "text-pink-200" : "text-white"}`}>
-                      {t.title}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className={`text-base md:text-lg font-bold truncate ${isPlaying ? "text-pink-200" : "text-white"}`}>
+                        {t.title}
+                      </p>
+                      {isPlaying && (
+                        <span className="hidden md:inline font-mono-tight text-[9px] tracking-[0.3em] text-pink-400 border border-pink-400/40 px-1.5 py-0.5">
+                          NOW PLAYING
+                        </span>
+                      )}
+                    </div>
                     <p className="md:hidden text-xs text-white/40 truncate font-mono-tight tracking-wider">
                       {t.artist}
                     </p>
@@ -1060,7 +1126,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">07 / News</span>
+                <span className="section-label text-pink-400">06 / News</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">

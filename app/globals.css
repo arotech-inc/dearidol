@@ -106,3 +106,36 @@ html {
 main:not(:has(.snap-section)) {
   animation: fadeInUp 0.6s ease-out;
 }
+
+/* 사운드트랙 이퀄라이저 */
+@keyframes eq-bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq-bar 0.8s ease-in-out infinite;
+}
+.eq-bar:nth-child(1) { animation-delay: -0.4s; }
+.eq-bar:nth-child(2) { animation-delay: -0.1s; }
+.eq-bar:nth-child(3) { animation-delay: -0.6s; }
+.eq-bar:nth-child(4) { animation-delay: -0.2s; }
+.eq-bar:nth-child(5) { animation-delay: -0.5s; }
+
+/* HUD 스캔라인 (Pillar placeholder 호버) */
+@keyframes scan-y {
+  0% { transform: translateY(-120%); }
+  100% { transform: translateY(120%); }
+}
+.scan-line {
+  animation: scan-y 2.5s linear infinite;
+}
+
+/* 부드러운 펄스 (Pillar placeholder 글로우) */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.4; }
+}
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
