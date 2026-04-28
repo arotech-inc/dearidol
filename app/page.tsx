@@ -11,18 +11,32 @@ import {
   Shirt,
   Music2,
   Clapperboard,
-  Globe2,
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
   Sparkles,
   Play,
+  Pause,
+  Users,
+  Layers,
+  Sofa,
+  Target,
+  Handshake,
+  Zap,
+  Flame,
+  Mic2,
+  Star,
+  Crown,
+  Palette,
+  Headphones,
+  Trophy,
 } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
+  const [playingTrack, setPlayingTrack] = useState<number | null>(null);
 
   // System 비디오: 풀스크린 → 폰 모양 쉬링크
   const systemVideoRef = useRef<HTMLVideoElement>(null);
@@ -158,6 +172,151 @@ export default function Home() {
     };
   }, []);
 
+  // ========== 데이터 ==========
+  const pillars = [
+    {
+      Icon: Users,
+      num: "01",
+      title: "Multi-User Rhythm Party",
+      desc: "여러 유저가 한 방에서 함께 즐기는 K-POP 리듬 캐주얼 플레이",
+      tag: "Multi-User",
+      bar: "bg-pink-400",
+      accent: "text-pink-400",
+      ring: "border-pink-500/50",
+      dot: "bg-pink-500/30",
+      border: "border-pink-500/40",
+      bg: "bg-pink-500/[0.02]",
+    },
+    {
+      Icon: Layers,
+      num: "02",
+      title: "Dance Card Battle",
+      desc: "수집한 댄스 카드로 대결하는 카드 기반 무대 시스템",
+      tag: "Card Battle",
+      bar: "bg-blue-400",
+      accent: "text-blue-400",
+      ring: "border-blue-400/50",
+      dot: "bg-blue-400/30",
+      border: "border-blue-400/40",
+      bg: "bg-blue-400/[0.02]",
+    },
+    {
+      Icon: Shirt,
+      num: "03",
+      title: "Avatar & Idol Customization",
+      desc: "내 아바타와 보유 아이돌을 모두 꾸미는 강력한 비주얼 BM",
+      tag: "Customization",
+      bar: "bg-emerald-400",
+      accent: "text-emerald-400",
+      ring: "border-emerald-400/50",
+      dot: "bg-emerald-400/30",
+      border: "border-emerald-400/40",
+      bg: "bg-emerald-400/[0.02]",
+    },
+    {
+      Icon: Clapperboard,
+      num: "04",
+      title: "Music Video Creation",
+      desc: "수집한 댄스 카드로 나만의 뮤직비디오 제작·공유",
+      tag: "MV Studio",
+      bar: "bg-amber-400",
+      accent: "text-amber-400",
+      ring: "border-amber-400/50",
+      dot: "bg-amber-400/30",
+      border: "border-amber-400/40",
+      bg: "bg-amber-400/[0.02]",
+    },
+    {
+      Icon: Building2,
+      num: "05",
+      title: "Production Management",
+      desc: "스케줄·콘서트·팬 수치·사업으로 성장하는 프로덕션 운영",
+      tag: "Management",
+      bar: "bg-pink-400",
+      accent: "text-pink-400",
+      ring: "border-pink-500/50",
+      dot: "bg-pink-500/30",
+      border: "border-pink-500/40",
+      bg: "bg-pink-500/[0.02]",
+    },
+    {
+      Icon: Sofa,
+      num: "06",
+      title: "Social Space & Room",
+      desc: "내가 꾸민 방으로 유저를 초대하는 소셜 공간과 로비",
+      tag: "Social",
+      bar: "bg-teal-400",
+      accent: "text-teal-400",
+      ring: "border-teal-400/50",
+      dot: "bg-teal-400/30",
+      border: "border-teal-400/40",
+      bg: "bg-teal-400/[0.02]",
+    },
+  ];
+
+  const gameModes = [
+    {
+      Icon: Target,
+      num: "01",
+      en: "Score Battle",
+      ko: "개인 스코어 경쟁",
+      desc: "같은 곡, 같은 진행 타이밍에서 보유 카드와 판정으로 점수 경쟁",
+      bar: "bg-pink-400",
+      accent: "text-pink-400",
+    },
+    {
+      Icon: Handshake,
+      num: "02",
+      en: "Team Battle",
+      ko: "팀 단위 실시간 대결",
+      desc: "3v3 또는 2v2 팀 합산 점수, 시너지 카드·역할 분담형 플레이",
+      bar: "bg-indigo-400",
+      accent: "text-indigo-400",
+    },
+    {
+      Icon: Zap,
+      num: "03",
+      en: "Real-Time Battle",
+      ko: "실시간 배틀 모드",
+      desc: "데미지형 팀전·압박 카드·역전 구간을 가진 숙련 콘텐츠",
+      bar: "bg-amber-400",
+      accent: "text-amber-400",
+    },
+    {
+      Icon: Flame,
+      num: "04",
+      en: "Battle Party",
+      ko: "협동 레이드",
+      desc: "전설의 스타·레전드 아이돌을 상대로 협력하는 시즌 콘텐츠",
+      bar: "bg-teal-400",
+      accent: "text-teal-400",
+    },
+  ];
+
+  const categories = [
+    { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400" },
+    { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400" },
+    { Icon: Star, num: "03", ko: "비주얼", en: "Visual", bar: "bg-amber-400" },
+    { Icon: Crown, num: "04", ko: "카리스마", en: "Charisma", bar: "bg-teal-400" },
+    { Icon: Palette, num: "05", ko: "패션 · 열정", en: "Fashion · Passion", bar: "bg-pink-400" },
+  ];
+
+  const careerStages = [
+    { label: "신인", en: "ROOKIE" },
+    { label: "라이징", en: "RISING" },
+    { label: "톱스타", en: "TOP STAR" },
+    { label: "슈퍼스타", en: "SUPERSTAR" },
+    { label: "명예의 전당", en: "HALL OF FAME" },
+  ];
+
+  const tracks = [
+    { id: 1, title: "Spotlight", artist: "AURORA", duration: "3:21" },
+    { id: 2, title: "Neon Heart", artist: "VELVET CROWN", duration: "2:58" },
+    { id: 3, title: "Stage Light", artist: "LUMINA", duration: "3:12" },
+    { id: 4, title: "Encore", artist: "SOLAR FLARE", duration: "3:44" },
+    { id: 5, title: "Fanfare", artist: "STARDUST", duration: "3:05" },
+  ];
+
   return (
     <main className="bg-[#0a0a0f] text-white">
 
@@ -269,8 +428,624 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= ABOUT ================= */}
+      <section id="about" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden noise-bg">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="text-center mb-16 md:mb-20"
+          >
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-pink-400/50" />
+              <span className="section-label text-pink-400">02 / About</span>
+              <div className="h-px w-10 bg-pink-400/50" />
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-8">
+              단순한 리듬 게임이<br />
+              <span className="gradient-text-pink">아닙니다</span>
+            </h2>
+            <p className="text-white/60 text-lg md:text-2xl font-medium tracking-wide max-w-3xl mx-auto leading-relaxed">
+              <span className="text-pink-300">Play</span> the Music. <span className="text-purple-300">Collect</span> the Dance. <span className="text-amber-300">Build</span> the Idol Agency.
+            </p>
+          </motion.div>
+
+          {/* 3축 카드 */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-3 gap-6"
+          >
+            {[
+              {
+                Icon: Music2,
+                num: "01",
+                en: "PLAY",
+                title: "Play the Music",
+                desc: "K-POP 비트 위에서 카드를 발동하는 신개념 리듬 배틀. 함께 모인 유저와 호흡을 맞추는 라이브 무대.",
+                accent: "text-pink-400",
+                ring: "border-pink-500/40",
+                bar: "bg-pink-400",
+              },
+              {
+                Icon: Layers,
+                num: "02",
+                en: "COLLECT",
+                title: "Collect the Dance",
+                desc: "수집한 댄스 카드로 나만의 무대 덱을 구성하고, 곡과 모드에 맞춰 전략적으로 발동하세요.",
+                accent: "text-purple-400",
+                ring: "border-purple-500/40",
+                bar: "bg-purple-400",
+              },
+              {
+                Icon: Crown,
+                num: "03",
+                en: "BUILD",
+                title: "Build the Idol Agency",
+                desc: "아이돌 · 의상 · 사옥 · 팬덤까지— 라이브 서비스로 성장하는 나만의 프로덕션을 운영하세요.",
+                accent: "text-amber-400",
+                ring: "border-amber-500/40",
+                bar: "bg-amber-400",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="group relative p-8 md:p-10 bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500"
+              >
+                <div className={`absolute top-0 left-0 right-0 h-0.5 ${item.bar}`} />
+                <div className="flex items-center justify-between mb-8">
+                  <span className={`font-mono-tight text-xs tracking-[0.3em] ${item.accent}`}>
+                    {item.num} · {item.en}
+                  </span>
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl border ${item.ring} ${item.accent} group-hover:shadow-[0_0_25px_currentColor] transition duration-500`}>
+                    <item.Icon size={22} strokeWidth={1.5} />
+                  </div>
+                </div>
+                <h3 className="text-white text-2xl font-bold mb-4 group-hover:text-pink-200 transition">
+                  {item.title}
+                </h3>
+                <p className="text-white/50 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= CORE SYSTEM (6 Pillars) ================= */}
+      <section id="core" className="snap-section relative min-h-screen py-24 md:py-32 bg-[#0a0a0f]">
+        <div className="absolute inset-0 grid-pattern opacity-20" />
+        <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-blue-500/8 blur-[120px]" />
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-2 gap-12 items-end mb-14"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">03 / Core System</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                여섯 개의 기둥,<br />
+                <span className="gradient-text-pink">하나의 라이브 서비스</span>
+              </h2>
+            </div>
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+              Multi-User Rhythm Party · Dance Card Battle · Avatar/Idol · Music Video · Production · Social Space —
+              여섯 개의 코어 시스템이 하나의 K-POP 프로덕션 라이브 서비스로 묶여 있습니다.
+            </p>
+          </motion.div>
+
+          {/* 6 Pillars 그리드 */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {pillars.map((p, i) => (
+              <div
+                key={i}
+                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500"
+              >
+                {/* 컬러 상단 라인 */}
+                <div className={`absolute top-0 left-0 right-0 h-0.5 ${p.bar}`} />
+
+                {/* 콘텐츠 */}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <span className={`font-mono-tight text-xs tracking-[0.3em] ${p.accent}`}>
+                        {p.num} · CORE PILLAR
+                      </span>
+                      <h3 className="text-white text-lg font-bold mt-2 leading-tight group-hover:text-pink-200 transition">
+                        {p.title}
+                      </h3>
+                    </div>
+                    <div className={`shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-xl border ${p.ring} ${p.accent} group-hover:shadow-[0_0_20px_currentColor] transition duration-500`}>
+                      <p.Icon size={20} strokeWidth={1.5} />
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-white/50 leading-relaxed mb-5 min-h-[40px]">
+                    {p.desc}
+                  </p>
+
+                  {/* 점선 박스 placeholder */}
+                  <div className={`relative aspect-[4/3] border-2 border-dashed ${p.border} ${p.bg} flex flex-col items-center justify-center`}>
+                    <div className={`w-14 h-14 rounded-full border-2 ${p.ring} flex items-center justify-center mb-5`}>
+                      <div className={`w-6 h-6 rounded-full ${p.dot}`} />
+                    </div>
+                    <p className="text-white/60 text-xs font-bold px-4 text-center">
+                      {p.title} — UI 스크린샷
+                    </p>
+                    <p className="text-white/30 text-[9px] tracking-[0.3em] mt-2">
+                      GAMEPLAY / UI SCREENSHOT
+                    </p>
+                  </div>
+
+                  {/* 하단 태그 */}
+                  <div className="flex items-center gap-2 mt-4">
+                    <span className="font-mono-tight text-[10px] text-white/30 tracking-[0.2em] uppercase">
+                      {p.tag}
+                    </span>
+                    <div className="h-px flex-1 bg-white/10" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= GAME MODES (with Phone Video Morphing) ================= */}
+      <section id="modes" className="snap-section relative min-h-screen bg-[#0a0a0f]">
+        <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
+
+        {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
+        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-0" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
+          <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center">
+              {/* 폰 프레임 래퍼 — 고정 크기 + scale 애니메이션 (Apple 스타일) */}
+              <motion.div
+                style={{ scale: phoneScale, width: "850px", height: "420px", borderRadius: "48px" }}
+                className="relative will-change-transform shrink-0"
+              >
+                {/* 화면 영역 (overflow-hidden은 여기만) */}
+                <motion.div
+                  style={{
+                    borderWidth: phoneBorderW,
+                    borderStyle: "solid",
+                    borderColor: "#7a8ba8",
+                    borderRadius: "48px",
+                    boxShadow: phoneShadow,
+                  }}
+                  className="absolute inset-0 overflow-hidden bg-[#1a1a1e]"
+                >
+                  <video
+                    ref={systemVideoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  >
+                    <source src="/dance.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* Dynamic Island (가로 모드 — 좌측 중앙) */}
+                  <motion.div
+                    style={{ opacity: notchOpacity }}
+                    className="absolute left-[6px] top-1/2 -translate-y-1/2 w-[28px] h-[100px] bg-black rounded-full pointer-events-none z-10"
+                  />
+
+                  {/* 홈 인디케이터 (가로 모드 — 하단 중앙 가로 바) */}
+                  <motion.div
+                    style={{ opacity: notchOpacity }}
+                    className="absolute bottom-[6px] left-1/2 -translate-x-1/2 w-[120px] h-[5px] bg-white/70 rounded-full pointer-events-none z-10"
+                  />
+
+                  {/* 프레임 광택 */}
+                  <motion.div
+                    style={{ opacity: notchOpacity }}
+                    className="absolute inset-0 pointer-events-none z-10 rounded-[inherit]"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent" />
+                  </motion.div>
+                </motion.div>
+
+                {/* 상단 버튼들 (가로 모드: 세로의 좌측 = 가로의 상단) */}
+                <motion.div style={{ opacity: notchOpacity }} className="absolute top-[-4px] left-0 right-0 pointer-events-none z-20">
+                  {/* 무음 스위치 */}
+                  <div className="absolute left-[18%] h-[4px] w-[28px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                  {/* 볼륨 업 */}
+                  <div className="absolute left-[26%] h-[4px] w-[44px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                  {/* 볼륨 다운 */}
+                  <div className="absolute left-[36%] h-[4px] w-[44px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                </motion.div>
+
+                {/* 하단 전원 버튼 (가로 모드: 세로의 우측 = 가로의 하단) */}
+                <motion.div style={{ opacity: notchOpacity }} className="absolute bottom-[-4px] left-0 right-0 pointer-events-none z-20">
+                  <div className="absolute right-[26%] h-[4px] w-[60px] bg-[#6a7b98] rounded-b-sm shadow-[inset_0_-1px_0_rgba(255,255,255,0.2)]" />
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-2 md:pt-4 md:-mt-[20vh] pb-24">
+          {/* 섹션 타이틀 */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-2 gap-12 items-end mb-14"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">04 / Game Modes</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                혼자도, 친구와도,<br />
+                <span className="gradient-text-gold">협동 레이드까지</span>
+              </h2>
+            </div>
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+              스코어전 · 팀전 · 실시간 배틀 · 배틀파티 — 캐주얼부터 협동 레이드까지,
+              혼자 즐겨도 친구와 모여도 어울리는 4개의 모드.
+            </p>
+          </motion.div>
+
+          {/* 모바일 전용 간단 비디오 */}
+          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-12">
+            <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
+              <source src="/dance.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          {/* Game Modes 4개 카드 */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
+          >
+            {gameModes.map((m, i) => (
+              <div
+                key={i}
+                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 p-7"
+              >
+                <div className={`absolute top-0 left-0 right-0 h-0.5 ${m.bar}`} />
+
+                <div className="flex items-center justify-between mb-7">
+                  <span className={`font-mono-tight text-xs tracking-[0.3em] ${m.accent}`}>
+                    {m.num}
+                  </span>
+                </div>
+
+                <div className="flex flex-col items-center text-center mb-6">
+                  <div className={`mb-5 ${m.accent} group-hover:scale-110 transition duration-500`}>
+                    <m.Icon size={44} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-white text-xl font-bold mb-2">
+                    {m.en}
+                  </h3>
+                  <p className={`text-sm font-bold ${m.accent}`}>
+                    {m.ko}
+                  </p>
+                </div>
+
+                <div className="pt-5 border-t border-white/5">
+                  <p className="text-sm text-white/50 leading-relaxed text-center">
+                    {m.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* 협동 강조 배너 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="mt-6 p-6 md:p-7 border border-pink-500/30 bg-pink-500/5 text-center"
+          >
+            <p className="text-pink-300 text-sm md:text-base font-bold tracking-wide">
+              협동 플레이가 커뮤니티를 강화하고, 시즌 이벤트 · 한정 보상 · 스트리머 콘텐츠로 확장 가능합니다.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= IDOL MANAGEMENT (육성) ================= */}
+      <section id="management" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 grid-pattern opacity-25" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-amber-500/8 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-2 gap-12 items-end mb-14"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">05 / Idol Management</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                5대 카테고리,<br />
+                <span className="gradient-text-pink">50개 세부 스탯의 깊은 육성</span>
+              </h2>
+            </div>
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+              단순 공·방 구조가 아닌, 아이돌의 활동 영역을 결정하는 성장 지표.
+              스탯 · 커리어 · 성격 · 재능까지 — 아이돌마다 다른 길을 만드는 시스템.
+            </p>
+          </motion.div>
+
+          {/* 50 카드 + 5 카테고리 */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-[0.9fr_1.4fr] gap-5"
+          >
+            {/* 50 SUB-STATS 카드 */}
+            <div className="relative bg-white/[0.02] border border-white/10 p-10 md:p-12 flex flex-col items-center justify-center text-center">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-pink-400" />
+              <div className="font-display gradient-text-pink leading-none text-[8rem] md:text-[10rem]">
+                50
+              </div>
+              <div className="mt-3 mb-2 flex items-center gap-3">
+                <div className="h-px w-8 bg-pink-400/40" />
+                <span className="font-mono-tight text-xs tracking-[0.3em] text-white/70">
+                  SUB-STATS PER IDOL
+                </span>
+                <div className="h-px w-8 bg-pink-400/40" />
+              </div>
+              <p className="text-white/50 text-sm mt-6 leading-relaxed">
+                스케줄 · 콘서트 · 사업<br />
+                슈퍼스타 · 팀 편성에 모두 반영
+              </p>
+            </div>
+
+            {/* 5 CATEGORIES 리스트 */}
+            <div className="relative">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
+                  5 CATEGORIES
+                </span>
+                <div className="h-px flex-1 bg-white/10" />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                {categories.map((c, i) => (
+                  <div
+                    key={i}
+                    className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
+                  >
+                    <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
+                    <div className="grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
+                      <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
+                        {c.num}
+                      </span>
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 group-hover:text-white transition">
+                        <c.Icon size={22} strokeWidth={1.5} />
+                      </div>
+                      <span className="text-white text-base md:text-lg font-bold">
+                        {c.ko}
+                      </span>
+                      <span className="font-mono-tight text-xs italic text-white/40">
+                        {c.en}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 커리어 라이프사이클 */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-10 bg-white/[0.02] border border-white/10 p-8 md:p-10"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Trophy size={18} className="text-amber-400" />
+              <span className="font-mono-tight text-xs tracking-[0.3em] text-amber-400">
+                CAREER LIFECYCLE
+              </span>
+              <div className="h-px flex-1 bg-white/10" />
+            </div>
+            <h3 className="text-white text-xl md:text-2xl font-bold mb-8">
+              신인부터 명예의 전당까지, <span className="text-amber-300">단계별 커리어</span>
+            </h3>
+
+            <div className="relative">
+              <div className="absolute top-3 left-0 right-0 h-px bg-gradient-to-r from-pink-500/50 via-amber-400/50 to-pink-500/50" />
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-6 relative">
+                {careerStages.map((stage, i) => (
+                  <div key={i} className="flex flex-col items-center text-center">
+                    <div className="w-6 h-6 rounded-full bg-[#0a0a0f] border-2 border-amber-400 flex items-center justify-center mb-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    </div>
+                    <span className="text-white text-base md:text-lg font-bold mb-1">
+                      {stage.label}
+                    </span>
+                    <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
+                      {stage.en}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 성격·재능 칩 */}
+            <div className="mt-10 pt-8 border-t border-white/10 grid md:grid-cols-2 gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles size={14} className="text-pink-400" />
+                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-pink-400">
+                    PERSONALITY
+                  </span>
+                </div>
+                <p className="text-white/60 text-sm leading-relaxed">
+                  성격이 활동 선택 · 팬 호감도 · 팀 시너지에 영향을 줍니다. 카리스마형, 청순형, 4차원, 노력파…
+                </p>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Star size={14} className="text-amber-400" />
+                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-amber-400">
+                    TALENT
+                  </span>
+                </div>
+                <p className="text-white/60 text-sm leading-relaxed">
+                  재능 시스템은 같은 등급의 아이돌도 서로 다른 강점을 갖게 만듭니다. 뽑은 그날부터 운명이 갈립니다.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= SOUNDTRACK PREVIEW ================= */}
+      <section id="soundtrack" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden bg-[#0a0a0f]">
+        <div className="absolute inset-0 grid-pattern opacity-25" />
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
+
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="grid md:grid-cols-2 gap-12 items-end mb-12"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="section-label text-pink-400">06 / Soundtrack</span>
+                <div className="h-px w-12 bg-pink-400/30" />
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                음악이 먼저,<br />
+                <span className="gradient-text-pink">그 다음이 게임</span>
+              </h2>
+            </div>
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+              K-POP 리듬 게임의 핵심 후킹은 음악입니다. 30초 미리듣기로
+              Dear Idol의 사운드트랙을 먼저 들어보세요.
+            </p>
+          </motion.div>
+
+          {/* 곡 리스트 */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="bg-white/[0.02] border border-white/10"
+          >
+            <div className="grid grid-cols-[60px_60px_1fr_auto_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-4 px-6 py-4 border-b border-white/10">
+              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">PLAY</span>
+              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">#</span>
+              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">TITLE</span>
+              <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40">ARTIST</span>
+              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">PREVIEW</span>
+              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">LENGTH</span>
+            </div>
+
+            {tracks.map((t) => {
+              const isPlaying = playingTrack === t.id;
+              return (
+                <div
+                  key={t.id}
+                  className={`group grid grid-cols-[60px_60px_1fr_auto_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-4 px-6 py-4 border-b border-white/5 transition cursor-pointer ${
+                    isPlaying ? "bg-pink-500/10" : "hover:bg-white/[0.03]"
+                  }`}
+                  onClick={() => setPlayingTrack(isPlaying ? null : t.id)}
+                >
+                  <button
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
+                      isPlaying
+                        ? "bg-pink-400 text-black"
+                        : "bg-white/[0.06] text-white/70 group-hover:bg-white group-hover:text-black"
+                    }`}
+                  >
+                    {isPlaying ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" className="ml-0.5" />}
+                  </button>
+                  <span className={`font-mono-tight text-sm ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
+                    {String(t.id).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0">
+                    <p className={`text-base md:text-lg font-bold truncate ${isPlaying ? "text-pink-200" : "text-white"}`}>
+                      {t.title}
+                    </p>
+                    <p className="md:hidden text-xs text-white/40 truncate font-mono-tight tracking-wider">
+                      {t.artist}
+                    </p>
+                  </div>
+                  <span className="hidden md:inline font-mono-tight text-sm text-white/50 tracking-wider truncate">
+                    {t.artist}
+                  </span>
+                  <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
+                    0:30
+                  </span>
+                  <span className="font-mono-tight text-sm text-white/50 tabular-nums">
+                    {t.duration}
+                  </span>
+                </div>
+              );
+            })}
+
+            {/* 푸터 */}
+            <div className="px-6 py-4 flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-2 text-white/40 text-xs">
+                <Headphones size={14} />
+                <span className="font-mono-tight tracking-wider">30-SECOND PREVIEWS</span>
+              </div>
+              <span className="text-xs text-white/30">
+                전곡은 정식 출시 후 게임에서 만나보세요.
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ================= NEWS ================= */}
-      <section id="news" className="snap-section relative min-h-screen pt-40 pb-20 md:pt-48 md:pb-24 overflow-hidden noise-bg">
+      <section id="news" className="snap-section relative min-h-screen pt-24 pb-20 md:pt-32 md:pb-24 overflow-hidden noise-bg">
         {/* 배경 */}
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
@@ -285,7 +1060,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">01 / News</span>
+                <span className="section-label text-pink-400">07 / News</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -375,237 +1150,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SYSTEM ================= */}
-      <section id="system" className="snap-section relative min-h-screen bg-[#0a0a0f]">
-        <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
-        <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
-
-        {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
-        <div ref={phoneSectionRef} className="hidden md:block relative w-full mb-0" style={{ height: "180vh", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", width: "100vw" }}>
-          <div className="sticky top-0 h-screen w-full overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* 폰 프레임 래퍼 — 고정 크기 + scale 애니메이션 (Apple 스타일) */}
-              <motion.div
-                style={{ scale: phoneScale, width: "850px", height: "420px", borderRadius: "48px" }}
-                className="relative will-change-transform shrink-0"
-              >
-                {/* 화면 영역 (overflow-hidden은 여기만) */}
-                <motion.div
-                  style={{
-                    borderWidth: phoneBorderW,
-                    borderStyle: "solid",
-                    borderColor: "#7a8ba8",
-                    borderRadius: "48px",
-                    boxShadow: phoneShadow,
-                  }}
-                  className="absolute inset-0 overflow-hidden bg-[#1a1a1e]"
-                >
-                  <video
-                    ref={systemVideoRef}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  >
-                    <source src="/dance.mp4" type="video/mp4" />
-                  </video>
-
-                  {/* Dynamic Island (가로 모드 — 좌측 중앙) */}
-                  <motion.div
-                    style={{ opacity: notchOpacity }}
-                    className="absolute left-[6px] top-1/2 -translate-y-1/2 w-[28px] h-[100px] bg-black rounded-full pointer-events-none z-10"
-                  />
-
-                  {/* 홈 인디케이터 (가로 모드 — 하단 중앙 가로 바) */}
-                  <motion.div
-                    style={{ opacity: notchOpacity }}
-                    className="absolute bottom-[6px] left-1/2 -translate-x-1/2 w-[120px] h-[5px] bg-white/70 rounded-full pointer-events-none z-10"
-                  />
-
-                  {/* 프레임 광택 */}
-                  <motion.div
-                    style={{ opacity: notchOpacity }}
-                    className="absolute inset-0 pointer-events-none z-10 rounded-[inherit]"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent" />
-                  </motion.div>
-                </motion.div>
-
-                {/* 상단 버튼들 (가로 모드: 세로의 좌측 = 가로의 상단) */}
-                <motion.div style={{ opacity: notchOpacity }} className="absolute top-[-4px] left-0 right-0 pointer-events-none z-20">
-                  {/* 무음 스위치 */}
-                  <div className="absolute left-[18%] h-[4px] w-[28px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
-                  {/* 볼륨 업 */}
-                  <div className="absolute left-[26%] h-[4px] w-[44px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
-                  {/* 볼륨 다운 */}
-                  <div className="absolute left-[36%] h-[4px] w-[44px] bg-[#6a7b98] rounded-t-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
-                </motion.div>
-
-                {/* 하단 전원 버튼 (가로 모드: 세로의 우측 = 가로의 하단) */}
-                <motion.div style={{ opacity: notchOpacity }} className="absolute bottom-[-4px] left-0 right-0 pointer-events-none z-20">
-                  <div className="absolute right-[26%] h-[4px] w-[60px] bg-[#6a7b98] rounded-b-sm shadow-[inset_0_-1px_0_rgba(255,255,255,0.2)]" />
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10 pt-2 md:pt-4 md:-mt-[20vh]">
-          {/* 섹션 타이틀 */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-20 items-end mb-16"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">02 / Core System</span>
-                <div className="h-px w-12 bg-pink-400/30" />
-              </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] whitespace-nowrap">
-                처음부터 끝까지,<br />
-                <span className="gradient-text-gold">내 손으로 만든 빛</span>
-              </h2>
-            </div>
-            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              <span className="block mb-2">아이돌은 소유하는 것이 아니라 창조하는 것.</span>
-              <span className="block">
-                고퀄리티 스타일링부터 안무 구성, 카메라 연출까지—
-                <br className="hidden md:inline" />
-                당신이 상상하던 완벽한 스테이지를 직접 연출하세요.
-              </span>
-            </p>
-          </motion.div>
-
-          {/* 모바일 전용 간단 비디오 */}
-          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-16">
-            <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
-              <source src="/dance.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-          </div>
-
-          {/* 기능별 이미지 그리드 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-          >
-            {[
-              {
-                Icon: Building2,
-                num: "01",
-                title: "프로덕션 경영",
-                desc: "3D 사무실을 꾸미고 확장하며 소속사를 성장시키세요.",
-                accent: "text-pink-400",
-                img: "/design.png",
-                tag: "Management",
-              },
-              {
-                Icon: Shirt,
-                num: "02",
-                title: "아이돌 패션",
-                desc: "헤어부터 악세서리까지, 파츠 단위로 무한 코디.",
-                accent: "text-purple-400",
-                img: "/idol-design.png",
-                tag: "Fashion",
-              },
-              {
-                Icon: Music2,
-                num: "03",
-                title: "리듬 & 댄스카드",
-                desc: "K-POP에 맞춰 전략적으로 카드를 발동하는 신개념 리듬게임.",
-                accent: "text-cyan-400",
-                img: "/dance card.png",
-                tag: "Rhythm",
-              },
-              {
-                Icon: Clapperboard,
-                num: "04",
-                title: "MV 제작 & 공유",
-                desc: "카메라 워크와 안무를 직접 연출하는 나만의 뮤직비디오.",
-                accent: "text-amber-400",
-                img: "/dearidol-hero.png",
-                tag: "MV Studio",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group relative overflow-hidden border border-white/10 hover:border-white/30 transition duration-500 cursor-pointer"
-              >
-                {/* 이미지 영역 */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={item.img}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover transition duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 group-hover:from-black/80 transition duration-500" />
-
-                  {/* 거대 번호 */}
-                  <span className="absolute top-3 right-3 font-display text-4xl text-white/20 group-hover:text-white/50 transition duration-500">
-                    {item.num}
-                  </span>
-
-                  {/* 아이콘 */}
-                  <div className={`absolute top-4 left-4 inline-flex items-center justify-center w-11 h-11 rounded-xl border border-white/20 backdrop-blur-md bg-black/30 ${item.accent} group-hover:border-current group-hover:shadow-[0_0_25px_currentColor] transition duration-500`}>
-                    <item.Icon size={20} strokeWidth={1.5} />
-                  </div>
-
-                  {/* 하단 태그 */}
-                  <div className="absolute bottom-3 left-3 font-mono-tight text-[10px] text-white/70 tracking-[0.2em] uppercase">
-                    {item.tag}
-                  </div>
-                </div>
-
-                {/* 텍스트 영역 */}
-                <div className="p-6 bg-[#0a0a0f] group-hover:bg-[#13111a] transition duration-500">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="font-mono-tight text-[10px] text-white/30">FEATURE.{item.num}</span>
-                    <div className="h-px flex-1 bg-white/10" />
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-pink-300 transition">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* 소셜 강조 배너 */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="mt-10 p-8 md:p-10 border border-white/10 bg-gradient-to-r from-white/[0.02] to-transparent flex items-center gap-6 flex-wrap"
-          >
-            <Globe2 size={36} strokeWidth={1.2} className="text-pink-400 shrink-0" />
-            <div className="flex-1 min-w-0">
-              <h4 className="text-white font-bold text-lg mb-1">Social Meta</h4>
-              <p className="text-sm text-white/50">다른 유저의 프로덕션을 방문하고, 서로의 아이돌 · 패션 · 공간을 구경하세요.</p>
-            </div>
-            <div className="flex items-center gap-2 text-white/30 text-xs font-mono-tight">
-              <Sparkles size={14} /> LIVE
-            </div>
-          </motion.div>
-
-          {/* ================= 다운로드 CTA ================= */}
+      {/* ================= CTA / 사전예약 ================= */}
+      <section id="cta" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f]">
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative mt-10 overflow-hidden rounded-2xl"
+            className="relative overflow-hidden rounded-2xl"
           >
             {/* 배경 그라데이션 + 효과 */}
             <div className="absolute inset-0 bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700" />
