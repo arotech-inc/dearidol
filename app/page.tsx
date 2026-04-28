@@ -42,10 +42,7 @@ export default function Home() {
   const counterInView = useInView(counterRef, { amount: 0.5 });
   const [statCount, setStatCount] = useState(1);
   useEffect(() => {
-    if (!counterInView) {
-      setStatCount(1);
-      return;
-    }
+    if (!counterInView) return;
     const start = performance.now();
     const duration = 1500;
     let raf = 0;
@@ -561,8 +558,8 @@ export default function Home() {
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                K-POP 프로덕션의 모든 순간,<br />
-                <span className="gradient-text-pink">라이브 서비스의 6가지 코어</span>
+                프로덕션의 모든 순간,<br />
+                <span className="gradient-text-pink">라이브 서비스의 핵심 코어</span>
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">

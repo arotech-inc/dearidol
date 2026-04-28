@@ -13,7 +13,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4 border-l-4 border-pink-500 pl-4">1. 수집하는 개인정보 항목 및 수집 방법</h2>
             <div className="space-y-3 pl-2">
-              <p>Dear Idol(이하 "게임")의 원활한 서비스 제공을 위해 유저님의 개인정보를 어떻게 수집하고 보호하는지 안내해 드립니다.</p>
+              <p>Dear Idol(이하 &ldquo;게임&rdquo;)의 원활한 서비스 제공을 위해 유저님의 개인정보를 어떻게 수집하고 보호하는지 안내해 드립니다.</p>
               <div className="bg-white/5 rounded-xl p-5 space-y-3 border border-white/10">
                 <p><span className="text-pink-400 font-semibold">필수 항목</span><br />이메일 주소, 비밀번호, 프로듀서명(닉네임), 기기 정보(OS, 기기 식별자), 접속 로그</p>
                 <p><span className="text-pink-400 font-semibold">게임 이용 데이터</span><br />아이돌 육성 및 트레이닝 기록, 스테이지 클리어 데이터, 재화 및 아이템(코스튬, 아이돌 카드 등) 보유 현황, 결제 기록</p>
