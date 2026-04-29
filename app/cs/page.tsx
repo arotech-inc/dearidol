@@ -105,6 +105,36 @@ function FAQSection() {
 
 function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitting(true);
+    setErrorMsg(null);
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      inquiryType: formData.get("inquiryType"),
+      email: formData.get("email"),
+      nickname: formData.get("nickname"),
+      message: formData.get("message"),
+    };
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "전송 실패");
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "전송 실패");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return submitted ? (
     <div className="text-center py-20">
       <p className="text-4xl mb-4">✅</p>
@@ -119,12 +149,12 @@ function ContactSection() {
     </div>
   ) : (
     <form
-      onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+      onSubmit={handleSubmit}
       className="max-w-2xl mx-auto space-y-6"
     >
       <div>
         <label className="block text-sm text-white/60 mb-2">문의 유형</label>
-        <select required className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500">
+        <select name="inquiryType" required className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500">
           <option value="">선택해주세요</option>
           <option>계정 문제</option>
           <option>결제 문제</option>
@@ -135,6 +165,7 @@ function ContactSection() {
       <div>
         <label className="block text-sm text-white/60 mb-2">이메일</label>
         <input
+          name="email"
           type="email"
           required
           placeholder="답변 받을 이메일 주소"
@@ -144,6 +175,7 @@ function ContactSection() {
       <div>
         <label className="block text-sm text-white/60 mb-2">닉네임 (선택)</label>
         <input
+          name="nickname"
           type="text"
           placeholder="인게임 닉네임"
           className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-pink-500"
@@ -152,17 +184,24 @@ function ContactSection() {
       <div>
         <label className="block text-sm text-white/60 mb-2">문의 내용</label>
         <textarea
+          name="message"
           required
           rows={6}
           placeholder="문의 내용을 상세히 작성해주세요."
           className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-pink-500 resize-none"
         />
       </div>
+      {errorMsg && (
+        <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3">
+          {errorMsg}
+        </p>
+      )}
       <button
         type="submit"
-        className="w-full py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-bold text-white hover:opacity-90 transition"
+        disabled={submitting}
+        className="w-full py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-bold text-white hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        문의 접수
+        {submitting ? "전송 중..." : "문의 접수"}
       </button>
     </form>
   );
