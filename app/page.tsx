@@ -122,8 +122,10 @@ export default function Home() {
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
   useEffect(() => {
-    // 모바일에서는 자유 스크롤 허용
-    if (window.matchMedia("(max-width: 768px)").matches) return;
+    // 모바일·좁은 데스크톱(lg 미만)에서는 자유 스크롤 허용 — 좁은 폭에서
+    // 섹션 콘텐츠가 viewport보다 길어지면 tall-section 자유 스크롤이 빠른 휠을
+    // 그대로 통과시켜 중간 섹션이 생략된 것처럼 보이는 문제를 막음.
+    if (window.matchMedia("(max-width: 1023px)").matches) return;
 
     const getSections = () =>
       Array.from(document.querySelectorAll<HTMLElement>(".snap-section"));
@@ -196,7 +198,7 @@ export default function Home() {
       Icon: Users,
       num: "01",
       title: "Multi-User Rhythm Party",
-      desc: "여러 유저가 한 방에서 함께 즐기는 K-POP 리듬 캐주얼 플레이",
+      desc: "여러 유저가 한 방에서 함께 즐기는 캐주얼 리듬 플레이",
       tag: "Multi-User",
       bar: "bg-pink-400",
       accent: "text-pink-400",
@@ -222,7 +224,7 @@ export default function Home() {
       Icon: Shirt,
       num: "03",
       title: "Avatar & Idol Customization",
-      desc: "내 아바타와 보유 아이돌을 모두 꾸미는 강력한 비주얼 BM",
+      desc: "내 아바타와 아이돌을 자유롭게 꾸미는 강력한 커스터마이징",
       tag: "Customization",
       bar: "bg-emerald-400",
       accent: "text-emerald-400",
@@ -278,7 +280,7 @@ export default function Home() {
       num: "01",
       en: "Score Battle",
       ko: "개인 스코어 경쟁",
-      desc: "같은 곡, 같은 진행 타이밍에서 보유 카드와 판정으로 점수 경쟁",
+      desc: "같은 곡, 같은 진행 타이밍에서\n보유 카드와 판정으로 점수 경쟁",
       bar: "bg-pink-400",
       accent: "text-pink-400",
     },
@@ -305,7 +307,7 @@ export default function Home() {
       num: "04",
       en: "Battle Party",
       ko: "협동 레이드",
-      desc: "전설의 스타·레전드 아이돌을 상대로 협력하는 시즌 콘텐츠",
+      desc: "전설의 스타·레전드 아이돌을 상대로\n협력하는 시즌 콘텐츠",
       bar: "bg-teal-400",
       accent: "text-teal-400",
     },
@@ -488,7 +490,7 @@ export default function Home() {
                 num: "01",
                 en: "PLAY",
                 title: "Play the Music",
-                desc: "K-POP 비트 위에서 카드를 발동하는 신개념 리듬 배틀. 함께 모인 유저와 호흡을 맞추는 라이브 무대.",
+                desc: "다양한 비트 위에서 카드를 발동하는 신개념 리듬 배틀. 함께 모인 유저와 호흡을 맞추는 라이브 무대.",
                 accent: "text-pink-400",
                 ring: "border-pink-500/40",
                 bar: "bg-pink-400",
@@ -557,9 +559,9 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+              <h2 className="font-display leading-[1.1] whitespace-nowrap text-[clamp(1rem,4.2vw,3.75rem)]">
                 프로덕션의 모든 순간,<br />
-                <span className="gradient-text-pink">라이브 서비스의 핵심 코어</span>
+                <span className="gradient-text-pink">디어아이돌의 핵심 코어</span>
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
@@ -755,8 +757,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              스코어전 · 팀전 · 실시간 배틀 · 배틀파티 — 캐주얼부터 협동 레이드까지,
-              혼자 즐겨도 친구와 모여도 어울리는 4개의 모드.
+              캐주얼부터 협동 레이드까지 다양한 모드로 폭넓게 즐기는 재미
             </p>
           </motion.div>
 
@@ -804,7 +805,7 @@ export default function Home() {
                 </div>
 
                 <div className="pt-5 border-t border-white/5">
-                  <p className="text-sm text-white/50 leading-relaxed text-center">
+                  <p className="text-sm text-white/50 leading-relaxed text-center whitespace-pre-line">
                     {m.desc}
                   </p>
                 </div>
@@ -1008,13 +1009,13 @@ export default function Home() {
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                음악이 먼저,<br />
-                <span className="gradient-text-pink">그 다음이 게임</span>
+                당신의 다음<br />
+                <span className="gradient-text-pink">최애곡</span>
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              K-POP 리듬 게임의 핵심 후킹은 음악입니다. 30초 미리듣기로
-              Dear Idol의 사운드트랙을 먼저 들어보세요.
+              정식 출시 전 5트랙, 30초씩 선공개합니다.
+              가장 먼저 듣고 데뷔 무대를 기다려주세요.
             </p>
           </motion.div>
 
