@@ -1311,7 +1311,8 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-white/80 text-base md:text-lg mb-10 max-w-lg mx-auto"
               >
-                사전예약하고 한정 의상, 다이아, SSR 카드까지 — Dear Idol 세계에 가장 먼저 입장하세요.
+                사전예약하고 한정 의상, 다이아, SSR 카드까지<br />
+                Dear Idol 세계에 가장 먼저 입장하세요.
               </motion.p>
 
               <motion.div
