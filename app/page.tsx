@@ -407,7 +407,7 @@ export default function Home() {
           <motion.h1
             variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] mb-4"
+            className="font-display text-[clamp(2.75rem,11vw,9rem)] leading-[0.85] mb-4 px-4"
           >
             <span className="block text-white">PRODUCE</span>
             <span className="block gradient-text-pink">YOUR STAR</span>
@@ -571,7 +571,7 @@ export default function Home() {
       </section>
 
       {/* ================= CORE SYSTEM (6 Pillars) ================= */}
-      <section id="core" className="snap-section relative min-h-screen py-24 md:py-32 bg-[#0a0a0f]">
+      <section id="core" className="snap-section relative min-h-screen py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-blue-500/8 blur-[120px]" />
 
@@ -588,7 +588,7 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display leading-[1.1] whitespace-nowrap text-[clamp(1rem,4.2vw,3.75rem)]">
+              <h2 className="font-display leading-[1.1] md:whitespace-nowrap text-[clamp(1.6rem,4.2vw,3.75rem)]">
                 프로덕션의 모든 순간,<br />
                 <span className="gradient-text-pink">디어아이돌의 핵심 코어</span>
               </h2>
@@ -761,7 +761,7 @@ export default function Home() {
       </section>
 
       {/* ================= GAME MODES ================= */}
-      <section id="modes" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f]">
+      <section id="modes" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
         <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
 
@@ -931,8 +931,8 @@ export default function Home() {
                       className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
                     >
                       <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
-                      <div className="grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
-                        <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
+                      <div className="grid grid-cols-[40px_44px_1fr] md:grid-cols-[60px_50px_1fr_auto] items-center gap-3 md:gap-4 w-full pl-4 pr-4 md:pl-6 md:pr-6 py-4">
+                        <span className="font-mono-tight text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] text-white/50">
                           {c.num}
                         </span>
                         <div
@@ -941,12 +941,14 @@ export default function Home() {
                         >
                           <c.Icon size={22} strokeWidth={1.5} />
                         </div>
-                        <span className="text-white text-base md:text-lg font-bold">
-                          {c.ko}
-                        </span>
-                        <span className="font-mono-tight text-xs italic text-white/40">
-                          {c.en}
-                        </span>
+                        <div className="min-w-0 flex flex-col md:flex-row md:items-center md:justify-between md:gap-4">
+                          <span className="text-white text-base md:text-lg font-bold whitespace-nowrap">
+                            {c.ko}
+                          </span>
+                          <span className="font-mono-tight text-[10px] md:text-xs italic text-white/40 whitespace-nowrap">
+                            {c.en}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   );
@@ -1060,12 +1062,12 @@ export default function Home() {
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             className="bg-white/[0.02] border border-white/10"
           >
-            <div className="grid grid-cols-[60px_60px_1fr_auto_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-4 px-6 py-4 border-b border-white/10">
+            <div className="grid grid-cols-[48px_1fr_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-3 md:gap-4 px-4 md:px-6 py-4 border-b border-white/10">
               <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">PLAY</span>
-              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">#</span>
+              <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40">#</span>
               <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">TITLE</span>
               <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40">ARTIST</span>
-              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">PREVIEW</span>
+              <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">PREVIEW</span>
               <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">LENGTH</span>
             </div>
 
@@ -1074,7 +1076,7 @@ export default function Home() {
               return (
                 <div
                   key={t.id}
-                  className={`group grid grid-cols-[60px_60px_1fr_auto_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-4 px-6 py-4 border-b border-white/5 transition cursor-pointer ${
+                  className={`group grid grid-cols-[48px_1fr_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-3 md:gap-4 px-4 md:px-6 py-4 border-b border-white/5 transition cursor-pointer ${
                     isPlaying ? "bg-pink-500/10" : "hover:bg-white/[0.03]"
                   }`}
                   onClick={() => setPlayingTrack(isPlaying ? null : t.id)}
@@ -1096,12 +1098,15 @@ export default function Home() {
                       <Play size={14} fill="currentColor" className="ml-0.5" />
                     )}
                   </button>
-                  <span className={`font-mono-tight text-sm ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
+                  <span className={`hidden md:inline font-mono-tight text-sm ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
                     {String(t.id).padStart(2, "0")}
                   </span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className={`text-base md:text-lg font-bold truncate ${isPlaying ? "text-pink-200" : "text-white"}`}>
+                      <span className={`md:hidden font-mono-tight text-xs shrink-0 ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
+                        {String(t.id).padStart(2, "0")}
+                      </span>
+                      <p className={`text-sm md:text-lg font-bold truncate ${isPlaying ? "text-pink-200" : "text-white"}`}>
                         {t.title}
                       </p>
                       {isPlaying && (
@@ -1110,17 +1115,17 @@ export default function Home() {
                         </span>
                       )}
                     </div>
-                    <p className="md:hidden text-xs text-white/40 truncate font-mono-tight tracking-wider">
+                    <p className="md:hidden text-[11px] text-white/40 truncate font-mono-tight tracking-wider">
                       {t.artist}
                     </p>
                   </div>
                   <span className="hidden md:inline font-mono-tight text-sm text-white/50 tracking-wider truncate">
                     {t.artist}
                   </span>
-                  <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
+                  <span className="hidden md:inline font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
                     0:30
                   </span>
-                  <span className="font-mono-tight text-sm text-white/50 tabular-nums">
+                  <span className="font-mono-tight text-xs md:text-sm text-white/50 tabular-nums">
                     {t.duration}
                   </span>
                 </div>
@@ -1248,7 +1253,7 @@ export default function Home() {
       </section>
 
       {/* ================= CTA / 사전예약 ================= */}
-      <section id="cta" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f]">
+      <section id="cta" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1278,9 +1283,9 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="flex items-center justify-center gap-3 mb-4"
               >
-                <div className="h-px w-10 bg-white/60" />
-                <span className="section-label text-white/80">Now · Pre-register</span>
-                <div className="h-px w-10 bg-white/60" />
+                <div className="h-px w-6 md:w-10 bg-white/60" />
+                <span className="section-label text-white/80 whitespace-nowrap">Now · Pre-register</span>
+                <div className="h-px w-6 md:w-10 bg-white/60" />
               </motion.div>
 
               <motion.h3
@@ -1313,7 +1318,7 @@ export default function Home() {
                 {/* 메인 CTA */}
                 <button
                   onClick={() => setShowPopup(true)}
-                  className="group inline-flex items-center gap-3 px-10 py-4 bg-white text-black font-bold text-base hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
+                  className="group inline-flex items-center gap-2 md:gap-3 px-6 md:px-10 py-3.5 md:py-4 bg-white text-black font-bold text-sm md:text-base hover:bg-black hover:text-white transition-all duration-300 cursor-pointer whitespace-nowrap"
                 >
                   <span>무료로 사전예약하기</span>
                   <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -1369,9 +1374,8 @@ export default function Home() {
                   <Sparkles size={16} className="text-pink-400" />
                   <span className="section-label text-pink-400">Coming Soon</span>
                 </div>
-                <h3 className="font-display text-3xl text-white mb-4 leading-tight">
-                  조금만<br />
-                  <span className="gradient-text-pink">기다려주세요</span>
+                <h3 className="font-display text-3xl text-white mb-4 leading-tight whitespace-nowrap">
+                  조금만 <span className="gradient-text-pink">기다려주세요</span>
                 </h3>
                 <p className="text-white/50 text-sm leading-relaxed mb-8">
                   사전예약이 오픈되면 공식 채널을 통해 가장 먼저 안내드릴게요.
