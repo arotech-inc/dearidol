@@ -588,7 +588,7 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display leading-[1.1] md:whitespace-nowrap text-[clamp(1.6rem,4.2vw,3.75rem)]">
+              <h2 className="font-display leading-[1.1] md:whitespace-nowrap text-[clamp(2.25rem,5vw,3.75rem)]">
                 프로덕션의 모든 순간,<br />
                 <span className="gradient-text-pink">디어아이돌의 핵심 코어</span>
               </h2>
@@ -881,7 +881,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              단순 공·방 구조가 아닌, 아이돌의 활동 영역을 결정하는 성장 지표.
+              아이돌의 활동 영역을 결정하는 성장 지표.<br />
               스탯 · 커리어 · 성격 · 재능까지 — 아이돌마다 다른 길을 만드는 시스템.
             </p>
           </motion.div>
@@ -977,19 +977,24 @@ export default function Home() {
             </h3>
 
             <div className="relative">
-              <div className="absolute top-3 left-0 right-0 h-px bg-gradient-to-r from-pink-500/50 via-amber-400/50 to-pink-500/50" />
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-6 relative">
+              {/* 데스크탑: 가로 라인 */}
+              <div className="hidden md:block absolute top-3 left-0 right-0 h-px bg-gradient-to-r from-pink-500/50 via-amber-400/50 to-pink-500/50" />
+              {/* 모바일: 세로 라인 */}
+              <div className="md:hidden absolute left-3 top-3 bottom-3 w-px bg-gradient-to-b from-pink-500/50 via-amber-400/50 to-pink-500/50" />
+              <div className="flex flex-col gap-5 md:grid md:grid-cols-5 md:gap-6 relative">
                 {careerStages.map((stage, i) => (
-                  <div key={i} className="flex flex-col items-center text-center">
-                    <div className="w-6 h-6 rounded-full bg-[#0a0a0f] border-2 border-amber-400 flex items-center justify-center mb-3">
+                  <div key={i} className="flex md:flex-col items-center md:text-center gap-4 md:gap-0">
+                    <div className="relative z-10 shrink-0 w-6 h-6 rounded-full bg-[#0a0a0f] border-2 border-amber-400 flex items-center justify-center md:mb-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                     </div>
-                    <span className="text-white text-base md:text-lg font-bold mb-1">
-                      {stage.label}
-                    </span>
-                    <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
-                      {stage.en}
-                    </span>
+                    <div className="flex flex-col">
+                      <span className="text-white text-base md:text-lg font-bold md:mb-1">
+                        {stage.label}
+                      </span>
+                      <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
+                        {stage.en}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1005,7 +1010,7 @@ export default function Home() {
                   </span>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed">
-                  성격이 활동 선택 · 팬 호감도 · 팀 시너지에 영향을 줍니다. 카리스마형, 청순형, 4차원, 노력파…
+                  아이돌의 성격이 활동 선택 · 팬 호감도 · 팀 시너지에 영향을 줍니다.
                 </p>
               </div>
               <div>
