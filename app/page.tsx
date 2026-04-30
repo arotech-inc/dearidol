@@ -849,7 +849,7 @@ export default function Home() {
             className="mt-6 p-6 md:p-7 border border-pink-500/30 bg-pink-500/5 text-center"
           >
             <p className="text-pink-300 text-sm md:text-base font-bold tracking-wide">
-              협동 플레이로 시즌 이벤트 · 한정 보상 · 스트리머 콘텐츠로 확장 가능합니다.
+              협동 플레이로 시즌 이벤트 · 한정 보상까지 — 함께할수록 더 커집니다.
             </p>
           </motion.div>
         </div>
