@@ -42,37 +42,6 @@ const barColor: Record<string, string> = {
   "bg-indigo-400": "#818cf8",
 };
 
-function StatCounter({ target, delay = 0, className, color }: { target: number; delay?: number; className?: string; color?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { amount: 0.5 });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!inView) {
-      setCount(0);
-      return;
-    }
-    let raf = 0;
-    const startTimer = setTimeout(() => {
-      const start = performance.now();
-      const duration = 1200;
-      const tick = (now: number) => {
-        const t = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        setCount(Math.round(target * eased));
-        if (t < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    }, delay * 1000);
-    return () => {
-      clearTimeout(startTimer);
-      cancelAnimationFrame(raf);
-    };
-  }, [inView, target, delay]);
-
-  return <span ref={ref} className={className} style={color ? { color } : undefined}>{count}</span>;
-}
-
 const TopAccent = ({ bar }: { bar: string }) => {
   const c = barColor[bar] ?? "#f472b6";
   return (
@@ -372,11 +341,11 @@ export default function Home() {
   ];
 
   const categories = [
-    { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400", value: 92 },
-    { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400", value: 88 },
-    { Icon: Star, num: "03", ko: "비주얼", en: "Visual", bar: "bg-amber-400", value: 95 },
-    { Icon: Crown, num: "04", ko: "카리스마", en: "Charisma", bar: "bg-teal-400", value: 80 },
-    { Icon: Palette, num: "05", ko: "패션 · 열정", en: "Fashion · Passion", bar: "bg-pink-400", value: 75 },
+    { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400" },
+    { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400" },
+    { Icon: Star, num: "03", ko: "비주얼", en: "Visual", bar: "bg-amber-400" },
+    { Icon: Crown, num: "04", ko: "카리스마", en: "Charisma", bar: "bg-teal-400" },
+    { Icon: Palette, num: "05", ko: "패션 · 열정", en: "Fashion · Passion", bar: "bg-pink-400" },
   ];
 
   const careerStages = [
@@ -953,51 +922,35 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-3">
-                {categories.map((c, i) => {
-                  const color = barColor[c.bar] ?? "#f472b6";
-                  return (
-                    <div
-                      key={i}
-                      className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center overflow-hidden"
-                    >
-                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
-                      <div className="grid grid-cols-[40px_44px_minmax(110px,auto)_1fr_56px] items-center gap-4 w-full pl-6 pr-6 py-4">
-                        <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
-                          {c.num}
-                        </span>
-                        <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 group-hover:text-white transition">
-                          <c.Icon size={22} strokeWidth={1.5} />
-                        </div>
-                        <div className="flex flex-col leading-tight">
-                          <span className="text-white text-base md:text-lg font-bold">
-                            {c.ko}
-                          </span>
-                          <span className="font-mono-tight text-[10px] italic text-white/40 mt-0.5">
-                            {c.en}
-                          </span>
-                        </div>
-                        {/* 게이지 */}
-                        <div className="relative h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${c.value}%` }}
-                            viewport={{ once: false, amount: 0.5 }}
-                            transition={{ duration: 1.2, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-                            className="absolute inset-y-0 left-0 rounded-full"
-                            style={{ background: `linear-gradient(to right, ${color}aa, ${color})`, boxShadow: `0 0 12px ${color}80` }}
-                          />
-                        </div>
-                        {/* 수치 */}
-                        <StatCounter
-                          target={c.value}
-                          delay={i * 0.1}
-                          color={color}
-                          className="font-display text-xl md:text-2xl tabular-nums text-right"
-                        />
+                {categories.map((c, i) => (
+                  <div
+                    key={i}
+                    className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
+                  >
+                    {/* 좌측 컬러 게이지: 왼쪽→오른쪽으로 차오름 */}
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: false, amount: 0.5 }}
+                      transition={{ duration: 0.9, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+                      className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar} origin-left`}
+                    />
+                    <div className="grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
+                      <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
+                        {c.num}
+                      </span>
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 group-hover:text-white transition">
+                        <c.Icon size={22} strokeWidth={1.5} />
                       </div>
+                      <span className="text-white text-base md:text-lg font-bold">
+                        {c.ko}
+                      </span>
+                      <span className="font-mono-tight text-xs italic text-white/40">
+                        {c.en}
+                      </span>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             </div>
           </motion.div>
