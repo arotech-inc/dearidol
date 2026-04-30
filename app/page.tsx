@@ -341,11 +341,11 @@ export default function Home() {
   ];
 
   const categories = [
-    { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400" },
-    { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400" },
-    { Icon: Star, num: "03", ko: "비주얼", en: "Visual", bar: "bg-amber-400" },
-    { Icon: Crown, num: "04", ko: "카리스마", en: "Charisma", bar: "bg-teal-400" },
-    { Icon: Palette, num: "05", ko: "패션 · 열정", en: "Fashion · Passion", bar: "bg-pink-400" },
+    { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400", value: 42 },
+    { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400", value: 30 },
+    { Icon: Star, num: "03", ko: "비주얼", en: "Visual", bar: "bg-amber-400", value: 62 },
+    { Icon: Crown, num: "04", ko: "카리스마", en: "Charisma", bar: "bg-teal-400", value: 46 },
+    { Icon: Palette, num: "05", ko: "패션 · 열정", en: "Fashion · Passion", bar: "bg-pink-400", value: 38 },
   ];
 
   const careerStages = [
@@ -922,35 +922,41 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-3">
-                {categories.map((c, i) => (
-                  <div
-                    key={i}
-                    className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
-                  >
-                    {/* 좌측 컬러 게이지: 왼쪽→오른쪽으로 차오름 */}
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: false, amount: 0.5 }}
-                      transition={{ duration: 0.9, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
-                      className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar} origin-left`}
-                    />
-                    <div className="grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
-                      <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
-                        {c.num}
-                      </span>
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 group-hover:text-white transition">
-                        <c.Icon size={22} strokeWidth={1.5} />
+                {categories.map((c, i) => {
+                  const color = barColor[c.bar] ?? "#f472b6";
+                  return (
+                    <div
+                      key={i}
+                      className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center overflow-hidden"
+                    >
+                      {/* 가로 게이지 채움 (왼쪽→오른쪽) */}
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${c.value}%` }}
+                        viewport={{ once: false, amount: 0.5 }}
+                        transition={{ duration: 1.1, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+                        className="absolute left-0 top-0 bottom-0 pointer-events-none"
+                        style={{ background: `linear-gradient(to right, ${color}33 0%, ${color}1f 60%, ${color}0a 100%)` }}
+                      />
+                      {/* 좌측 컬러 액센트 */}
+                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
+                      <div className="relative grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
+                        <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
+                          {c.num}
+                        </span>
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 group-hover:text-white transition">
+                          <c.Icon size={22} strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white text-base md:text-lg font-bold">
+                          {c.ko}
+                        </span>
+                        <span className="font-mono-tight text-xs italic text-white/40">
+                          {c.en}
+                        </span>
                       </div>
-                      <span className="text-white text-base md:text-lg font-bold">
-                        {c.ko}
-                      </span>
-                      <span className="font-mono-tight text-xs italic text-white/40">
-                        {c.en}
-                      </span>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </motion.div>
