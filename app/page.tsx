@@ -581,7 +581,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-12 items-end mb-14"
+            className="grid md:grid-cols-2 gap-12 items-center mb-14"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -594,8 +594,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              Multi-User Rhythm Party · Dance Card Battle · Avatar/Idol · Music Video · Production · Social Space —
-              여섯 개의 코어 시스템이 하나의 K-POP 프로덕션 라이브 서비스로 묶여 있습니다.
+              여섯 개의 코어 시스템으로 폭 넓은 라이브 서비스를 경험
             </p>
           </motion.div>
 
@@ -773,7 +772,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-12 items-end mb-14"
+            className="grid md:grid-cols-2 gap-12 items-center mb-14"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -868,7 +867,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-12 items-end mb-14"
+            className="grid md:grid-cols-2 gap-12 items-center mb-14"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -924,28 +923,34 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-3">
-                {categories.map((c, i) => (
-                  <div
-                    key={i}
-                    className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
-                  >
-                    <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
-                    <div className="grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
-                      <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
-                        {c.num}
-                      </span>
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 group-hover:text-white transition">
-                        <c.Icon size={22} strokeWidth={1.5} />
+                {categories.map((c, i) => {
+                  const color = barColor[c.bar] ?? "#f472b6";
+                  return (
+                    <div
+                      key={i}
+                      className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
+                    >
+                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
+                      <div className="grid grid-cols-[60px_50px_1fr_auto] items-center gap-4 w-full pl-6 pr-6 py-4">
+                        <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
+                          {c.num}
+                        </span>
+                        <div
+                          className="flex items-center justify-center w-10 h-10 rounded-lg border transition duration-500 group-hover:shadow-[0_0_18px_currentColor]"
+                          style={{ color, borderColor: `${color}66` }}
+                        >
+                          <c.Icon size={22} strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white text-base md:text-lg font-bold">
+                          {c.ko}
+                        </span>
+                        <span className="font-mono-tight text-xs italic text-white/40">
+                          {c.en}
+                        </span>
                       </div>
-                      <span className="text-white text-base md:text-lg font-bold">
-                        {c.ko}
-                      </span>
-                      <span className="font-mono-tight text-xs italic text-white/40">
-                        {c.en}
-                      </span>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </motion.div>
@@ -1029,7 +1034,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-12 items-end mb-12"
+            className="grid md:grid-cols-2 gap-12 items-center mb-12"
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
