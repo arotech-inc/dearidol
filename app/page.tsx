@@ -31,6 +31,33 @@ import {
   Trophy,
 } from "lucide-react";
 
+const barColor: Record<string, string> = {
+  "bg-pink-400": "#f472b6",
+  "bg-pink-500": "#ec4899",
+  "bg-blue-400": "#60a5fa",
+  "bg-emerald-400": "#34d399",
+  "bg-amber-400": "#fbbf24",
+  "bg-teal-400": "#2dd4bf",
+  "bg-purple-400": "#c084fc",
+  "bg-indigo-400": "#818cf8",
+};
+
+const TopAccent = ({ bar }: { bar: string }) => {
+  const c = barColor[bar] ?? "#f472b6";
+  return (
+    <>
+      <div
+        className="pointer-events-none absolute -top-2 left-0 right-0 h-4 blur-md opacity-70"
+        style={{ background: `linear-gradient(to right, transparent 5%, ${c} 50%, transparent 95%)` }}
+      />
+      <div
+        className="pointer-events-none absolute top-0 left-0 right-0 h-[2px]"
+        style={{ background: `linear-gradient(to right, transparent, ${c}, transparent)` }}
+      />
+    </>
+  );
+};
+
 export default function Home() {
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
@@ -520,7 +547,7 @@ export default function Home() {
                 key={i}
                 className="group relative p-8 md:p-10 bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500"
               >
-                <div className={`absolute top-0 left-0 right-0 h-0.5 ${item.bar}`} />
+                <TopAccent bar={item.bar} />
                 <div className="flex items-center justify-between mb-8">
                   <span className={`font-mono-tight text-xs tracking-[0.3em] ${item.accent}`}>
                     {item.num} · {item.en}
@@ -583,8 +610,8 @@ export default function Home() {
                 key={i}
                 className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500"
               >
-                {/* 컬러 상단 라인 */}
-                <div className={`absolute top-0 left-0 right-0 h-0.5 ${p.bar}`} />
+                {/* 컬러 상단 라인 (그라디언트 + 글로우) */}
+                <TopAccent bar={p.bar} />
 
                 {/* 콘텐츠 */}
                 <div className="p-6">
@@ -782,9 +809,8 @@ export default function Home() {
                 key={i}
                 className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 hover:bg-white/[0.04] transition duration-500 p-7"
               >
-                {/* 호버 시 상단 라인 글로우 */}
-                <div className={`absolute inset-x-6 -top-1 h-2 ${m.bar} blur-md opacity-0 group-hover:opacity-100 transition duration-500`} />
-                <div className={`absolute top-0 left-0 right-0 h-0.5 ${m.bar}`} />
+                {/* 컬러 상단 라인 (그라디언트 + 글로우) */}
+                <TopAccent bar={m.bar} />
 
                 <div className="flex items-center justify-between mb-7">
                   <span className={`font-mono-tight text-xs tracking-[0.3em] ${m.accent}`}>
