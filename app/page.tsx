@@ -1021,7 +1021,8 @@ export default function Home() {
                   </span>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed">
-                  재능 시스템은 같은 등급의 아이돌도 서로 다른 강점을 갖게 만듭니다. 뽑은 그날부터 운명이 갈립니다.
+                  재능 시스템은 같은 등급의 아이돌도 서로 다른 강점을 갖게 만듭니다. <br />
+                  뽑은 그날부터 운명이 갈립니다.
                 </p>
               </div>
             </div>
@@ -1208,7 +1209,7 @@ export default function Home() {
                 <span className="section-label text-white/70">Notice</span>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <p className="font-mono-tight text-pink-400/80 text-xs mb-3">{newsData[activeNews].date}</p>
+                <p className="font-mono-tight text-white/90 text-xs font-bold tracking-wider mb-3 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">{newsData[activeNews].date}</p>
                 <h3 className="text-white text-2xl md:text-3xl font-bold leading-tight group-hover:text-pink-200 transition max-w-lg">
                   {newsData[activeNews].title}
                 </h3>
