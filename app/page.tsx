@@ -465,7 +465,7 @@ export default function Home() {
               </a>
               <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
                 className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-                <Image src="/appstore.png" alt="App Store" width={160} height={52} className="w-[150px] md:w-[160px] h-auto" />
+                <Image src="/appstore.svg" alt="App Store" width={160} height={52} className="w-[150px] md:w-[160px] h-auto" />
               </a>
             </div>
           </motion.div>
@@ -1347,7 +1347,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg"
                   >
-                    <Image src="/appstore.png" alt="App Store" width={160} height={52} />
+                    <Image src="/appstore.svg" alt="App Store" width={160} height={52} />
                   </a>
                 </div>
               </motion.div>
