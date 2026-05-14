@@ -6,9 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const menuItems = [
-  { label: "News", link: "/news" },
   { label: "System", link: "/#core" },
   { label: "Soundtrack", link: "/#soundtrack" },
+  { label: "News", link: "/news" },
   { label: "고객센터", link: "/cs" },
 ];
 
@@ -75,23 +75,23 @@ export default function DearIdolHeader() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 w-80 h-full bg-gradient-to-b from-zinc-900 to-black border-l border-white/10 z-[120] flex flex-col"
+              className="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-gradient-to-b from-zinc-900 to-black border-l border-white/10 z-[120] flex flex-col overflow-hidden"
             >
               {/* 메뉴 상단 */}
-              <div className="p-8 border-b border-white/10">
-                <Image src="/IDOL_LOGO.png" alt="Dear Idol" width={120} height={120} className="object-contain mb-4" />
+              <div className="px-6 pt-6 pb-5 border-b border-white/10">
+                <Image src="/IDOL_LOGO.png" alt="Dear Idol" width={90} height={90} className="object-contain mb-2" />
                 <p className="text-white/40 text-xs">PRODUCE YOUR STAR</p>
               </div>
 
               {/* 메뉴 링크 */}
-              <nav className="flex-1 p-8">
-                <ul className="space-y-2">
+              <nav className="flex-1 px-6 py-5 overflow-hidden">
+                <ul className="space-y-1.5">
                   {menuItems.map((item, i) => (
                     <li key={i}>
                       <Link
                         href={item.link}
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center justify-between py-4 px-4 rounded-xl text-white/80 hover:text-pink-400 hover:bg-white/5 transition group"
+                        className="flex items-center justify-between py-3 px-4 rounded-xl text-white/80 hover:text-pink-400 hover:bg-white/5 transition group"
                       >
                         <span className="text-lg font-semibold">{item.label}</span>
                         <span className="text-white/20 group-hover:text-pink-400 group-hover:translate-x-1 transition-all">→</span>
@@ -102,7 +102,7 @@ export default function DearIdolHeader() {
               </nav>
 
               {/* 메뉴 하단 */}
-              <div className="p-8 border-t border-white/10 space-y-3">
+              <div className="px-6 py-5 border-t border-white/10 space-y-2.5">
                 <button
                   onClick={() => { setIsMenuOpen(false); setShowAuth("login"); }}
                   className="w-full py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition cursor-pointer"

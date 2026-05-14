@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-32 px-6">
+    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-32 px-5 md:px-8">
       <div className="max-w-3xl mx-auto">
 
         <h1 className="text-4xl md:text-5xl font-bold text-pink-400 mb-2">개인정보처리방침</h1>

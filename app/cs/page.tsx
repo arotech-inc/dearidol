@@ -225,7 +225,7 @@ export default function CSPage() {
   const [activeTab, setActiveTab] = useState("faq");
 
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-32 px-6">
+    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-32 px-5 md:px-8">
       <div className="max-w-4xl mx-auto">
 
         {/* 헤더 */}

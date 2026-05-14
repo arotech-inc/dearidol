@@ -19,7 +19,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
   }
 
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-24 pb-12 px-6 md:px-20">
+    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-24 pb-12 px-5 md:px-20">
       <div className="max-w-4xl mx-auto">
 
         {/* 카테고리 뱃지 */}

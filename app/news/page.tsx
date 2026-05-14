@@ -42,7 +42,7 @@ export default function NewsListPage() {
   };
 
   return (
-    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-32 px-6 relative overflow-hidden">
+    <main className="bg-gradient-to-b from-black via-purple-950 to-black text-white min-h-screen pt-40 pb-32 px-5 md:px-8 relative overflow-hidden">
       {/* 배경 장식 */}
       <div className="absolute top-40 left-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-40 right-10 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />

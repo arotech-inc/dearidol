@@ -235,6 +235,7 @@ export default function Home() {
       dot: "bg-pink-500/30",
       border: "border-pink-500/40",
       bg: "bg-pink-500/[0.02]",
+      image: "",
     },
     {
       Icon: Layers,
@@ -248,6 +249,7 @@ export default function Home() {
       dot: "bg-blue-400/30",
       border: "border-blue-400/40",
       bg: "bg-blue-400/[0.02]",
+      image: "/dance card.png",
     },
     {
       Icon: Shirt,
@@ -261,6 +263,7 @@ export default function Home() {
       dot: "bg-emerald-400/30",
       border: "border-emerald-400/40",
       bg: "bg-emerald-400/[0.02]",
+      image: "/idol-Customization.png",
     },
     {
       Icon: Clapperboard,
@@ -274,6 +277,7 @@ export default function Home() {
       dot: "bg-amber-400/30",
       border: "border-amber-400/40",
       bg: "bg-amber-400/[0.02]",
+      image: "/music-video.png",
     },
     {
       Icon: Building2,
@@ -287,6 +291,7 @@ export default function Home() {
       dot: "bg-purple-500/30",
       border: "border-purple-500/40",
       bg: "bg-purple-500/[0.02]",
+      image: "/schedule.png",
     },
     {
       Icon: Sofa,
@@ -300,6 +305,7 @@ export default function Home() {
       dot: "bg-cyan-400/30",
       border: "border-cyan-400/40",
       bg: "bg-cyan-400/[0.02]",
+      image: "/design.png",
     },
   ];
 
@@ -390,7 +396,7 @@ export default function Home() {
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } } }}
-          className="relative z-10 px-8 w-full max-w-5xl mx-auto flex flex-col items-center text-center"
+          className="relative z-10 px-5 md:px-8 w-full max-w-5xl mx-auto flex flex-col items-center text-center"
         >
           {/* 상단 라벨 */}
           <motion.div
@@ -461,11 +467,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3">
               <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
                 className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-                <Image src="/googleplay.png" alt="Google Play" width={160} height={52} className="w-[150px] md:w-[160px] h-auto" />
+                <Image src="/googleplay.png" alt="Google Play" width={564} height={167} className="h-[44px] md:h-[48px] w-auto" />
               </a>
               <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
                 className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300">
-                <Image src="/appstore.svg" alt="App Store" width={160} height={52} className="w-[150px] md:w-[160px] h-auto" />
+                <Image src="/appstore.svg" alt="App Store" width={564} height={190} className="h-[44px] md:h-[48px] w-auto" />
               </a>
             </div>
           </motion.div>
@@ -483,7 +489,7 @@ export default function Home() {
         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -575,7 +581,7 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-blue-500/8 blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -634,37 +640,49 @@ export default function Home() {
                     {p.desc}
                   </p>
 
-                  {/* 점선 박스 placeholder — HUD 스타일 */}
-                  <div className={`relative aspect-[4/3] border border-dashed ${p.border} ${p.bg} flex flex-col items-center justify-center overflow-hidden`}>
-                    {/* 배경 그리드 */}
-                    <div className="absolute inset-0 grid-pattern opacity-40" />
+                  {/* 미리보기 박스 — 이미지 있으면 이미지, 없으면 HUD placeholder */}
+                  <div className={`relative aspect-[4/3] border ${p.image ? "" : "border-dashed"} ${p.border} ${p.image ? "" : p.bg} flex flex-col items-center justify-center overflow-hidden`}>
+                    {p.image ? (
+                      <Image
+                        src={p.image}
+                        alt={p.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <>
+                        {/* 배경 그리드 */}
+                        <div className="absolute inset-0 grid-pattern opacity-40" />
 
-                    {/* 코너 마커 (HUD 느낌) */}
-                    <div className={`absolute top-1.5 left-1.5 w-3 h-3 border-l border-t ${p.border} opacity-80`} />
-                    <div className={`absolute top-1.5 right-1.5 w-3 h-3 border-r border-t ${p.border} opacity-80`} />
-                    <div className={`absolute bottom-1.5 left-1.5 w-3 h-3 border-l border-b ${p.border} opacity-80`} />
-                    <div className={`absolute bottom-1.5 right-1.5 w-3 h-3 border-r border-b ${p.border} opacity-80`} />
+                        {/* 메인 시각 요소 */}
+                        <div className="relative z-10 flex flex-col items-center">
+                          <div className="relative w-14 h-14 mb-5">
+                            <div className={`absolute inset-0 rounded-full ${p.dot} blur-2xl glow-pulse`} />
+                            <div className={`relative w-full h-full rounded-full border ${p.ring} flex items-center justify-center backdrop-blur-sm bg-black/20`}>
+                              <p.Icon size={22} strokeWidth={1.5} className={p.accent} />
+                            </div>
+                          </div>
+
+                          <p className={`font-mono-tight text-[9px] tracking-[0.3em] ${p.accent} mb-2`}>
+                            PREVIEW · {p.num}
+                          </p>
+                          <p className="text-white/60 text-[11px] font-bold px-4 text-center leading-relaxed">
+                            {p.title}
+                          </p>
+                        </div>
+                      </>
+                    )}
+
+                    {/* 코너 마커 (HUD 느낌, 이미지 위에서도 표시) */}
+                    <div className={`absolute top-1.5 left-1.5 w-3 h-3 border-l border-t ${p.border} opacity-80 z-10`} />
+                    <div className={`absolute top-1.5 right-1.5 w-3 h-3 border-r border-t ${p.border} opacity-80 z-10`} />
+                    <div className={`absolute bottom-1.5 left-1.5 w-3 h-3 border-l border-b ${p.border} opacity-80 z-10`} />
+                    <div className={`absolute bottom-1.5 right-1.5 w-3 h-3 border-r border-b ${p.border} opacity-80 z-10`} />
 
                     {/* 호버 시 스캔라인 */}
-                    <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none">
+                    <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none z-10">
                       <div className={`absolute inset-x-0 h-[40%] scan-line bg-gradient-to-b from-transparent via-white/[0.05] to-transparent`} />
-                    </div>
-
-                    {/* 메인 시각 요소 */}
-                    <div className="relative z-10 flex flex-col items-center">
-                      <div className="relative w-14 h-14 mb-5">
-                        <div className={`absolute inset-0 rounded-full ${p.dot} blur-2xl glow-pulse`} />
-                        <div className={`relative w-full h-full rounded-full border ${p.ring} flex items-center justify-center backdrop-blur-sm bg-black/20`}>
-                          <p.Icon size={22} strokeWidth={1.5} className={p.accent} />
-                        </div>
-                      </div>
-
-                      <p className={`font-mono-tight text-[9px] tracking-[0.3em] ${p.accent} mb-2`}>
-                        PREVIEW · {p.num}
-                      </p>
-                      <p className="text-white/60 text-[11px] font-bold px-4 text-center leading-relaxed">
-                        {p.title}
-                      </p>
                     </div>
                   </div>
 
@@ -765,7 +783,7 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
         <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           {/* 섹션 타이틀 */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -861,7 +879,7 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-amber-500/8 blur-[120px]" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1036,7 +1054,7 @@ export default function Home() {
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1158,7 +1176,7 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute top-40 -right-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1260,7 +1278,7 @@ export default function Home() {
 
       {/* ================= CTA / 사전예약 ================= */}
       <section id="cta" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1281,7 +1299,7 @@ export default function Home() {
             <div className="absolute inset-0 grid-pattern opacity-30" />
 
             {/* 콘텐츠 */}
-            <div className="relative px-8 md:px-16 py-16 md:py-24 text-center">
+            <div className="relative px-5 md:px-16 py-16 md:py-24 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1339,7 +1357,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg"
                   >
-                    <Image src="/googleplay.png" alt="Google Play" width={160} height={52} />
+                    <Image src="/googleplay.png" alt="Google Play" width={564} height={167} className="h-[48px] w-auto" />
                   </a>
                   <a
                     href="https://www.apple.com/app-store/"
@@ -1347,7 +1365,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg"
                   >
-                    <Image src="/appstore.svg" alt="App Store" width={160} height={52} />
+                    <Image src="/appstore.svg" alt="App Store" width={564} height={190} className="h-[48px] w-auto" />
                   </a>
                 </div>
               </motion.div>
