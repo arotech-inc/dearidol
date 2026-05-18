@@ -235,7 +235,7 @@ export default function Home() {
       dot: "bg-pink-500/30",
       border: "border-pink-500/40",
       bg: "bg-pink-500/[0.02]",
-      image: "",
+      image: "/multi-user.png",
     },
     {
       Icon: Layers,
