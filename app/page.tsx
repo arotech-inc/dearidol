@@ -466,12 +466,12 @@ export default function Home() {
             <span className="section-label text-white/40 md:hidden">Available on</span>
             <div className="flex items-center justify-center gap-3">
               <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
-                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
-                <Image src="/googleplay.png" alt="Google Play" width={564} height={167} className="w-[148px] md:w-[160px] h-auto" />
+                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 block w-[148px] h-[44px] md:w-[160px] md:h-[48px] relative">
+                <Image src="/googleplay.png" alt="Google Play" fill className="object-cover" />
               </a>
               <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
-                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
-                <Image src="/appstore.svg" alt="App Store" width={564} height={190} className="w-[148px] md:w-[160px] h-auto" />
+                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 block w-[148px] h-[44px] md:w-[160px] md:h-[48px] relative">
+                <Image src="/appstore.svg" alt="App Store" fill className="object-cover" />
               </a>
             </div>
           </motion.div>
@@ -1355,17 +1355,17 @@ export default function Home() {
                     href="https://play.google.com/store"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg inline-block"
+                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg block w-[160px] h-[48px] relative"
                   >
-                    <Image src="/googleplay.png" alt="Google Play" width={564} height={167} className="w-[160px] h-auto" />
+                    <Image src="/googleplay.png" alt="Google Play" fill className="object-cover" />
                   </a>
                   <a
                     href="https://www.apple.com/app-store/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg inline-block"
+                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg block w-[160px] h-[48px] relative"
                   >
-                    <Image src="/appstore.svg" alt="App Store" width={564} height={190} className="w-[160px] h-auto" />
+                    <Image src="/appstore.svg" alt="App Store" fill className="object-cover" />
                   </a>
                 </div>
               </motion.div>
