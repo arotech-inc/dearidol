@@ -14,6 +14,8 @@ import {
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Sparkles,
   Play,
   Users,
@@ -63,6 +65,7 @@ const TopAccent = ({ bar }: { bar: string }) => {
 export default function Home() {
   const router = useRouter();
   const [activeNews, setActiveNews] = useState(0);
+  const [activePillar, setActivePillar] = useState(0);
   const [playingTrack, setPlayingTrack] = useState<number | null>(null);
 
   // 50 카운트업 (Idol Management 섹션)
@@ -449,20 +452,47 @@ export default function Home() {
             </div>
             <span className="section-label text-white/40 md:hidden">Available on</span>
             <div className="flex items-center justify-center gap-3">
-              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
-                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
-                <Image src="/googleplay.png" alt="Google Play" width={161} height={48} className="h-11 md:h-12 w-auto" />
+              {/* App Store 버튼 */}
+              <a
+                href="https://www.apple.com/app-store/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-start gap-3 w-[180px] md:w-[200px] h-12 md:h-14 px-4 rounded-full bg-black border border-white/15 hover:border-white/40 transition"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-white shrink-0">
+                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09M12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z" />
+                </svg>
+                <span className="flex flex-col items-start leading-tight">
+                  <span className="text-[10px] text-white/60">다운로드</span>
+                  <span className="text-sm md:text-base font-bold text-white">App Store</span>
+                </span>
               </a>
-              <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
-                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
-                <Image src="/appstore.svg" alt="App Store" width={144} height={48} className="h-11 md:h-12 w-auto" />
+
+              {/* Google Play 버튼 */}
+              <a
+                href="https://play.google.com/store"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-start gap-3 w-[180px] md:w-[200px] h-12 md:h-14 px-4 rounded-full bg-black border border-white/15 hover:border-white/40 transition"
+              >
+                <svg viewBox="0 0 24 24" className="w-7 h-7 shrink-0">
+                  <path fill="#FFC107" d="M21.6 12 14.1 6.6l-2 1.8 6.9 6.4-6.9 6.4 2 1.8L21.6 12Z"/>
+                  <path fill="#FF3D00" d="M3.6 2.8c-.4.3-.6.8-.6 1.4v15.6c0 .6.2 1.1.6 1.4l8.5-8.2L3.6 2.8Z"/>
+                  <path fill="#4CAF50" d="m12.1 8.4 2 1.8 4.9-2.8-9.6-5.7c-.5-.3-1-.4-1.5-.3-.2 0-.4.1-.5.2l4.7 6.8Z"/>
+                  <path fill="#1976D2" d="m12.1 15.6-2 1.8 4.6 6.6c.2.1.3.1.5.2.5.1 1 0 1.5-.3l9.6-5.7-4.9-2.8-4.6 1.6-4.7-1.4Z"/>
+                </svg>
+                <span className="flex flex-col items-start leading-tight">
+                  <span className="text-[10px] text-white/60">다운로드</span>
+                  <span className="text-sm md:text-base font-bold text-white">Google Play</span>
+                </span>
               </a>
+
               {/* 트레일러 아이콘 버튼 */}
               <a
                 href="#scenes"
                 aria-label="트레일러 보기"
                 title="트레일러 보기"
-                className="group ml-1 w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:border-white hover:text-black transition text-white/80 shrink-0"
+                className="group ml-1 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:border-white hover:text-black transition text-white/80 shrink-0"
               >
                 <Play size={14} fill="currentColor" className="ml-0.5" />
               </a>
@@ -597,98 +627,197 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* 6 Pillars 그리드 */}
+          {/* 6 Pillars 탭 + 슬라이드 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
           >
-            {pillars.map((p, i) => (
-              <div
-                key={i}
-                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500"
-              >
-                {/* 컬러 상단 라인 (그라디언트 + 글로우) */}
-                <TopAccent bar={p.bar} />
-
-                {/* 콘텐츠 */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <span className={`font-mono-tight text-xs tracking-[0.3em] ${p.accent}`}>
-                        {p.num} · CORE PILLAR
+            {/* 탭 — 6개 번호 + 라벨 (모바일은 짧게, 데스크톱은 풀 라벨) */}
+            <div className="relative mb-6 md:mb-8">
+              <div className="flex gap-1 overflow-x-auto scrollbar-none pb-2 border-b border-white/10">
+                {pillars.map((p, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActivePillar(i)}
+                    className={`relative shrink-0 px-3 md:px-6 py-2.5 md:py-3 text-left transition group ${
+                      activePillar === i ? "text-white" : "text-white/40 hover:text-white/70"
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5 md:gap-2 mb-0 md:mb-0.5">
+                      <span className={`font-mono-tight text-[10px] tracking-[0.2em] ${activePillar === i ? p.accent : ""}`}>
+                        {p.num}
                       </span>
-                      <h3 className="text-white text-lg font-bold mt-2 leading-tight group-hover:text-pink-200 transition">
-                        {p.title}
-                      </h3>
+                      <p.Icon size={12} strokeWidth={1.8} className={activePillar === i ? p.accent : "text-white/30"} />
                     </div>
-                    <div className={`shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-xl border ${p.ring} ${p.accent} group-hover:shadow-[0_0_20px_currentColor] transition duration-500`}>
-                      <p.Icon size={20} strokeWidth={1.5} />
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-white/50 leading-relaxed mb-5 min-h-[40px]">
-                    {p.desc}
-                  </p>
-
-                  {/* 미리보기 박스 — 이미지 있으면 이미지, 없으면 HUD placeholder */}
-                  <div className={`relative aspect-[4/3] border ${p.image ? "" : "border-dashed"} ${p.border} ${p.image ? "" : p.bg} flex flex-col items-center justify-center overflow-hidden`}>
-                    {p.image ? (
-                      <Image
-                        src={p.image}
-                        alt={p.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-contain transition duration-500 group-hover:scale-105"
+                    {/* 모바일: 라벨 짧게 / 데스크톱: 풀 */}
+                    <span className="hidden md:block text-sm font-bold whitespace-nowrap">{p.tag}</span>
+                    {/* 활성 인디케이터 */}
+                    {activePillar === i && (
+                      <motion.div
+                        layoutId="pillarTabIndicator"
+                        className={`absolute -bottom-[1px] left-0 right-0 h-[2px] ${p.bar}`}
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
-                    ) : (
-                      <>
-                        {/* 배경 그리드 */}
-                        <div className="absolute inset-0 grid-pattern opacity-40" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                        {/* 메인 시각 요소 */}
-                        <div className="relative z-10 flex flex-col items-center">
-                          <div className="relative w-14 h-14 mb-5">
-                            <div className={`absolute inset-0 rounded-full ${p.dot} blur-2xl glow-pulse`} />
-                            <div className={`relative w-full h-full rounded-full border ${p.ring} flex items-center justify-center backdrop-blur-sm bg-black/20`}>
-                              <p.Icon size={22} strokeWidth={1.5} className={p.accent} />
+            {/* 슬라이드 콘텐츠 (모바일 스와이프 지원) */}
+            <motion.div
+              className="relative touch-pan-y"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                const threshold = 60;
+                if (info.offset.x < -threshold) {
+                  setActivePillar((p) => (p + 1) % pillars.length);
+                } else if (info.offset.x > threshold) {
+                  setActivePillar((p) => (p - 1 + pillars.length) % pillars.length);
+                }
+              }}
+            >
+              <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center md:min-h-[420px]">
+                {/* 이미지 — 모바일 위 / 데스크톱 좌측 */}
+                <div className="relative order-1">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`img-${activePillar}`}
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                      className={`relative aspect-[4/3] border ${pillars[activePillar].border} overflow-hidden ${pillars[activePillar].image ? "" : pillars[activePillar].bg}`}
+                    >
+                      {pillars[activePillar].image ? (
+                        <Image
+                          src={pillars[activePillar].image}
+                          alt={pillars[activePillar].title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-contain pointer-events-none select-none"
+                          draggable={false}
+                          priority
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="grid-pattern absolute inset-0 opacity-40" />
+                          <div className="relative z-10 flex flex-col items-center">
+                            <div className="relative w-20 h-20 mb-5">
+                              <div className={`absolute inset-0 rounded-full ${pillars[activePillar].dot} blur-2xl glow-pulse`} />
+                              <div className={`relative w-full h-full rounded-full border ${pillars[activePillar].ring} flex items-center justify-center backdrop-blur-sm bg-black/20`}>
+                                {(() => {
+                                  const Icon = pillars[activePillar].Icon;
+                                  return <Icon size={28} strokeWidth={1.5} className={pillars[activePillar].accent} />;
+                                })()}
+                              </div>
                             </div>
                           </div>
-
-                          <p className={`font-mono-tight text-[9px] tracking-[0.3em] ${p.accent} mb-2`}>
-                            PREVIEW · {p.num}
-                          </p>
-                          <p className="text-white/60 text-[11px] font-bold px-4 text-center leading-relaxed">
-                            {p.title}
-                          </p>
                         </div>
-                      </>
-                    )}
+                      )}
 
-                    {/* 코너 마커 (HUD 느낌, 이미지 위에서도 표시) */}
-                    <div className={`absolute top-1.5 left-1.5 w-3 h-3 border-l border-t ${p.border} opacity-80 z-10`} />
-                    <div className={`absolute top-1.5 right-1.5 w-3 h-3 border-r border-t ${p.border} opacity-80 z-10`} />
-                    <div className={`absolute bottom-1.5 left-1.5 w-3 h-3 border-l border-b ${p.border} opacity-80 z-10`} />
-                    <div className={`absolute bottom-1.5 right-1.5 w-3 h-3 border-r border-b ${p.border} opacity-80 z-10`} />
+                      {/* 코너 마커 */}
+                      <div className={`absolute top-1.5 left-1.5 w-3 h-3 border-l border-t ${pillars[activePillar].border} opacity-80 z-10`} />
+                      <div className={`absolute top-1.5 right-1.5 w-3 h-3 border-r border-t ${pillars[activePillar].border} opacity-80 z-10`} />
+                      <div className={`absolute bottom-1.5 left-1.5 w-3 h-3 border-l border-b ${pillars[activePillar].border} opacity-80 z-10`} />
+                      <div className={`absolute bottom-1.5 right-1.5 w-3 h-3 border-r border-b ${pillars[activePillar].border} opacity-80 z-10`} />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
-                    {/* 호버 시 스캔라인 */}
-                    <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none z-10">
-                      <div className={`absolute inset-x-0 h-[40%] scan-line bg-gradient-to-b from-transparent via-white/[0.05] to-transparent`} />
-                    </div>
-                  </div>
+                {/* 설명 — 모바일 아래 / 데스크톱 우측 */}
+                <div className="relative order-2">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`txt-${activePillar}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    >
+                      <div className="flex items-center gap-3 mb-3 md:mb-4">
+                        <span className={`font-mono-tight text-[10px] md:text-xs tracking-[0.3em] ${pillars[activePillar].accent}`}>
+                          {pillars[activePillar].num} · CORE PILLAR
+                        </span>
+                        <div className={`h-px flex-1 ${pillars[activePillar].border.replace("border-", "bg-").replace("/40", "/30")}`} />
+                      </div>
 
-                  {/* 하단 태그 */}
-                  <div className="flex items-center gap-2 mt-4">
-                    <span className="font-mono-tight text-[10px] text-white/30 tracking-[0.2em] uppercase">
-                      {p.tag}
-                    </span>
-                    <div className="h-px flex-1 bg-white/10" />
-                  </div>
+                      <h3 className="font-display text-2xl md:text-4xl lg:text-5xl text-white leading-tight mb-3 md:mb-5">
+                        {pillars[activePillar].title}
+                      </h3>
+
+                      <p className="text-sm md:text-lg text-white/60 leading-relaxed mb-6 md:mb-8 max-w-md">
+                        {pillars[activePillar].desc}
+                      </p>
+
+                      <div className="flex items-center gap-3">
+                        <span className={`inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-xl border ${pillars[activePillar].ring} ${pillars[activePillar].accent}`}>
+                          {(() => {
+                            const Icon = pillars[activePillar].Icon;
+                            return <Icon size={16} strokeWidth={1.5} />;
+                          })()}
+                        </span>
+                        <span className={`font-mono-tight text-[10px] md:text-xs tracking-[0.3em] ${pillars[activePillar].accent}`}>
+                          {pillars[activePillar].tag.toUpperCase()}
+                        </span>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
-            ))}
+
+              {/* 모바일: 스와이프 힌트 + 도트 인디케이터 */}
+              <div className="md:hidden flex flex-col items-center gap-3 mt-6 pt-5 border-t border-white/10">
+                <div className="flex items-center gap-1.5">
+                  {pillars.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActivePillar(i)}
+                      aria-label={`${i + 1}번 슬라이드로 이동`}
+                      className={`h-1 rounded-full transition-all duration-300 ${
+                        i === activePillar
+                          ? `w-6 ${pillars[activePillar].bar}`
+                          : "w-1.5 bg-white/20"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="font-mono-tight text-[10px] tracking-[0.3em] text-white/30">
+                  ← SWIPE · {String(activePillar + 1).padStart(2, "0")} / {String(pillars.length).padStart(2, "0")} →
+                </p>
+              </div>
+
+              {/* 데스크톱: 좌우 화살표 + 페이지 표시 */}
+              <div className="hidden md:flex items-center justify-between mt-8 pt-6 border-t border-white/10">
+                <button
+                  onClick={() => setActivePillar((p) => (p - 1 + pillars.length) % pillars.length)}
+                  aria-label="이전"
+                  className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 hover:border-white/40 hover:bg-white/5 transition text-white/60 hover:text-white"
+                >
+                  <ChevronLeft size={16} className="transition group-hover:-translate-x-0.5" />
+                  <span className="text-sm font-medium">Prev</span>
+                </button>
+
+                <div className="font-mono-tight text-xs tracking-[0.3em] text-white/40">
+                  {String(activePillar + 1).padStart(2, "0")}
+                  <span className="mx-2 text-white/20">/</span>
+                  <span className="text-white/30">{String(pillars.length).padStart(2, "0")}</span>
+                </div>
+
+                <button
+                  onClick={() => setActivePillar((p) => (p + 1) % pillars.length)}
+                  aria-label="다음"
+                  className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 hover:border-white/40 hover:bg-white/5 transition text-white/60 hover:text-white"
+                >
+                  <span className="text-sm font-medium">Next</span>
+                  <ChevronRight size={16} className="transition group-hover:translate-x-0.5" />
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>

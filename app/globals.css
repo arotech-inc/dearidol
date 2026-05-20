@@ -137,6 +137,15 @@ main:not(:has(.snap-section)) {
   animation: scan-y 2.5s linear infinite;
 }
 
+/* 스크롤바 숨김 (가로 탭 스크롤용) */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* 부드러운 펄스 (Pillar placeholder 글로우) */
 @keyframes glow-pulse {
   0%, 100% { opacity: 0.15; }
