@@ -518,83 +518,30 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-center mb-16 md:mb-20"
+            className="text-center"
           >
-            <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="flex items-center justify-center gap-3 mb-8">
               <div className="h-px w-10 bg-pink-400/50" />
               <span className="section-label text-pink-400">01 / About</span>
               <div className="h-px w-10 bg-pink-400/50" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-8">
+
+            <h2 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] mb-10">
               단순한 리듬 게임이<br />
               <span className="gradient-text-pink">아닙니다</span>
             </h2>
-            <p className="text-white/60 text-lg md:text-2xl font-medium tracking-wide max-w-3xl mx-auto leading-relaxed">
-              <span className="text-pink-300">Play</span> the Music. <span className="text-purple-300">Collect</span> the Dance. <span className="text-amber-300">Build</span> the Idol Agency.
-            </p>
-          </motion.div>
 
-          {/* 3축 카드 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-3 gap-6"
-          >
-            {[
-              {
-                Icon: Music2,
-                num: "01",
-                en: "PLAY",
-                title: "Play the Music",
-                desc: "다양한 비트 위에서 카드를 발동하는 신개념 리듬 배틀. 함께 모인 유저와 호흡을 맞추는 라이브 무대.",
-                accent: "text-pink-400",
-                ring: "border-pink-500/40",
-                bar: "bg-pink-400",
-              },
-              {
-                Icon: Layers,
-                num: "02",
-                en: "COLLECT",
-                title: "Collect the Dance",
-                desc: "수집한 댄스 카드로 나만의 무대 덱을 구성하고, 곡과 모드에 맞춰 전략적으로 발동하세요.",
-                accent: "text-purple-400",
-                ring: "border-purple-500/40",
-                bar: "bg-purple-400",
-              },
-              {
-                Icon: Crown,
-                num: "03",
-                en: "BUILD",
-                title: "Build the Idol Agency",
-                desc: "아이돌 · 의상 · 사옥 · 팬덤까지— 라이브 서비스로 성장하는 나만의 프로덕션을 운영하세요.",
-                accent: "text-amber-400",
-                ring: "border-amber-500/40",
-                bar: "bg-amber-400",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group relative p-8 md:p-10 bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500"
-              >
-                <TopAccent bar={item.bar} />
-                <div className="flex items-center justify-between mb-8">
-                  <span className={`font-mono-tight text-xs tracking-[0.3em] ${item.accent}`}>
-                    {item.num} · {item.en}
-                  </span>
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl border ${item.ring} ${item.accent} group-hover:shadow-[0_0_25px_currentColor] transition duration-500`}>
-                    <item.Icon size={22} strokeWidth={1.5} />
-                  </div>
-                </div>
-                <h3 className="text-white text-2xl font-bold mb-4 group-hover:text-pink-200 transition">
-                  {item.title}
-                </h3>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+            <p className="text-white/80 text-lg md:text-2xl font-bold tracking-wide max-w-3xl mx-auto leading-relaxed mb-6">
+              <span className="text-pink-400">Play</span> the Music.{" "}
+              <span className="text-purple-400">Collect</span> the Dance.{" "}
+              <span className="text-amber-400">Build</span> the Idol Agency.
+            </p>
+
+            <p className="text-white/50 text-sm md:text-base leading-relaxed max-w-xl mx-auto">
+              무대를 플레이하고, 보상을 모아, 당신만의 아이돌 세계를 완성하세요.
+              <br />
+              최고의 프로듀서는 바로 <span className="text-pink-300 font-semibold">당신</span>입니다.
+            </p>
           </motion.div>
         </div>
       </section>
@@ -681,6 +628,22 @@ export default function Home() {
                 }
               }}
             >
+              {/* 좌우 화살표 (데스크톱만, 슬라이드 양옆 플로팅) */}
+              <button
+                onClick={() => setActivePillar((p) => (p - 1 + pillars.length) % pillars.length)}
+                aria-label="이전"
+                className="hidden md:flex absolute left-0 lg:-left-4 xl:-left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/15 hover:border-white/50 hover:bg-black/70 items-center justify-center text-white/70 hover:text-white transition group"
+              >
+                <ChevronLeft size={20} className="transition group-hover:-translate-x-0.5" />
+              </button>
+              <button
+                onClick={() => setActivePillar((p) => (p + 1) % pillars.length)}
+                aria-label="다음"
+                className="hidden md:flex absolute right-0 lg:-right-4 xl:-right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/15 hover:border-white/50 hover:bg-black/70 items-center justify-center text-white/70 hover:text-white transition group"
+              >
+                <ChevronRight size={20} className="transition group-hover:translate-x-0.5" />
+              </button>
+
               <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center md:min-h-[420px]">
                 {/* 이미지 — 모바일 위 / 데스크톱 좌측 */}
                 <div className="relative order-1">
@@ -791,31 +754,13 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* 데스크톱: 좌우 화살표 + 페이지 표시 */}
-              <div className="hidden md:flex items-center justify-between mt-8 pt-6 border-t border-white/10">
-                <button
-                  onClick={() => setActivePillar((p) => (p - 1 + pillars.length) % pillars.length)}
-                  aria-label="이전"
-                  className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 hover:border-white/40 hover:bg-white/5 transition text-white/60 hover:text-white"
-                >
-                  <ChevronLeft size={16} className="transition group-hover:-translate-x-0.5" />
-                  <span className="text-sm font-medium">Prev</span>
-                </button>
-
+              {/* 데스크톱: 페이지 표시만 중앙 */}
+              <div className="hidden md:flex items-center justify-center mt-8 pt-6 border-t border-white/10">
                 <div className="font-mono-tight text-xs tracking-[0.3em] text-white/40">
                   {String(activePillar + 1).padStart(2, "0")}
                   <span className="mx-2 text-white/20">/</span>
                   <span className="text-white/30">{String(pillars.length).padStart(2, "0")}</span>
                 </div>
-
-                <button
-                  onClick={() => setActivePillar((p) => (p + 1) % pillars.length)}
-                  aria-label="다음"
-                  className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 hover:border-white/40 hover:bg-white/5 transition text-white/60 hover:text-white"
-                >
-                  <span className="text-sm font-medium">Next</span>
-                  <ChevronRight size={16} className="transition group-hover:translate-x-0.5" />
-                </button>
               </div>
             </motion.div>
           </motion.div>
