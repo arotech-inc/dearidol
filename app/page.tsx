@@ -376,27 +376,14 @@ export default function Home() {
     <main className="bg-[#0a0a0f] text-white">
 
       {/* ================= HERO ================= */}
-      <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+      <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden">
 
-        {/* 뒷배경 (블러된 영상 확대 — 좌우 빈 공간 채우기) */}
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-50 pointer-events-none"
-          aria-hidden="true"
-        >
-          <source src="/dearidol-hero.mp4" type="video/mp4" />
-        </video>
-
-        {/* 메인 영상 (전체 프레임 표시) */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-contain"
+          className="absolute inset-0 w-full h-full object-cover object-top"
         >
           <source src="/dearidol-hero.mp4" type="video/mp4" />
         </video>
