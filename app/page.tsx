@@ -62,7 +62,6 @@ const TopAccent = ({ bar }: { bar: string }) => {
 
 export default function Home() {
   const router = useRouter();
-  const [showPopup, setShowPopup] = useState(false);
   const [activeNews, setActiveNews] = useState(0);
   const [playingTrack, setPlayingTrack] = useState<number | null>(null);
 
@@ -378,14 +377,26 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden">
 
+        {/* 데스크톱: 가로형 영상 */}
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          className="hidden md:block absolute inset-0 w-full h-full object-cover object-top"
         >
           <source src="/dearidol-hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* 모바일: 세로형 영상 */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="block md:hidden absolute inset-0 w-full h-full object-cover object-top"
+        >
+          <source src="/dearidol-hero-m.mp4" type="video/mp4" />
         </video>
 
         {/* 비네팅 + 하단 페이드 */}
@@ -434,14 +445,6 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="flex flex-wrap justify-center items-center gap-4 mb-14"
           >
-            <button
-              onClick={() => setShowPopup(true)}
-              className="group relative h-14 px-8 bg-white text-black font-bold rounded-none hover:bg-pink-400 transition-all duration-300 flex items-center gap-3 cursor-pointer"
-            >
-              <span>사전예약</span>
-              <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
-
             <a
               href="#scenes"
               className="group h-14 flex items-center gap-3 pl-3 pr-6 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
@@ -466,12 +469,12 @@ export default function Home() {
             <span className="section-label text-white/40 md:hidden">Available on</span>
             <div className="flex items-center justify-center gap-3">
               <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer"
-                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 block w-[148px] h-[44px] md:w-[160px] md:h-[48px] relative">
-                <Image src="/googleplay.png" alt="Google Play" fill sizes="160px" className="object-contain" />
+                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
+                <Image src="/googleplay.png" alt="Google Play" width={161} height={48} className="h-11 md:h-12 w-auto" />
               </a>
               <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
-                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 block w-[148px] h-[44px] md:w-[160px] md:h-[48px] relative">
-                <Image src="/appstore.svg" alt="App Store" fill sizes="160px" className="object-contain" />
+                className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
+                <Image src="/appstore.svg" alt="App Store" width={144} height={48} className="h-11 md:h-12 w-auto" />
               </a>
             </div>
           </motion.div>
@@ -1275,148 +1278,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* ================= CTA / 사전예약 ================= */}
-      <section id="cta" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative overflow-hidden rounded-2xl"
-          >
-            {/* 배경 그라데이션 + 효과 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.2)_0%,transparent_60%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.3)_0%,transparent_60%)]" />
-
-            {/* 장식 블러 */}
-            <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-pink-300/30 blur-[80px]" />
-            <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-purple-400/30 blur-[80px]" />
-
-            {/* 그리드 패턴 */}
-            <div className="absolute inset-0 grid-pattern opacity-30" />
-
-            {/* 콘텐츠 */}
-            <div className="relative px-5 md:px-16 py-16 md:py-24 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="flex items-center justify-center gap-3 mb-4"
-              >
-                <div className="h-px w-6 md:w-10 bg-white/60" />
-                <span className="section-label text-white/80 whitespace-nowrap">Now · Pre-register</span>
-                <div className="h-px w-6 md:w-10 bg-white/60" />
-              </motion.div>
-
-              <motion.h3
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="font-display text-5xl md:text-7xl leading-none text-white mb-3"
-              >
-                지금 <span className="text-pink-100">시작하세요</span>
-              </motion.h3>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-white/80 text-base md:text-lg mb-10 max-w-lg mx-auto"
-              >
-                사전예약하고 한정 의상, 다이아, SSR 카드까지<br />
-                Dear Idol 세계에 가장 먼저 입장하세요.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex flex-col items-center gap-6"
-              >
-                {/* 메인 CTA */}
-                <button
-                  onClick={() => setShowPopup(true)}
-                  className="group inline-flex items-center gap-2 md:gap-3 px-6 md:px-10 py-3.5 md:py-4 bg-white text-black font-bold text-sm md:text-base hover:bg-black hover:text-white transition-all duration-300 cursor-pointer whitespace-nowrap"
-                >
-                  <span>무료로 사전예약하기</span>
-                  <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </button>
-
-                {/* 스토어 뱃지 */}
-                <div className="flex flex-wrap justify-center items-center gap-4 mt-2">
-                  <a
-                    href="https://play.google.com/store"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg block w-[160px] h-[48px] relative"
-                  >
-                    <Image src="/googleplay.png" alt="Google Play" fill sizes="160px" className="object-contain" />
-                  </a>
-                  <a
-                    href="https://www.apple.com/app-store/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition duration-300 hover:scale-105 hover:-translate-y-0.5 drop-shadow-lg block w-[160px] h-[48px] relative"
-                  >
-                    <Image src="/appstore.svg" alt="App Store" fill sizes="160px" className="object-contain" />
-                  </a>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ================= 준비중 팝업 ================= */}
-      <AnimatePresence>
-        {showPopup && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md px-4"
-            onClick={() => setShowPopup(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="bg-[#13111a] border border-white/10 p-10 max-w-md w-full mx-4 relative overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* 장식 */}
-              <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-pink-500/20 blur-3xl" />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-6">
-                  <Sparkles size={16} className="text-pink-400" />
-                  <span className="section-label text-pink-400">Coming Soon</span>
-                </div>
-                <h3 className="font-display text-3xl text-white mb-4 leading-tight whitespace-nowrap">
-                  조금만 <span className="gradient-text-pink">기다려주세요</span>
-                </h3>
-                <p className="text-white/50 text-sm leading-relaxed mb-8">
-                  사전예약이 오픈되면 공식 채널을 통해 가장 먼저 안내드릴게요.
-                  알림을 받고 싶다면 SNS를 팔로우 해주세요.
-                </p>
-                <button
-                  onClick={() => setShowPopup(false)}
-                  className="w-full py-4 bg-white text-black font-bold hover:bg-pink-400 transition cursor-pointer flex items-center justify-center gap-2"
-                >
-                  확인 <ArrowRight size={16} />
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </main>
   );
