@@ -150,9 +150,7 @@ export default function Home() {
 
   // 휠 스크롤을 가로채서 섹션 단위로 이동 (데스크톱 전용, Honkai 스타일)
   useEffect(() => {
-    // 모바일·좁은 데스크톱(lg 미만)에서는 자유 스크롤 허용 — 좁은 폭에서
-    // 섹션 콘텐츠가 viewport보다 길어지면 tall-section 자유 스크롤이 빠른 휠을
-    // 그대로 통과시켜 중간 섹션이 생략된 것처럼 보이는 문제를 막음.
+    // 모바일·좁은 데스크톱(lg 미만)에서는 자유 스크롤 허용
     if (window.matchMedia("(max-width: 1023px)").matches) return;
 
     const getSections = () =>
@@ -375,7 +373,7 @@ export default function Home() {
     <main className="bg-[#0a0a0f] text-white">
 
       {/* ================= HERO ================= */}
-      <section className="snap-section relative h-screen w-full flex items-center justify-center overflow-hidden">
+      <section className="snap-section relative h-screen min-h-[100dvh] w-full flex items-center justify-center overflow-hidden">
 
         {/* 데스크톱: 가로형 영상 */}
         <video
@@ -407,7 +405,7 @@ export default function Home() {
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } } }}
-          className="relative z-10 px-5 md:px-8 w-full max-w-5xl mx-auto flex flex-col items-center text-center"
+          className="relative z-10 px-5 md:px-8 w-full max-w-5xl mx-auto flex flex-col items-center text-center pt-20 md:pt-28"
         >
           {/* 상단 라벨 */}
           <motion.div
@@ -434,29 +432,12 @@ export default function Home() {
           <motion.p
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.7 }}
-            className="max-w-2xl text-white/70 text-base md:text-xl font-medium tracking-wide mt-8 mb-10 px-4"
+            className="max-w-2xl text-white/70 text-base md:text-xl font-medium tracking-wide mt-8 mb-14 px-4"
           >
             가장 화려한 피날레, 당신의 손끝에서 완성되다.
           </motion.p>
 
-          {/* CTA 그룹 */}
-          <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-wrap justify-center items-center gap-4 mb-14"
-          >
-            <a
-              href="#scenes"
-              className="group h-14 flex items-center gap-3 pl-3 pr-6 border border-white/20 hover:border-white/50 transition text-white/80 hover:text-white"
-            >
-              <div className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition shrink-0">
-                <Play size={12} fill="currentColor" className="ml-0.5" />
-              </div>
-              <span className="font-bold">트레일러 보기</span>
-            </a>
-          </motion.div>
-
-          {/* 스토어 뱃지 */}
+          {/* 스토어 뱃지 + 트레일러 아이콘 */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6 }}
@@ -475,6 +456,15 @@ export default function Home() {
               <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"
                 className="transition hover:opacity-80 hover:-translate-y-0.5 duration-300 inline-block">
                 <Image src="/appstore.svg" alt="App Store" width={144} height={48} className="h-11 md:h-12 w-auto" />
+              </a>
+              {/* 트레일러 아이콘 버튼 */}
+              <a
+                href="#scenes"
+                aria-label="트레일러 보기"
+                title="트레일러 보기"
+                className="group ml-1 w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:border-white hover:text-black transition text-white/80 shrink-0"
+              >
+                <Play size={14} fill="currentColor" className="ml-0.5" />
               </a>
             </div>
           </motion.div>
@@ -703,12 +693,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= PHONE VIDEO MORPHING (데스크톱 시각 효과) ================= */}
-      <section className="snap-section hidden md:block relative bg-[#0a0a0f]">
+      {/* ================= PHONE VIDEO MORPHING (데스크톱 시각 효과 — lg 이상) ================= */}
+      <section className="snap-section hidden lg:block relative bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
 
         {/* 데스크톱 전용: 풀스크린 → 단계적 축소 → 가로 폰 모핑 */}
-        <div ref={phoneSectionRef} className="relative w-full" style={{ height: "180vh", width: "100vw" }}>
+        <div ref={phoneSectionRef} className="relative w-full" style={{ height: "180vh" }}>
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               {/* 폰 프레임 래퍼 — 고정 크기 + scale 애니메이션 (Apple 스타일) */}
