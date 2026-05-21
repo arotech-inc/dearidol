@@ -457,15 +457,9 @@ export default function Home() {
                 href="https://www.apple.com/app-store/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-start gap-3 w-[180px] md:w-[200px] h-12 md:h-14 px-4 rounded-full bg-black border border-white/15 hover:border-white/40 transition"
+                className="group block w-[180px] md:w-[200px] h-12 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-white shrink-0">
-                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09M12 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z" />
-                </svg>
-                <span className="flex flex-col items-start leading-tight">
-                  <span className="text-[10px] text-white/60">다운로드</span>
-                  <span className="text-sm md:text-base font-bold text-white">App Store</span>
-                </span>
+                <Image src="/appstore.svg" alt="App Store" fill className="object-contain" />
               </a>
 
               {/* Google Play 버튼 */}
@@ -473,18 +467,9 @@ export default function Home() {
                 href="https://play.google.com/store"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-start gap-3 w-[180px] md:w-[200px] h-12 md:h-14 px-4 rounded-full bg-black border border-white/15 hover:border-white/40 transition"
+                className="group block w-[180px] md:w-[200px] h-12 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
               >
-                <svg viewBox="0 0 24 24" className="w-7 h-7 shrink-0">
-                  <path fill="#FFC107" d="M21.6 12 14.1 6.6l-2 1.8 6.9 6.4-6.9 6.4 2 1.8L21.6 12Z"/>
-                  <path fill="#FF3D00" d="M3.6 2.8c-.4.3-.6.8-.6 1.4v15.6c0 .6.2 1.1.6 1.4l8.5-8.2L3.6 2.8Z"/>
-                  <path fill="#4CAF50" d="m12.1 8.4 2 1.8 4.9-2.8-9.6-5.7c-.5-.3-1-.4-1.5-.3-.2 0-.4.1-.5.2l4.7 6.8Z"/>
-                  <path fill="#1976D2" d="m12.1 15.6-2 1.8 4.6 6.6c.2.1.3.1.5.2.5.1 1 0 1.5-.3l9.6-5.7-4.9-2.8-4.6 1.6-4.7-1.4Z"/>
-                </svg>
-                <span className="flex flex-col items-start leading-tight">
-                  <span className="text-[10px] text-white/60">다운로드</span>
-                  <span className="text-sm md:text-base font-bold text-white">Google Play</span>
-                </span>
+                <Image src="/googleplay.png" alt="Google Play" fill className="object-contain" />
               </a>
 
               {/* 트레일러 아이콘 버튼 */}
