@@ -501,7 +501,7 @@ export default function Home() {
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section id="about" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden noise-bg">
+      <section id="about" className="snap-section relative min-h-screen py-24 md:py-32 overflow-hidden noise-bg">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
@@ -537,62 +537,27 @@ export default function Home() {
               최고의 프로듀서는 바로 <span className="text-pink-300 font-semibold">당신</span>입니다.
             </p>
           </motion.div>
-        </div>
-      </section>
 
-      {/* ================= CORE LOOP ================= */}
-      <section id="core-loop" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-20" />
-        <div className="absolute top-1/4 -left-40 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
-
-        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-center mb-14"
-          >
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px w-10 bg-pink-400/50" />
-              <span className="section-label text-pink-400">02 / Core Loop</span>
-              <div className="h-px w-10 bg-pink-400/50" />
-            </div>
-
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-6">
-              모든 플레이가<br />
-              <span className="gradient-text-pink">다음 성장으로 이어집니다</span>
-            </h2>
-
-            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-              배틀로 얻고, 육성으로 성공시키고,<br />
-              성장으로 더 큰 무대를 해금합니다.
-            </p>
-          </motion.div>
-
+          {/* 코어 루프 카드 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative"
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative mt-20 md:mt-24"
           >
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               {loopStages.map((s, i) => (
                 <div key={i} className="relative">
-                  <div className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 p-5 md:p-6 text-center overflow-hidden">
+                  <div className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 p-4 md:p-5 text-center overflow-hidden">
                     {/* 상단 컬러 라인 */}
                     <div className={`absolute top-0 left-0 right-0 h-0.5 ${s.bar}`} />
 
-                    <div className={`font-mono-tight text-[10px] tracking-[0.3em] ${s.accent} mb-3`}>
-                      STEP {String(i + 1).padStart(2, "0")}
-                    </div>
-                    <div className={`mb-3 inline-flex items-center justify-center w-11 h-11 rounded-full border ${s.border} ${s.accent} group-hover:shadow-[0_0_18px_currentColor] transition duration-500`}>
-                      <s.Icon size={20} strokeWidth={1.5} />
+                    <div className={`mb-2.5 inline-flex items-center justify-center w-10 h-10 rounded-full border ${s.border} ${s.accent} group-hover:shadow-[0_0_18px_currentColor] transition duration-500`}>
+                      <s.Icon size={18} strokeWidth={1.5} />
                     </div>
                     <div className="text-white font-bold text-base md:text-lg">{s.label}</div>
-                    <div className="text-white/40 text-xs mt-1">{s.desc}</div>
+                    <div className="text-white/40 text-xs mt-0.5">{s.desc}</div>
                   </div>
                   {/* 화살표 (lg에서만) */}
                   {i < loopStages.length - 1 && (
@@ -602,12 +567,6 @@ export default function Home() {
                   )}
                 </div>
               ))}
-            </div>
-
-            <div className="mt-10 flex items-center justify-center gap-3 text-white/30">
-              <div className="h-px w-12 bg-white/10" />
-              <span className="font-mono-tight text-[10px] tracking-[0.3em]">CONTINUOUS LOOP</span>
-              <div className="h-px w-12 bg-white/10" />
             </div>
           </motion.div>
         </div>
@@ -628,7 +587,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">03 / Core System</span>
+                <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display leading-[1.1] md:whitespace-nowrap text-[clamp(2.25rem,5vw,3.75rem)]">
@@ -928,7 +887,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">04 / Game Modes</span>
+                <span className="section-label text-pink-400">03 / Game Modes</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -1023,7 +982,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">05 / Idol Management</span>
+                <span className="section-label text-pink-400">04 / Idol Management</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -1198,7 +1157,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">06 / Soundtrack</span>
+                <span className="section-label text-pink-400">05 / Soundtrack</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -1320,7 +1279,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">07 / News</span>
+                <span className="section-label text-pink-400">06 / News</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
