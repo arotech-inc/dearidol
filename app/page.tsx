@@ -21,15 +21,12 @@ import {
   Users,
   Layers,
   Sofa,
-  Target,
-  Handshake,
   Zap,
   Flame,
   Mic2,
   Star,
   Crown,
   Palette,
-  Headphones,
   Trophy,
 } from "lucide-react";
 
@@ -46,27 +43,10 @@ const barColor: Record<string, string> = {
   "bg-rose-400": "#fb7185",
 };
 
-const TopAccent = ({ bar }: { bar: string }) => {
-  const c = barColor[bar] ?? "#f472b6";
-  return (
-    <>
-      <div
-        className="pointer-events-none absolute -top-2 left-0 right-0 h-4 blur-md opacity-70"
-        style={{ background: `linear-gradient(to right, transparent 5%, ${c} 50%, transparent 95%)` }}
-      />
-      <div
-        className="pointer-events-none absolute top-0 left-0 right-0 h-[2px]"
-        style={{ background: `linear-gradient(to right, transparent, ${c}, transparent)` }}
-      />
-    </>
-  );
-};
-
 export default function Home() {
   const router = useRouter();
   const [activeNews, setActiveNews] = useState(0);
   const [activePillar, setActivePillar] = useState(0);
-  const [playingTrack, setPlayingTrack] = useState<number | null>(null);
 
   // 50 카운트업 (Idol Management 섹션)
   const counterRef = useRef<HTMLDivElement>(null);
@@ -309,45 +289,6 @@ export default function Home() {
     },
   ];
 
-  const gameModes = [
-    {
-      Icon: Target,
-      num: "01",
-      en: "Score Battle",
-      ko: "개인 스코어 경쟁",
-      desc: "같은 곡, 같은 진행 타이밍에서\n보유 카드와 판정으로 점수 경쟁",
-      bar: "bg-pink-400",
-      accent: "text-pink-400",
-    },
-    {
-      Icon: Handshake,
-      num: "02",
-      en: "Team Battle",
-      ko: "팀 단위 실시간 대결",
-      desc: "3v3 또는 2v2 팀 합산 점수, 시너지 카드·역할 분담형 플레이",
-      bar: "bg-indigo-400",
-      accent: "text-indigo-400",
-    },
-    {
-      Icon: Zap,
-      num: "03",
-      en: "Real-Time Battle",
-      ko: "실시간 배틀 모드",
-      desc: "데미지형 팀전·압박 카드·역전 구간을 가진 숙련 콘텐츠",
-      bar: "bg-amber-400",
-      accent: "text-amber-400",
-    },
-    {
-      Icon: Flame,
-      num: "04",
-      en: "Battle Party",
-      ko: "협동 레이드",
-      desc: "전설의 스타·레전드 아이돌을 상대로\n협력하는 시즌 콘텐츠",
-      bar: "bg-teal-400",
-      accent: "text-teal-400",
-    },
-  ];
-
   const categories = [
     { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400" },
     { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400" },
@@ -373,12 +314,11 @@ export default function Home() {
     { label: "명예의 전당", en: "HALL OF FAME" },
   ];
 
-  const tracks = [
-    { id: 1, title: "Spotlight", artist: "AURORA", duration: "3:21" },
-    { id: 2, title: "Neon Heart", artist: "VELVET CROWN", duration: "2:58" },
-    { id: 3, title: "Stage Light", artist: "LUMINA", duration: "3:12" },
-    { id: 4, title: "Encore", artist: "SOLAR FLARE", duration: "3:44" },
-    { id: 5, title: "Fanfare", artist: "STARDUST", duration: "3:05" },
+  const growthStages = [
+    { num: "01", ko: "작은 사무실", en: "Startup Studio", desc: "신인 프로듀서의 첫 무대", accent: "text-pink-400", border: "border-pink-500/40", bar: "bg-pink-400" },
+    { num: "02", ko: "중소 기획사", en: "Growing Agency", desc: "팬덤 확장과 첫 히트곡", accent: "text-purple-400", border: "border-purple-500/40", bar: "bg-purple-400" },
+    { num: "03", ko: "메이저 레이블", en: "Major Label", desc: "전국 단위 매니지먼트", accent: "text-amber-400", border: "border-amber-500/40", bar: "bg-amber-400" },
+    { num: "04", ko: "글로벌 사옥", en: "Global HQ", desc: "월드 투어와 국제 진출", accent: "text-cyan-400", border: "border-cyan-400/40", bar: "bg-cyan-400" },
   ];
 
   return (
@@ -501,7 +441,7 @@ export default function Home() {
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section id="about" className="snap-section relative min-h-screen py-24 md:py-32 overflow-hidden noise-bg">
+      <section id="about" className="snap-section relative min-h-screen pt-36 md:pt-48 pb-24 md:pb-32 overflow-hidden noise-bg">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-pink-500/10 blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
@@ -533,8 +473,6 @@ export default function Home() {
 
             <p className="text-white/50 text-sm md:text-base leading-relaxed max-w-xl mx-auto">
               무대를 플레이하고, 보상을 모아, 당신만의 아이돌 세계를 완성하세요.
-              <br />
-              최고의 프로듀서는 바로 <span className="text-pink-300 font-semibold">당신</span>입니다.
             </p>
           </motion.div>
 
@@ -871,101 +809,6 @@ export default function Home() {
 
       </section>
 
-      {/* ================= GAME MODES ================= */}
-      <section id="modes" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 bg-[#0a0a0f] overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
-          {/* 섹션 타이틀 */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-2 gap-12 items-center mb-14"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">03 / Game Modes</span>
-                <div className="h-px w-12 bg-pink-400/30" />
-              </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                혼자도, 친구와도,<br />
-                <span className="gradient-text-gold">협동 레이드까지</span>
-              </h2>
-            </div>
-            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              캐주얼부터 협동 레이드까지 다양한 모드로 폭넓게 즐기는 재미
-            </p>
-          </motion.div>
-
-          {/* 모바일 전용 간단 비디오 */}
-          <div className="md:hidden relative aspect-video w-full overflow-hidden border border-white/10 mb-12">
-            <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
-              <source src="/dance.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-          </div>
-
-          {/* Game Modes 4개 카드 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-          >
-            {gameModes.map((m, i) => (
-              <div
-                key={i}
-                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 hover:bg-white/[0.04] transition duration-500 p-7"
-              >
-                {/* 컬러 상단 라인 (그라디언트 + 글로우) */}
-                <TopAccent bar={m.bar} />
-
-                <div className="flex items-center justify-between mb-7">
-                  <span className={`font-mono-tight text-xs tracking-[0.3em] ${m.accent}`}>
-                    {m.num}
-                  </span>
-                </div>
-
-                <div className="flex flex-col items-center text-center mb-6">
-                  <div className={`mb-5 ${m.accent} group-hover:scale-110 group-hover:drop-shadow-[0_0_18px_currentColor] transition duration-500`}>
-                    <m.Icon size={44} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-white text-xl font-bold mb-2">
-                    {m.en}
-                  </h3>
-                  <p className={`text-sm font-bold ${m.accent}`}>
-                    {m.ko}
-                  </p>
-                </div>
-
-                <div className="pt-5 border-t border-white/5">
-                  <p className="text-sm text-white/50 leading-relaxed text-center whitespace-pre-line">
-                    {m.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* 협동 강조 배너 */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="mt-6 p-6 md:p-7 border border-pink-500/30 bg-pink-500/5 text-center"
-          >
-            <p className="text-pink-300 text-sm md:text-base font-bold tracking-wide">
-              협동 플레이로 시즌 이벤트 · 한정 보상까지 — 함께할수록 더 커집니다.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* ================= IDOL MANAGEMENT (육성) ================= */}
       <section id="management" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-25" />
@@ -982,7 +825,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">04 / Idol Management</span>
+                <span className="section-label text-pink-400">03 / Idol Management</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
@@ -1141,8 +984,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SOUNDTRACK PREVIEW ================= */}
-      <section id="soundtrack" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden bg-[#0a0a0f]">
+      {/* ================= GROWING PRODUCTION ================= */}
+      <section id="growth" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-25" />
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
@@ -1157,108 +1000,64 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">05 / Soundtrack</span>
+                <span className="section-label text-pink-400">04 / Growing Production</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                당신의 다음<br />
-                <span className="gradient-text-pink">최애곡</span>
+                작은 사무실에서<br />
+                <span className="gradient-text-pink">글로벌 사옥까지</span>
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              정식 출시 전 5트랙, 30초씩 선공개합니다.
-              가장 먼저 듣고 데뷔 무대를 기다려주세요.
+              아이돌이 성장할수록 프로덕션도 함께 커집니다.
+              데뷔 직후의 작은 스튜디오부터 월드 투어를 지휘하는 글로벌 사옥까지 — 당신의 손으로 키워보세요.
             </p>
           </motion.div>
 
-          {/* 곡 리스트 */}
+          {/* 4단계 성장 카드 */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="bg-white/[0.02] border border-white/10"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"
           >
-            <div className="grid grid-cols-[48px_1fr_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-3 md:gap-4 px-4 md:px-6 py-4 border-b border-white/10">
-              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">PLAY</span>
-              <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40">#</span>
-              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40">TITLE</span>
-              <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40">ARTIST</span>
-              <span className="hidden md:inline font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">PREVIEW</span>
-              <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/40 text-right">LENGTH</span>
-            </div>
+            {growthStages.map((g, i) => (
+              <div
+                key={i}
+                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 overflow-hidden"
+              >
+                {/* 상단 컬러 라인 */}
+                <div className={`absolute top-0 left-0 right-0 h-0.5 ${g.bar} z-10`} />
 
-            {tracks.map((t) => {
-              const isPlaying = playingTrack === t.id;
-              return (
-                <div
-                  key={t.id}
-                  className={`group grid grid-cols-[48px_1fr_auto] md:grid-cols-[80px_60px_1fr_1fr_auto_auto] items-center gap-3 md:gap-4 px-4 md:px-6 py-4 border-b border-white/5 transition cursor-pointer ${
-                    isPlaying ? "bg-pink-500/10" : "hover:bg-white/[0.03]"
-                  }`}
-                  onClick={() => setPlayingTrack(isPlaying ? null : t.id)}
-                >
-                  <button
-                    className={`relative w-10 h-10 rounded-full flex items-center justify-center transition ${
-                      isPlaying
-                        ? "bg-pink-400 text-black"
-                        : "bg-white/[0.06] text-white/70 group-hover:bg-white group-hover:text-black"
-                    }`}
-                  >
-                    {isPlaying ? (
-                      <div className="flex items-end justify-center gap-[2px] h-3.5 w-4">
-                        {[0, 1, 2, 3, 4].map((b) => (
-                          <span key={b} className="eq-bar w-[2px] h-full bg-current rounded-sm" />
-                        ))}
-                      </div>
-                    ) : (
-                      <Play size={14} fill="currentColor" className="ml-0.5" />
-                    )}
-                  </button>
-                  <span className={`hidden md:inline font-mono-tight text-sm ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
-                    {String(t.id).padStart(2, "0")}
-                  </span>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className={`md:hidden font-mono-tight text-xs shrink-0 ${isPlaying ? "text-pink-400" : "text-white/40"}`}>
-                        {String(t.id).padStart(2, "0")}
-                      </span>
-                      <p className={`text-sm md:text-lg font-bold truncate ${isPlaying ? "text-pink-200" : "text-white"}`}>
-                        {t.title}
-                      </p>
-                      {isPlaying && (
-                        <span className="hidden md:inline font-mono-tight text-[9px] tracking-[0.3em] text-pink-400 border border-pink-400/40 px-1.5 py-0.5">
-                          NOW PLAYING
-                        </span>
-                      )}
-                    </div>
-                    <p className="md:hidden text-[11px] text-white/40 truncate font-mono-tight tracking-wider">
-                      {t.artist}
-                    </p>
+                {/* 이미지 placeholder */}
+                <div className={`relative aspect-[4/5] border-b ${g.border} bg-white/[0.01] flex items-center justify-center overflow-hidden`}>
+                  {/* 배경 그리드 */}
+                  <div className="absolute inset-0 grid-pattern opacity-30" />
+
+                  {/* 코너 마커 */}
+                  <div className={`absolute top-2 left-2 w-3 h-3 border-l border-t ${g.border} opacity-80`} />
+                  <div className={`absolute top-2 right-2 w-3 h-3 border-r border-t ${g.border} opacity-80`} />
+                  <div className={`absolute bottom-2 left-2 w-3 h-3 border-l border-b ${g.border} opacity-80`} />
+                  <div className={`absolute bottom-2 right-2 w-3 h-3 border-r border-b ${g.border} opacity-80`} />
+
+                  {/* 빈칸 라벨 */}
+                  <div className="relative z-10 flex flex-col items-center">
+                    <span className={`font-mono-tight text-[10px] tracking-[0.3em] ${g.accent} mb-1`}>STAGE {g.num}</span>
+                    <span className="text-white/30 text-[10px] font-mono-tight tracking-wider">IMAGE</span>
                   </div>
-                  <span className="hidden md:inline font-mono-tight text-sm text-white/50 tracking-wider truncate">
-                    {t.artist}
-                  </span>
-                  <span className="hidden md:inline font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
-                    0:30
-                  </span>
-                  <span className="font-mono-tight text-xs md:text-sm text-white/50 tabular-nums">
-                    {t.duration}
-                  </span>
                 </div>
-              );
-            })}
 
-            {/* 푸터 */}
-            <div className="px-6 py-4 flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center gap-2 text-white/40 text-xs">
-                <Headphones size={14} />
-                <span className="font-mono-tight tracking-wider">30-SECOND PREVIEWS</span>
+                {/* 텍스트 */}
+                <div className="p-4 md:p-5">
+                  <div className={`font-mono-tight text-[10px] tracking-[0.3em] ${g.accent} mb-1.5`}>
+                    {g.num} · {g.en}
+                  </div>
+                  <h3 className="text-white text-base md:text-lg font-bold mb-1.5">{g.ko}</h3>
+                  <p className="text-white/50 text-xs md:text-sm leading-relaxed">{g.desc}</p>
+                </div>
               </div>
-              <span className="text-xs text-white/30">
-                전곡은 정식 출시 후 게임에서 만나보세요.
-              </span>
-            </div>
+            ))}
           </motion.div>
         </div>
       </section>
@@ -1279,7 +1078,7 @@ export default function Home() {
           >
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="section-label text-pink-400">06 / News</span>
+                <span className="section-label text-pink-400">05 / News</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
