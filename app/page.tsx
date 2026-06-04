@@ -215,7 +215,7 @@ export default function Home() {
       dot: "bg-pink-500/30",
       border: "border-pink-500/40",
       bg: "bg-pink-500/[0.02]",
-      image: "/multi-user.png",
+      image: "/multi-user.webp",
     },
     {
       Icon: Layers,
@@ -229,7 +229,7 @@ export default function Home() {
       dot: "bg-blue-400/30",
       border: "border-blue-400/40",
       bg: "bg-blue-400/[0.02]",
-      image: "/dance card.png",
+      image: "/dance-card.webp",
     },
     {
       Icon: Shirt,
@@ -243,7 +243,7 @@ export default function Home() {
       dot: "bg-emerald-400/30",
       border: "border-emerald-400/40",
       bg: "bg-emerald-400/[0.02]",
-      image: "/idol-Customization.png",
+      image: "/idol-customization.webp",
     },
     {
       Icon: Clapperboard,
@@ -257,7 +257,7 @@ export default function Home() {
       dot: "bg-amber-400/30",
       border: "border-amber-400/40",
       bg: "bg-amber-400/[0.02]",
-      image: "/music-video.png",
+      image: "/music-video.webp",
     },
     {
       Icon: Building2,
@@ -271,7 +271,7 @@ export default function Home() {
       dot: "bg-purple-500/30",
       border: "border-purple-500/40",
       bg: "bg-purple-500/[0.02]",
-      image: "/schedule.png",
+      image: "/schedule.webp",
     },
     {
       Icon: Sofa,
@@ -285,7 +285,7 @@ export default function Home() {
       dot: "bg-cyan-400/30",
       border: "border-cyan-400/40",
       bg: "bg-cyan-400/[0.02]",
-      image: "/design.png",
+      image: "/design.webp",
     },
   ];
 
@@ -764,7 +764,7 @@ export default function Home() {
                     preload="auto"
                     className="absolute inset-0 w-full h-full object-cover"
                   >
-                    <source src="/dance.mp4" type="video/mp4" />
+                    <source src="/dear.mp4" type="video/mp4" />
                   </video>
 
                   {/* Dynamic Island (가로 모드 — 좌측 중앙) */}
