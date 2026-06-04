@@ -815,6 +815,83 @@ export default function Home() {
 
       </section>
 
+      {/* ================= MOBILE PHONE VIDEO (간소화 버전) ================= */}
+      <section className="snap-section lg:hidden relative bg-[#0a0a0f] min-h-screen flex items-center py-20 overflow-hidden">
+        <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+        <div className="absolute top-1/3 -right-20 w-[300px] h-[300px] rounded-full bg-pink-500/10 blur-[100px]" />
+        <div className="absolute bottom-1/3 -left-20 w-[300px] h-[300px] rounded-full bg-purple-500/10 blur-[100px]" />
+
+        <div className="max-w-2xl mx-auto px-5 w-full relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="text-center mb-8"
+          >
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-8 bg-pink-400/50" />
+              <span className="section-label text-pink-400">In-Game Preview</span>
+              <div className="h-px w-8 bg-pink-400/50" />
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl leading-[1.1]">
+              실제 플레이 화면을<br />
+              <span className="gradient-text-pink">미리 만나보세요</span>
+            </h2>
+          </motion.div>
+
+          {/* 모바일용 가로 폰 프레임 */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative mx-auto"
+            style={{ maxWidth: "560px" }}
+          >
+            <div
+              className="relative aspect-[2/1] rounded-[28px] border-[6px] border-[#7a8ba8] overflow-hidden bg-black shadow-[0_15px_50px_rgba(0,0,0,0.5)]"
+            >
+              <video
+                autoPlay
+                muted={isMuted}
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-contain bg-black"
+              >
+                <source src="/dear.mp4" type="video/mp4" />
+              </video>
+
+              {/* Dynamic Island */}
+              <div className="absolute left-[6px] top-1/2 -translate-y-1/2 w-[18px] h-[60px] bg-black rounded-full pointer-events-none z-10" />
+              {/* 홈 인디케이터 */}
+              <div className="absolute bottom-[6px] left-1/2 -translate-x-1/2 w-[70px] h-[3px] bg-white/70 rounded-full pointer-events-none z-10" />
+
+              {/* 음소거 해제 버튼 */}
+              <button
+                type="button"
+                onClick={() => setIsMuted((m) => !m)}
+                aria-label={isMuted ? "사운드 켜기" : "사운드 끄기"}
+                className="absolute bottom-3 right-3 z-20 w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/20 hover:border-pink-400/60 flex items-center justify-center text-white/80 transition cursor-pointer"
+              >
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
+            </div>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-white/50 text-sm text-center mt-6 leading-relaxed"
+          >
+            카드 발동 · 콤보 시스템 · 라이브 무대까지 — 한 번에 확인하세요.
+          </motion.p>
+        </div>
+      </section>
+
       {/* ================= IDOL MANAGEMENT (육성) ================= */}
       <section id="management" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-25" />
