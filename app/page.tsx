@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,50 +25,17 @@ import {
   Flame,
   Mic2,
   Star,
-  Crown,
-  Palette,
   Trophy,
   Volume2,
   VolumeX,
+  Calendar,
 } from "lucide-react";
-
-const barColor: Record<string, string> = {
-  "bg-pink-400": "#f472b6",
-  "bg-pink-500": "#ec4899",
-  "bg-blue-400": "#60a5fa",
-  "bg-emerald-400": "#34d399",
-  "bg-amber-400": "#fbbf24",
-  "bg-teal-400": "#2dd4bf",
-  "bg-purple-400": "#c084fc",
-  "bg-indigo-400": "#818cf8",
-  "bg-cyan-400": "#22d3ee",
-  "bg-rose-400": "#fb7185",
-};
 
 export default function Home() {
   const router = useRouter();
   const [activeNews, setActiveNews] = useState(0);
   const [activePillar, setActivePillar] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
-
-  // 50 카운트업 (Idol Management 섹션)
-  const counterRef = useRef<HTMLDivElement>(null);
-  const counterInView = useInView(counterRef, { amount: 0.5 });
-  const [statCount, setStatCount] = useState(1);
-  useEffect(() => {
-    if (!counterInView) return;
-    const start = performance.now();
-    const duration = 1500;
-    let raf = 0;
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setStatCount(Math.round(1 + (50 - 1) * eased));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [counterInView]);
 
   // System 비디오: 풀스크린 → 폰 모양 쉬링크
   const systemVideoRef = useRef<HTMLVideoElement>(null);
@@ -310,14 +277,6 @@ export default function Home() {
     },
   ];
 
-  const categories = [
-    { Icon: Mic2, num: "01", ko: "보컬", en: "Vocal", bar: "bg-pink-400" },
-    { Icon: Flame, num: "02", ko: "댄스", en: "Dance", bar: "bg-indigo-400" },
-    { Icon: Star, num: "03", ko: "비주얼", en: "Visual", bar: "bg-amber-400" },
-    { Icon: Crown, num: "04", ko: "카리스마", en: "Charisma", bar: "bg-teal-400" },
-    { Icon: Palette, num: "05", ko: "패션 · 열정", en: "Fashion · Passion", bar: "bg-rose-400" },
-  ];
-
   const loopStages = [
     { Icon: Zap, label: "Battle", desc: "리듬 배틀", accent: "text-pink-400", border: "border-pink-500/30", bar: "bg-pink-400" },
     { Icon: Sparkles, label: "Earn", desc: "보상 획득", accent: "text-purple-400", border: "border-purple-500/30", bar: "bg-purple-400" },
@@ -325,14 +284,6 @@ export default function Home() {
     { Icon: Mic2, label: "Perform", desc: "무대 공연", accent: "text-amber-400", border: "border-amber-400/30", bar: "bg-amber-400" },
     { Icon: Star, label: "Grow", desc: "성장 · 명성", accent: "text-emerald-400", border: "border-emerald-400/30", bar: "bg-emerald-400" },
     { Icon: Trophy, label: "Unlock", desc: "콘텐츠 해금", accent: "text-cyan-400", border: "border-cyan-400/30", bar: "bg-cyan-400" },
-  ];
-
-  const careerStages = [
-    { label: "신인", en: "ROOKIE" },
-    { label: "라이징", en: "RISING" },
-    { label: "톱스타", en: "TOP STAR" },
-    { label: "슈퍼스타", en: "SUPERSTAR" },
-    { label: "명예의 전당", en: "HALL OF FAME" },
   ];
 
   return (
@@ -942,145 +893,163 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* 50 카드 + 5 카테고리 */}
+          {/* 3-Column Layout: Idol Card + Hexagon Stats + Feature Grid */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid md:grid-cols-[0.9fr_1.4fr] gap-5"
+            className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1.2fr] gap-5"
           >
-            {/* 50 SUB-STATS 카드 */}
-            <div className="relative bg-white/[0.02] border border-white/10 p-10 md:p-12 flex flex-col items-center justify-center text-center">
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-pink-400" />
-              <div ref={counterRef} className="font-display gradient-text-pink leading-none text-[8rem] md:text-[10rem] tabular-nums">
-                {statCount}
-              </div>
-              <div className="mt-3 mb-2 flex items-center gap-3">
-                <div className="h-px w-8 bg-pink-400/40" />
-                <span className="font-mono-tight text-xs tracking-[0.3em] text-white/70">
-                  SUB-STATS PER IDOL
+            {/* LEFT — Idol Card */}
+            <div className="relative bg-white/[0.02] border border-white/10 overflow-hidden flex flex-col">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-pink-400 z-20" />
+
+              {/* UR 등급 라벨 */}
+              <div className="absolute top-3 left-3 z-20">
+                <span className="inline-flex items-center px-2.5 py-1 rounded bg-gradient-to-br from-pink-500 to-purple-600 text-white text-xs font-bold tracking-wider shadow-[0_0_15px_rgba(236,72,153,0.6)]">
+                  UR
                 </span>
-                <div className="h-px w-8 bg-pink-400/40" />
-              </div>
-              <p className="text-white/50 text-sm mt-6 leading-relaxed">
-                스케줄 · 콘서트 · 사업<br />
-                슈퍼스타 · 팀 편성에 모두 반영
-              </p>
-            </div>
-
-            {/* 5 CATEGORIES 리스트 */}
-            <div className="relative">
-              <div className="flex items-center gap-3 mb-5">
-                <span className="font-mono-tight text-xs tracking-[0.3em] text-white/50">
-                  5 CATEGORIES
-                </span>
-                <div className="h-px flex-1 bg-white/10" />
               </div>
 
-              <div className="flex flex-col gap-3">
-                {categories.map((c, i) => {
-                  const color = barColor[c.bar] ?? "#f472b6";
-                  return (
-                    <div
-                      key={i}
-                      className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 flex items-center"
-                    >
-                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${c.bar}`} />
-                      <div className="grid grid-cols-[40px_44px_1fr] md:grid-cols-[60px_50px_1fr_auto] items-center gap-3 md:gap-4 w-full pl-4 pr-4 md:pl-6 md:pr-6 py-4">
-                        <span className="font-mono-tight text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] text-white/50">
-                          {c.num}
-                        </span>
-                        <div
-                          className="flex items-center justify-center w-10 h-10 rounded-lg border transition duration-500 group-hover:shadow-[0_0_18px_currentColor]"
-                          style={{ color, borderColor: `${color}66` }}
-                        >
-                          <c.Icon size={22} strokeWidth={1.5} />
-                        </div>
-                        <div className="min-w-0 flex flex-col md:flex-row md:items-center md:justify-between md:gap-4">
-                          <span className="text-white text-base md:text-lg font-bold whitespace-nowrap">
-                            {c.ko}
-                          </span>
-                          <span className="font-mono-tight text-[10px] md:text-xs italic text-white/40 whitespace-nowrap">
-                            {c.en}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+              {/* 이미지 자리 (비워둠) */}
+              <div className="relative aspect-[3/4] bg-white/[0.02] border-b border-white/10 flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 grid-pattern opacity-30" />
+                {/* 코너 마커 */}
+                <div className="absolute top-2 left-2 w-3 h-3 border-l border-t border-pink-400/60 z-10" />
+                <div className="absolute top-2 right-2 w-3 h-3 border-r border-t border-pink-400/60 z-10" />
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-l border-b border-pink-400/60 z-10" />
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-r border-b border-pink-400/60 z-10" />
+                <div className="relative z-10 flex flex-col items-center">
+                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-pink-400 mb-1">IDOL</span>
+                  <span className="text-white/30 text-[10px] font-mono-tight tracking-wider">IMAGE</span>
+                </div>
+              </div>
+
+              {/* 하단 정보 */}
+              <div className="p-4 md:p-5 text-center">
+                <div className="flex items-center justify-center gap-0.5 mb-2">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star key={i} size={14} className="text-amber-400 fill-amber-400" />
+                  ))}
+                </div>
+                <h3 className="text-white text-xl font-bold tracking-wider mb-1">IDOL NAME</h3>
+                <p className="font-mono-tight text-xs tracking-[0.2em] text-pink-300">Lv.50</p>
               </div>
             </div>
-          </motion.div>
 
-          {/* 커리어 라이프사이클 */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-10 bg-white/[0.02] border border-white/10 p-8 md:p-10"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <Trophy size={18} className="text-amber-400" />
-              <span className="font-mono-tight text-xs tracking-[0.3em] text-amber-400">
-                CAREER LIFECYCLE
-              </span>
-              <div className="h-px flex-1 bg-white/10" />
+            {/* CENTER — Hexagon Stat Chart */}
+            <div className="relative bg-white/[0.02] border border-white/10 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-purple-400 z-20" />
+
+              <div className="p-5 md:p-6 h-full flex flex-col">
+                <div className="flex items-center gap-3 mb-3">
+                  <Sparkles size={14} className="text-purple-400" />
+                  <span className="font-mono-tight text-xs tracking-[0.3em] text-purple-400">
+                    50 SUB-STATS
+                  </span>
+                  <div className="h-px flex-1 bg-white/10" />
+                </div>
+                <p className="text-white/50 text-xs md:text-sm mb-4 leading-relaxed">
+                  6개 메인 + 50개 세부 스탯으로 아이돌의 강점을 결정합니다.
+                </p>
+
+                {/* 헥사곤 차트 */}
+                <div className="flex-1 flex items-center justify-center">
+                  {(() => {
+                    const stats = [
+                      { label: "Vocal", ko: "보컬", value: 92 },
+                      { label: "Dance", ko: "댄스", value: 95 },
+                      { label: "Charm", ko: "카리스마", value: 90 },
+                      { label: "Visual", ko: "비주얼", value: 88 },
+                      { label: "Style", ko: "패션", value: 75 },
+                      { label: "Passion", ko: "열정", value: 85 },
+                    ];
+                    const cx = 160, cy = 160, r = 90;
+                    const pt = (i: number, ratio = 1) => {
+                      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2;
+                      return [cx + r * ratio * Math.cos(a), cy + r * ratio * Math.sin(a)] as const;
+                    };
+                    const lbl = (i: number) => {
+                      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2;
+                      return [cx + 120 * Math.cos(a), cy + 120 * Math.sin(a)] as const;
+                    };
+                    return (
+                      <svg viewBox="0 0 320 320" className="w-full max-w-[320px]">
+                        {/* 배경 헥사곤 그리드 */}
+                        {[1, 0.75, 0.5, 0.25].map((scale, k) => (
+                          <polygon
+                            key={k}
+                            points={stats.map((_, i) => pt(i, scale).join(",")).join(" ")}
+                            fill="none"
+                            stroke="rgba(255,255,255,0.08)"
+                            strokeWidth="1"
+                          />
+                        ))}
+                        {/* 축 라인 */}
+                        {stats.map((_, i) => {
+                          const [x, y] = pt(i);
+                          return (
+                            <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                          );
+                        })}
+                        {/* 스탯 폴리곤 */}
+                        <polygon
+                          points={stats.map((s, i) => pt(i, s.value / 100).join(",")).join(" ")}
+                          fill="rgba(168,85,247,0.2)"
+                          stroke="rgb(192,132,252)"
+                          strokeWidth="2"
+                          filter="drop-shadow(0 0 8px rgba(192,132,252,0.4))"
+                        />
+                        {/* 스탯 점 */}
+                        {stats.map((s, i) => {
+                          const [x, y] = pt(i, s.value / 100);
+                          return <circle key={i} cx={x} cy={y} r={4} fill="rgb(192,132,252)" />;
+                        })}
+                        {/* 라벨 + 숫자 */}
+                        {stats.map((s, i) => {
+                          const [lx, ly] = lbl(i);
+                          return (
+                            <g key={i}>
+                              <text x={lx} y={ly - 4} textAnchor="middle" className="fill-white/80 text-[11px] font-bold tracking-wider" style={{ fontSize: "11px" }}>
+                                {s.label}
+                              </text>
+                              <text x={lx} y={ly + 10} textAnchor="middle" className="fill-pink-300 text-[12px] font-bold tabular-nums" style={{ fontSize: "12px" }}>
+                                {s.value}
+                              </text>
+                            </g>
+                          );
+                        })}
+                      </svg>
+                    );
+                  })()}
+                </div>
+              </div>
             </div>
-            <h3 className="text-white text-xl md:text-2xl font-bold mb-8">
-              신인부터 명예의 전당까지, <span className="text-amber-300">단계별 커리어</span>
-            </h3>
 
-            <div className="relative">
-              {/* 데스크탑: 가로 라인 */}
-              <div className="hidden md:block absolute top-3 left-0 right-0 h-px bg-gradient-to-r from-pink-500/50 via-amber-400/50 to-pink-500/50" />
-              {/* 모바일: 세로 라인 */}
-              <div className="md:hidden absolute left-3 top-3 bottom-3 w-px bg-gradient-to-b from-pink-500/50 via-amber-400/50 to-pink-500/50" />
-              <div className="flex flex-col gap-5 md:grid md:grid-cols-5 md:gap-6 relative">
-                {careerStages.map((stage, i) => (
-                  <div key={i} className="flex md:flex-col items-center md:text-center gap-4 md:gap-0">
-                    <div className="relative z-10 shrink-0 w-6 h-6 rounded-full bg-[#0a0a0f] border-2 border-amber-400 flex items-center justify-center md:mb-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-white text-base md:text-lg font-bold md:mb-1">
-                        {stage.label}
-                      </span>
-                      <span className="font-mono-tight text-[10px] text-white/40 tracking-[0.2em]">
-                        {stage.en}
-                      </span>
-                    </div>
+            {/* RIGHT — 2x2 Feature Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { Icon: Calendar, en: "SCHEDULE", ko: "스케줄 관리", desc: "활동 스케줄을 직접 운영", accent: "text-pink-400", border: "border-pink-500/40", bar: "bg-pink-400" },
+                { Icon: Mic2, en: "CONCERT", ko: "콘서트 운영", desc: "무대 기획부터 흥행까지", accent: "text-amber-400", border: "border-amber-500/40", bar: "bg-amber-400" },
+                { Icon: Star, en: "STAR ENDING", ko: "스타 엔딩", desc: "엔딩 분기로 특별한 결말", accent: "text-cyan-400", border: "border-cyan-400/40", bar: "bg-cyan-400" },
+                { Icon: Trophy, en: "HALL OF FAME", ko: "명예의 전당", desc: "전설로 남는 아이돌", accent: "text-purple-400", border: "border-purple-500/40", bar: "bg-purple-400" },
+              ].map((f, i) => (
+                <div
+                  key={i}
+                  className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 p-4 md:p-5 overflow-hidden"
+                >
+                  <div className={`absolute top-0 left-0 right-0 h-0.5 ${f.bar}`} />
+                  <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg border ${f.border} ${f.accent} group-hover:shadow-[0_0_18px_currentColor] transition duration-500 mb-3`}>
+                    <f.Icon size={18} strokeWidth={1.5} />
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 성격·재능 칩 */}
-            <div className="mt-10 pt-8 border-t border-white/10 grid md:grid-cols-2 gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Sparkles size={14} className="text-pink-400" />
-                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-pink-400">
-                    PERSONALITY
-                  </span>
+                  <div className={`font-mono-tight text-[10px] tracking-[0.25em] ${f.accent} mb-1`}>
+                    {f.en}
+                  </div>
+                  <h4 className="text-white text-sm md:text-base font-bold mb-1">{f.ko}</h4>
+                  <p className="text-white/40 text-xs leading-relaxed">{f.desc}</p>
                 </div>
-                <p className="text-white/60 text-sm leading-relaxed">
-                  아이돌의 성격이 활동 선택 · 팬 호감도 · 팀 시너지에 영향을 줍니다.
-                </p>
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Star size={14} className="text-amber-400" />
-                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-amber-400">
-                    TALENT
-                  </span>
-                </div>
-                <p className="text-white/60 text-sm leading-relaxed">
-                  재능 시스템은 같은 등급의 아이돌도 서로 다른 강점을 갖게 만듭니다. <br />
-                  뽑은 그날부터 운명이 갈립니다.
-                </p>
-              </div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -1135,16 +1104,12 @@ export default function Home() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain"
                 />
-
-                {/* BEFORE 배지 */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-500 text-white text-xs font-bold tracking-[0.2em] shadow-[0_4px_20px_rgba(236,72,153,0.5)]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                    BEFORE
-                  </span>
-                </div>
               </div>
               <div className="p-5 md:p-6 text-center">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-500 text-white text-xs font-bold tracking-[0.2em] shadow-[0_4px_20px_rgba(236,72,153,0.5)] mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                  BEFORE
+                </div>
                 <h3 className="text-white text-lg md:text-xl font-bold">프로덕션의 시작</h3>
               </div>
             </div>
@@ -1160,16 +1125,12 @@ export default function Home() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain"
                 />
-
-                {/* AFTER 배지 */}
-                <div className="absolute top-4 right-4 z-10">
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500 text-white text-xs font-bold tracking-[0.2em] shadow-[0_4px_20px_rgba(34,211,238,0.5)]">
-                    AFTER
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                  </span>
-                </div>
               </div>
               <div className="p-5 md:p-6 text-center">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500 text-white text-xs font-bold tracking-[0.2em] shadow-[0_4px_20px_rgba(34,211,238,0.5)] mb-3">
+                  AFTER
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                </div>
                 <h3 className="text-white text-lg md:text-xl font-bold">확장된 프로덕션</h3>
               </div>
             </div>
