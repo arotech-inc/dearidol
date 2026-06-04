@@ -5,7 +5,8 @@
       "Bash(npx tsc --noEmit)",
       "Bash(npx next lint)",
       "Bash(npm install:*)",
-      "Bash(ls character*)"
+      "Bash(ls character*)",
+      "Bash(git pull *)"
     ]
   }
 }
