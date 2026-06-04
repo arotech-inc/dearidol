@@ -125,7 +125,8 @@ export default function Home() {
     if (window.matchMedia("(max-width: 1023px)").matches) return;
 
     const getSections = () =>
-      Array.from(document.querySelectorAll<HTMLElement>(".snap-section"));
+      Array.from(document.querySelectorAll<HTMLElement>(".snap-section"))
+        .filter((el) => el.offsetParent !== null);
 
     let isAnimating = false;
     let lockUntil = 0;
@@ -951,32 +952,32 @@ export default function Home() {
                   <div className="h-px flex-1 bg-white/10" />
                 </div>
                 <p className="text-white/50 text-xs md:text-sm mb-4 leading-relaxed">
-                  6개 메인 + 50개 세부 스탯으로 아이돌의 강점을 결정합니다.
+                  5개 메인 + 50개 세부 스탯으로 아이돌의 강점을 결정합니다.
                 </p>
 
-                {/* 헥사곤 차트 */}
+                {/* 펜타곤 차트 */}
                 <div className="flex-1 flex items-center justify-center">
                   {(() => {
                     const stats = [
                       { label: "Vocal", ko: "보컬", value: 92 },
                       { label: "Dance", ko: "댄스", value: 95 },
-                      { label: "Charm", ko: "카리스마", value: 90 },
-                      { label: "Visual", ko: "비주얼", value: 88 },
-                      { label: "Style", ko: "패션", value: 75 },
                       { label: "Passion", ko: "열정", value: 85 },
+                      { label: "Charisma", ko: "카리스마", value: 90 },
+                      { label: "Visual", ko: "비주얼", value: 88 },
                     ];
+                    const N = stats.length;
                     const cx = 160, cy = 160, r = 90;
                     const pt = (i: number, ratio = 1) => {
-                      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2;
+                      const a = (Math.PI * 2 * i) / N - Math.PI / 2;
                       return [cx + r * ratio * Math.cos(a), cy + r * ratio * Math.sin(a)] as const;
                     };
                     const lbl = (i: number) => {
-                      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2;
+                      const a = (Math.PI * 2 * i) / N - Math.PI / 2;
                       return [cx + 120 * Math.cos(a), cy + 120 * Math.sin(a)] as const;
                     };
                     return (
                       <svg viewBox="0 0 320 320" className="w-full max-w-[320px]">
-                        {/* 배경 헥사곤 그리드 */}
+                        {/* 배경 펜타곤 그리드 */}
                         {[1, 0.75, 0.5, 0.25].map((scale, k) => (
                           <polygon
                             key={k}
