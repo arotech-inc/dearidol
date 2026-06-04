@@ -72,7 +72,25 @@ export default function Home() {
 
   // System 비디오: 풀스크린 → 폰 모양 쉬링크
   const systemVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const phoneSectionRef = useRef<HTMLDivElement>(null);
+
+  // 뷰포트에 따라 활성 비디오만 재생 (오디오 메아리 방지)
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const syncVideos = () => {
+      if (mql.matches) {
+        mobileVideoRef.current?.pause();
+        systemVideoRef.current?.play().catch(() => {});
+      } else {
+        systemVideoRef.current?.pause();
+        mobileVideoRef.current?.play().catch(() => {});
+      }
+    };
+    syncVideos();
+    mql.addEventListener("change", syncVideos);
+    return () => mql.removeEventListener("change", syncVideos);
+  }, []);
   const { scrollYProgress: phoneProgress } = useScroll({
     target: phoneSectionRef,
     offset: ["start start", "end end"],
@@ -853,6 +871,7 @@ export default function Home() {
               className="relative aspect-[2/1] rounded-[28px] border-[6px] border-[#7a8ba8] overflow-hidden bg-black shadow-[0_15px_50px_rgba(0,0,0,0.5)]"
             >
               <video
+                ref={mobileVideoRef}
                 autoPlay
                 muted={isMuted}
                 loop
@@ -1092,8 +1111,8 @@ export default function Home() {
               </h2>
             </div>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
-              아이돌이 성장할수록 프로덕션도 함께 커집니다.
-              데뷔 직후의 작은 스튜디오부터 월드 투어를 지휘하는 글로벌 사옥까지 — 당신의 손으로 키워보세요.
+              처음엔 작은 공간에서 시작하지만,<br />
+              성장할수록 더 넓은 프로덕션으로 확장됩니다.
             </p>
           </motion.div>
 
@@ -1108,64 +1127,50 @@ export default function Home() {
             {/* BEFORE */}
             <div className="group relative bg-white/[0.02] border border-white/10 hover:border-pink-400/40 transition duration-500 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-pink-400 z-20" />
-              <div className="relative aspect-[16/10] overflow-hidden">
+              <div className="relative aspect-[16/9] bg-black overflow-hidden">
                 <Image
                   src="/building.jpg"
-                  alt="Before — 작은 사무실"
+                  alt="Before"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  className="object-contain"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-
-                {/* 코너 마커 */}
-                <div className="absolute top-3 left-3 w-3 h-3 border-l border-t border-pink-400/70 z-10" />
-                <div className="absolute top-3 right-3 w-3 h-3 border-r border-t border-pink-400/70 z-10" />
-                <div className="absolute bottom-3 left-3 w-3 h-3 border-l border-b border-pink-400/70 z-10" />
-                <div className="absolute bottom-3 right-3 w-3 h-3 border-r border-b border-pink-400/70 z-10" />
 
                 {/* BEFORE 배지 */}
-                <div className="absolute top-5 left-5 flex items-center gap-2 z-10">
-                  <span className="inline-block w-2 h-2 rounded-full bg-pink-400" />
-                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/90 bg-black/40 backdrop-blur px-2 py-1">BEFORE</span>
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-500 text-white text-xs font-bold tracking-[0.2em] shadow-[0_4px_20px_rgba(236,72,153,0.5)]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                    BEFORE
+                  </span>
                 </div>
               </div>
-              <div className="p-5 md:p-6">
-                <div className="font-mono-tight text-[10px] tracking-[0.3em] text-pink-400 mb-2">START · STARTUP STUDIO</div>
-                <h3 className="text-white text-xl md:text-2xl font-bold mb-2">작은 사무실에서 시작</h3>
-                <p className="text-white/50 text-sm leading-relaxed">데뷔 직후의 작은 스튜디오. 신인 프로듀서로서의 첫 무대.</p>
+              <div className="p-5 md:p-6 text-center">
+                <h3 className="text-white text-lg md:text-xl font-bold">프로덕션의 시작</h3>
               </div>
             </div>
 
             {/* AFTER */}
             <div className="group relative bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition duration-500 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-cyan-400 z-20" />
-              <div className="relative aspect-[16/10] overflow-hidden">
+              <div className="relative aspect-[16/9] bg-black overflow-hidden">
                 <Image
                   src="/building upgrade.jpg"
-                  alt="After — 글로벌 사옥"
+                  alt="After"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  className="object-contain"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-
-                {/* 코너 마커 */}
-                <div className="absolute top-3 left-3 w-3 h-3 border-l border-t border-cyan-400/70 z-10" />
-                <div className="absolute top-3 right-3 w-3 h-3 border-r border-t border-cyan-400/70 z-10" />
-                <div className="absolute bottom-3 left-3 w-3 h-3 border-l border-b border-cyan-400/70 z-10" />
-                <div className="absolute bottom-3 right-3 w-3 h-3 border-r border-b border-cyan-400/70 z-10" />
 
                 {/* AFTER 배지 */}
-                <div className="absolute top-5 right-5 flex items-center gap-2 z-10">
-                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/90 bg-black/40 backdrop-blur px-2 py-1">AFTER</span>
-                  <span className="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                <div className="absolute top-4 right-4 z-10">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500 text-white text-xs font-bold tracking-[0.2em] shadow-[0_4px_20px_rgba(34,211,238,0.5)]">
+                    AFTER
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  </span>
                 </div>
               </div>
-              <div className="p-5 md:p-6">
-                <div className="font-mono-tight text-[10px] tracking-[0.3em] text-cyan-400 mb-2">GROWTH · GLOBAL HQ</div>
-                <h3 className="text-white text-xl md:text-2xl font-bold mb-2">글로벌 사옥으로 확장</h3>
-                <p className="text-white/50 text-sm leading-relaxed">월드 투어와 국제 진출을 지휘하는 K-POP 본사로 성장.</p>
+              <div className="p-5 md:p-6 text-center">
+                <h3 className="text-white text-lg md:text-xl font-bold">확장된 프로덕션</h3>
               </div>
             </div>
 
