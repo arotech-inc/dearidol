@@ -317,13 +317,6 @@ export default function Home() {
     { label: "명예의 전당", en: "HALL OF FAME" },
   ];
 
-  const growthStages = [
-    { num: "01", ko: "작은 사무실", en: "Startup Studio", desc: "신인 프로듀서의 첫 무대", accent: "text-pink-400", border: "border-pink-500/40", bar: "bg-pink-400" },
-    { num: "02", ko: "중소 기획사", en: "Growing Agency", desc: "팬덤 확장과 첫 히트곡", accent: "text-purple-400", border: "border-purple-500/40", bar: "bg-purple-400" },
-    { num: "03", ko: "메이저 레이블", en: "Major Label", desc: "전국 단위 매니지먼트", accent: "text-amber-400", border: "border-amber-500/40", bar: "bg-amber-400" },
-    { num: "04", ko: "글로벌 사옥", en: "Global HQ", desc: "월드 투어와 국제 진출", accent: "text-cyan-400", border: "border-cyan-400/40", bar: "bg-cyan-400" },
-  ];
-
   return (
     <main className="bg-[#0a0a0f] text-white">
 
@@ -1027,50 +1020,84 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* 4단계 성장 카드 */}
+          {/* Before / After 2단 비교 */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 relative"
           >
-            {growthStages.map((g, i) => (
-              <div
-                key={i}
-                className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 overflow-hidden"
-              >
-                {/* 상단 컬러 라인 */}
-                <div className={`absolute top-0 left-0 right-0 h-0.5 ${g.bar} z-10`} />
+            {/* BEFORE */}
+            <div className="group relative bg-white/[0.02] border border-white/10 hover:border-pink-400/40 transition duration-500 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-pink-400 z-20" />
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <Image
+                  src="/building.jpg"
+                  alt="Before — 작은 사무실"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                {/* 이미지 placeholder */}
-                <div className={`relative aspect-[4/5] border-b ${g.border} bg-white/[0.01] flex items-center justify-center overflow-hidden`}>
-                  {/* 배경 그리드 */}
-                  <div className="absolute inset-0 grid-pattern opacity-30" />
+                {/* 코너 마커 */}
+                <div className="absolute top-3 left-3 w-3 h-3 border-l border-t border-pink-400/70 z-10" />
+                <div className="absolute top-3 right-3 w-3 h-3 border-r border-t border-pink-400/70 z-10" />
+                <div className="absolute bottom-3 left-3 w-3 h-3 border-l border-b border-pink-400/70 z-10" />
+                <div className="absolute bottom-3 right-3 w-3 h-3 border-r border-b border-pink-400/70 z-10" />
 
-                  {/* 코너 마커 */}
-                  <div className={`absolute top-2 left-2 w-3 h-3 border-l border-t ${g.border} opacity-80`} />
-                  <div className={`absolute top-2 right-2 w-3 h-3 border-r border-t ${g.border} opacity-80`} />
-                  <div className={`absolute bottom-2 left-2 w-3 h-3 border-l border-b ${g.border} opacity-80`} />
-                  <div className={`absolute bottom-2 right-2 w-3 h-3 border-r border-b ${g.border} opacity-80`} />
-
-                  {/* 빈칸 라벨 */}
-                  <div className="relative z-10 flex flex-col items-center">
-                    <span className={`font-mono-tight text-[10px] tracking-[0.3em] ${g.accent} mb-1`}>STAGE {g.num}</span>
-                    <span className="text-white/30 text-[10px] font-mono-tight tracking-wider">IMAGE</span>
-                  </div>
-                </div>
-
-                {/* 텍스트 */}
-                <div className="p-4 md:p-5">
-                  <div className={`font-mono-tight text-[10px] tracking-[0.3em] ${g.accent} mb-1.5`}>
-                    {g.num} · {g.en}
-                  </div>
-                  <h3 className="text-white text-base md:text-lg font-bold mb-1.5">{g.ko}</h3>
-                  <p className="text-white/50 text-xs md:text-sm leading-relaxed">{g.desc}</p>
+                {/* BEFORE 배지 */}
+                <div className="absolute top-5 left-5 flex items-center gap-2 z-10">
+                  <span className="inline-block w-2 h-2 rounded-full bg-pink-400" />
+                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/90 bg-black/40 backdrop-blur px-2 py-1">BEFORE</span>
                 </div>
               </div>
-            ))}
+              <div className="p-5 md:p-6">
+                <div className="font-mono-tight text-[10px] tracking-[0.3em] text-pink-400 mb-2">START · STARTUP STUDIO</div>
+                <h3 className="text-white text-xl md:text-2xl font-bold mb-2">작은 사무실에서 시작</h3>
+                <p className="text-white/50 text-sm leading-relaxed">데뷔 직후의 작은 스튜디오. 신인 프로듀서로서의 첫 무대.</p>
+              </div>
+            </div>
+
+            {/* AFTER */}
+            <div className="group relative bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition duration-500 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-cyan-400 z-20" />
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <Image
+                  src="/building upgrade.jpg"
+                  alt="After — 글로벌 사옥"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                {/* 코너 마커 */}
+                <div className="absolute top-3 left-3 w-3 h-3 border-l border-t border-cyan-400/70 z-10" />
+                <div className="absolute top-3 right-3 w-3 h-3 border-r border-t border-cyan-400/70 z-10" />
+                <div className="absolute bottom-3 left-3 w-3 h-3 border-l border-b border-cyan-400/70 z-10" />
+                <div className="absolute bottom-3 right-3 w-3 h-3 border-r border-b border-cyan-400/70 z-10" />
+
+                {/* AFTER 배지 */}
+                <div className="absolute top-5 right-5 flex items-center gap-2 z-10">
+                  <span className="font-mono-tight text-[10px] tracking-[0.3em] text-white/90 bg-black/40 backdrop-blur px-2 py-1">AFTER</span>
+                  <span className="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                </div>
+              </div>
+              <div className="p-5 md:p-6">
+                <div className="font-mono-tight text-[10px] tracking-[0.3em] text-cyan-400 mb-2">GROWTH · GLOBAL HQ</div>
+                <h3 className="text-white text-xl md:text-2xl font-bold mb-2">글로벌 사옥으로 확장</h3>
+                <p className="text-white/50 text-sm leading-relaxed">월드 투어와 국제 진출을 지휘하는 K-POP 본사로 성장.</p>
+              </div>
+            </div>
+
+            {/* 화살표 (lg에서만) */}
+            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+              <div className="w-12 h-12 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/80">
+                <ArrowRight size={18} />
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
