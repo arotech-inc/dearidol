@@ -758,7 +758,7 @@ export default function Home() {
                     loop
                     playsInline
                     preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-contain bg-black"
                   >
                     <source src="/dear.mp4" type="video/mp4" />
                   </video>
