@@ -28,6 +28,8 @@ import {
   Crown,
   Palette,
   Trophy,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 
 const barColor: Record<string, string> = {
@@ -47,6 +49,7 @@ export default function Home() {
   const router = useRouter();
   const [activeNews, setActiveNews] = useState(0);
   const [activePillar, setActivePillar] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
 
   // 50 카운트업 (Idol Management 섹션)
   const counterRef = useRef<HTMLDivElement>(null);
@@ -758,7 +761,7 @@ export default function Home() {
                   <video
                     ref={systemVideoRef}
                     autoPlay
-                    muted
+                    muted={isMuted}
                     loop
                     playsInline
                     preload="auto"
@@ -804,6 +807,16 @@ export default function Home() {
                 </motion.div>
               </motion.div>
             </div>
+
+            {/* 음소거 해제 버튼 */}
+            <button
+              type="button"
+              onClick={() => setIsMuted((m) => !m)}
+              aria-label={isMuted ? "사운드 켜기" : "사운드 끄기"}
+              className="absolute bottom-8 right-8 md:bottom-10 md:right-10 z-30 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 hover:border-pink-400/60 hover:bg-pink-500/20 flex items-center justify-center text-white/80 hover:text-white transition cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+            >
+              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            </button>
           </div>
         </div>
 

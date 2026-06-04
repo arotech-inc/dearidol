@@ -6,7 +6,9 @@
       "Bash(npx next lint)",
       "Bash(npm install:*)",
       "Bash(ls character*)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(node_modules/ffmpeg-static/ffmpeg.exe -i \"/g/ARO/홈페이지/dear.mp4\" -vf \"scale=1280:-2,fps=30\" -c:v libx264 -crf 28 -preset fast -c:a aac -b:a 128k -movflags +faststart -y public/dear.mp4)",
+      "Bash(npm uninstall *)"
     ]
   }
 }
