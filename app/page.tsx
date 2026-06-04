@@ -414,13 +414,13 @@ export default function Home() {
               <div className="h-4 w-px bg-white/20" />
             </div>
             <span className="section-label text-white/40 md:hidden">Available on</span>
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-3 max-w-md md:max-w-none">
               {/* App Store 버튼 */}
               <a
                 href="https://www.apple.com/app-store/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block w-[180px] md:w-[200px] h-12 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
+                className="group block w-[150px] md:w-[200px] h-11 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
               >
                 <Image src="/appstore.svg" alt="App Store" fill className="object-contain" />
               </a>
@@ -430,7 +430,7 @@ export default function Home() {
                 href="https://play.google.com/store"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block w-[180px] md:w-[200px] h-12 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
+                className="group block w-[150px] md:w-[200px] h-11 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
               >
                 <Image src="/googleplay.png" alt="Google Play" fill className="object-contain" />
               </a>
@@ -440,7 +440,7 @@ export default function Home() {
                 href="#scenes"
                 aria-label="트레일러 보기"
                 title="트레일러 보기"
-                className="group ml-1 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:border-white hover:text-black transition text-white/80 shrink-0"
+                className="group w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:border-white hover:text-black transition text-white/80 shrink-0"
               >
                 <Play size={14} fill="currentColor" className="ml-0.5" />
               </a>
