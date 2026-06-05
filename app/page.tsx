@@ -786,7 +786,7 @@ export default function Home() {
       </section>
 
       {/* ================= MOBILE PHONE VIDEO (간소화 버전) ================= */}
-      <section className="snap-section lg:hidden relative bg-[#0a0a0f] min-h-screen flex items-center py-20 overflow-hidden">
+      <section className="snap-section lg:hidden relative bg-[#0a0a0f] py-16 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
         <div className="absolute top-1/3 -right-20 w-[300px] h-[300px] rounded-full bg-pink-500/10 blur-[100px]" />
         <div className="absolute bottom-1/3 -left-20 w-[300px] h-[300px] rounded-full bg-purple-500/10 blur-[100px]" />
@@ -864,7 +864,7 @@ export default function Home() {
       </section>
 
       {/* ================= IDOL MANAGEMENT (육성) ================= */}
-      <section id="management" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden">
+      <section id="management" className="snap-section relative md:min-h-screen md:flex md:items-center py-16 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-25" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-amber-500/8 blur-[120px]" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
@@ -927,12 +927,14 @@ export default function Home() {
               {/* 본문: 좌(캐릭터) + 우(스탯) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5 md:p-6 flex-1">
                 {/* 캐릭터 프리뷰 */}
-                <div className="relative min-h-[400px] bg-white/[0.02] border border-white/10 flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0 grid-pattern opacity-30" />
-                  <div className="relative z-0 flex flex-col items-center">
-                    <span className="font-mono-tight text-[10px] tracking-[0.3em] text-purple-400 mb-1">CHARACTER</span>
-                    <span className="text-white/30 text-[10px] font-mono-tight tracking-wider">PREVIEW</span>
-                  </div>
+                <div className="relative min-h-[400px] bg-white/[0.02] border border-white/10 overflow-hidden">
+                  <Image
+                    src="/character preview.png"
+                    alt="Character Preview"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 25vw"
+                    className="object-contain"
+                  />
                 </div>
 
                 {/* 우측 스탯 영역 */}
@@ -942,7 +944,7 @@ export default function Home() {
                     <span className="inline-flex items-center px-2 py-1 rounded bg-gradient-to-br from-purple-500 to-pink-500 text-white text-[10px] font-bold tracking-wider shadow-[0_0_12px_rgba(192,132,252,0.5)]">
                       SSR
                     </span>
-                    <span className="text-white text-sm md:text-base font-bold">IDOL NAME</span>
+                    <span className="text-white text-sm md:text-base font-bold">유진 산체스</span>
                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-pink-500/20 border border-pink-400/40 text-pink-300 text-[10px] font-bold tracking-wider">
                       <Mic2 size={10} />
                       VOCAL
@@ -961,7 +963,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 mb-3">
                     <Star size={14} className="text-amber-400 fill-amber-400/30" />
                     <span className="text-white/70 text-xs tracking-wider">아이돌 전투력</span>
-                    <span className="font-display text-amber-400 text-xl tabular-nums">18,440</span>
+                    <span className="font-display text-amber-400 text-xl tabular-nums">1,844</span>
                   </div>
 
                   {/* 펜타곤 스탯 */}
@@ -1051,7 +1053,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT — 4 Feature 카드 (세로 스택) */}
-            <div className="grid grid-rows-4 gap-3">
+            <div className="grid grid-rows-4 gap-2">
               {[
                 { Icon: Calendar, ko: "스케줄", desc: "다양한 스케줄로\n아이돌을 성장시켜요", accent: "text-pink-400", border: "border-pink-500/40", bar: "bg-pink-400" },
                 { Icon: Mic2, ko: "콘서트", desc: "무대에서 실력을 증명하고\n팬심을 모아 보세요", accent: "text-amber-400", border: "border-amber-500/40", bar: "bg-amber-400" },
@@ -1060,17 +1062,16 @@ export default function Home() {
               ].map((f, i) => (
                 <div
                   key={i}
-                  className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 overflow-hidden flex items-center gap-3 p-3 md:p-4"
+                  className="group relative bg-white/[0.02] border border-white/10 hover:border-white/30 transition duration-500 overflow-hidden flex items-center gap-4 px-5 py-4 md:py-5"
                 >
                   <div className={`absolute top-0 left-0 right-0 h-0.5 ${f.bar}`} />
                   <div className={`shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg border ${f.border} ${f.accent} group-hover:shadow-[0_0_18px_currentColor] transition duration-500`}>
                     <f.Icon size={20} strokeWidth={1.5} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-white text-sm md:text-base font-bold mb-0.5">{f.ko}</h4>
+                  <div className="flex-1 min-w-0 text-center">
+                    <h4 className="text-white text-sm md:text-base font-bold mb-1">{f.ko}</h4>
                     <p className="text-white/40 text-[11px] md:text-xs leading-snug whitespace-pre-line">{f.desc}</p>
                   </div>
-                  <ArrowRight size={14} className="shrink-0 text-white/30 group-hover:text-white/70 transition" />
                 </div>
               ))}
             </div>
@@ -1105,7 +1106,7 @@ export default function Home() {
       </section>
 
       {/* ================= GROWING PRODUCTION ================= */}
-      <section id="growth" className="snap-section relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden bg-[#0a0a0f]">
+      <section id="growth" className="snap-section relative md:min-h-screen md:flex md:items-center py-16 md:py-24 lg:py-32 overflow-hidden bg-[#0a0a0f]">
         <div className="absolute inset-0 grid-pattern opacity-25" />
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full bg-pink-500/8 blur-[120px]" />
