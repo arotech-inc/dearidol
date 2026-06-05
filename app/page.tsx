@@ -899,56 +899,19 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 lg:grid-cols-[0.9fr_2fr_0.9fr] gap-5"
+            className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.4fr_1fr] gap-5"
           >
             {/* LEFT — NEW SSR 등장 카드 */}
-            <div className="relative bg-gradient-to-br from-purple-900/40 via-pink-900/30 to-purple-900/40 border border-pink-500/30 overflow-hidden flex flex-col">
+            <div className="relative border border-pink-500/30 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400 z-20" />
-              <div className="absolute inset-0 grid-pattern opacity-20" />
-
-              {/* 메인 영역 */}
-              <div className="relative flex-1 flex flex-col items-center justify-between p-5 md:p-6 z-10">
-                {/* 상단 NEW · SSR 텍스트 */}
-                <div className="text-center">
-                  <div className="font-display gradient-text-pink text-4xl md:text-5xl leading-none drop-shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-                    NEW
-                  </div>
-                  <div className="font-display gradient-text-pink text-5xl md:text-6xl leading-none mt-1 drop-shadow-[0_0_20px_rgba(192,132,252,0.5)]">
-                    SSR
-                  </div>
-                  <div className="text-white text-base md:text-lg font-bold tracking-wider mt-3">IDOL NAME</div>
-                  <div className="flex items-center justify-center gap-0.5 mt-2">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <Star key={i} size={12} className="text-amber-400 fill-amber-400" />
-                    ))}
-                  </div>
-                </div>
-
-                {/* 캐릭터 이미지 */}
-                <div className="relative w-full aspect-[3/4] my-4 bg-white/[0.03] border border-white/10 overflow-hidden">
-                  <Image
-                    src="/character.jpg"
-                    alt="SSR 아이돌"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 25vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute top-2 left-2 w-3 h-3 border-l border-t border-pink-400/60 z-10" />
-                  <div className="absolute top-2 right-2 w-3 h-3 border-r border-t border-pink-400/60 z-10" />
-                  <div className="absolute bottom-2 left-2 w-3 h-3 border-l border-b border-pink-400/60 z-10" />
-                  <div className="absolute bottom-2 right-2 w-3 h-3 border-r border-b border-pink-400/60 z-10" />
-                </div>
-
-                {/* New Idol 라벨 + 획득 안내 */}
-                <div className="text-center">
-                  <div className="font-display text-pink-300 italic text-lg md:text-xl drop-shadow-[0_0_10px_rgba(236,72,153,0.4)]">
-                    New Idol!
-                  </div>
-                  <div className="mt-3 px-4 py-2 bg-black/40 border border-pink-500/30 rounded-full">
-                    <span className="font-mono-tight text-[10px] tracking-[0.25em] text-pink-300">SSR 등급 아이돌 획득!</span>
-                  </div>
-                </div>
-              </div>
+              <Image
+                src="/character.jpg"
+                alt="SSR 아이돌"
+                width={800}
+                height={1066}
+                sizes="(max-width: 1024px) 100vw, 25vw"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* CENTER — 아이돌 보관함 패널 */}
@@ -964,14 +927,8 @@ export default function Home() {
               {/* 본문: 좌(캐릭터) + 우(스탯) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5 md:p-6 flex-1">
                 {/* 캐릭터 프리뷰 */}
-                <div className="relative aspect-[3/4] bg-white/[0.02] border border-white/10 flex items-center justify-center overflow-hidden">
+                <div className="relative min-h-[400px] bg-white/[0.02] border border-white/10 flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 grid-pattern opacity-30" />
-                  <button className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/70 hover:bg-pink-500/40 hover:border-pink-400 transition">
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/70 hover:bg-pink-500/40 hover:border-pink-400 transition">
-                    <ChevronRight size={16} />
-                  </button>
                   <div className="relative z-0 flex flex-col items-center">
                     <span className="font-mono-tight text-[10px] tracking-[0.3em] text-purple-400 mb-1">CHARACTER</span>
                     <span className="text-white/30 text-[10px] font-mono-tight tracking-wider">PREVIEW</span>
@@ -1008,7 +965,7 @@ export default function Home() {
                   </div>
 
                   {/* 펜타곤 스탯 */}
-                  <div className="flex-1 flex items-center justify-center min-h-0">
+                  <div className="flex-1 flex items-center justify-center min-h-0 mt-6">
                     {(() => {
                       const stats = [
                         { label: "VOCAL", value: 366 },
@@ -1018,7 +975,7 @@ export default function Home() {
                         { label: "VISUAL", value: 346 },
                       ];
                       const N = stats.length;
-                      const cx = 160, cy = 160, r = 80;
+                      const cx = 180, cy = 180, r = 110;
                       const max = 500;
                       const pt = (i: number, ratio = 1) => {
                         const a = (Math.PI * 2 * i) / N - Math.PI / 2;
@@ -1026,10 +983,10 @@ export default function Home() {
                       };
                       const lbl = (i: number) => {
                         const a = (Math.PI * 2 * i) / N - Math.PI / 2;
-                        return [cx + 115 * Math.cos(a), cy + 115 * Math.sin(a)] as const;
+                        return [cx + 145 * Math.cos(a), cy + 145 * Math.sin(a)] as const;
                       };
                       return (
-                        <svg viewBox="0 0 320 320" className="w-full max-w-[280px]">
+                        <svg viewBox="0 0 360 360" className="w-full max-w-[360px]">
                           {[1, 0.75, 0.5, 0.25].map((scale, k) => (
                             <polygon
                               key={k}
@@ -1054,16 +1011,16 @@ export default function Home() {
                           />
                           {stats.map((s, i) => {
                             const [x, y] = pt(i, s.value / max);
-                            return <circle key={i} cx={x} cy={y} r={3.5} fill="rgb(192,132,252)" />;
+                            return <circle key={i} cx={x} cy={y} r={4} fill="rgb(192,132,252)" />;
                           })}
                           {stats.map((s, i) => {
                             const [lx, ly] = lbl(i);
                             return (
                               <g key={i}>
-                                <text x={lx} y={ly - 4} textAnchor="middle" className="fill-white/80 font-bold" style={{ fontSize: "10px", letterSpacing: "0.05em" }}>
+                                <text x={lx} y={ly - 5} textAnchor="middle" className="fill-white/90 font-bold" style={{ fontSize: "13px", letterSpacing: "0.05em" }}>
                                   {s.label}
                                 </text>
-                                <text x={lx} y={ly + 10} textAnchor="middle" className="fill-pink-300 font-bold tabular-nums" style={{ fontSize: "12px" }}>
+                                <text x={lx} y={ly + 13} textAnchor="middle" className="fill-pink-300 font-bold tabular-nums" style={{ fontSize: "16px" }}>
                                   {s.value}
                                 </text>
                               </g>
@@ -1094,7 +1051,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT — 4 Feature 카드 (세로 스택) */}
-            <div className="flex flex-col gap-3">
+            <div className="grid grid-rows-4 gap-3">
               {[
                 { Icon: Calendar, ko: "스케줄", desc: "다양한 스케줄로\n아이돌을 성장시켜요", accent: "text-pink-400", border: "border-pink-500/40", bar: "bg-pink-400" },
                 { Icon: Mic2, ko: "콘서트", desc: "무대에서 실력을 증명하고\n팬심을 모아 보세요", accent: "text-amber-400", border: "border-amber-500/40", bar: "bg-amber-400" },
