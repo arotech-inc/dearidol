@@ -905,7 +905,7 @@ export default function Home() {
             <div className="relative border border-pink-500/30 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400 z-20" />
               <Image
-                src="/character.jpg"
+                src="/character2.jpg"
                 alt="SSR 아이돌"
                 width={800}
                 height={1066}
@@ -1087,8 +1087,8 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 text-center">
               {[
                 { Icon: Users, label: "아이돌 획득", accent: "text-pink-400" },
-                { Icon: Star, label: "보관함에서 성장", accent: "text-amber-400" },
-                { Icon: Sparkles, label: "실력 & 팬심 상승", accent: "text-cyan-400" },
+                { Icon: Star, label: "육성 관리", accent: "text-amber-400" },
+                { Icon: Sparkles, label: "스케쥴 도전", accent: "text-cyan-400" },
                 { Icon: Trophy, label: "최고의 스타로 완성", accent: "text-purple-400" },
               ].map((step, i, arr) => (
                 <div key={i} className="flex items-center gap-3 md:gap-6">
