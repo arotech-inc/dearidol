@@ -924,16 +924,19 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* 가운데 이미지 자리 */}
-                <div className="relative w-full aspect-[3/4] my-4 bg-white/[0.03] border border-white/10 flex items-center justify-center overflow-hidden">
-                  <div className="absolute top-2 left-2 w-3 h-3 border-l border-t border-pink-400/60" />
-                  <div className="absolute top-2 right-2 w-3 h-3 border-r border-t border-pink-400/60" />
-                  <div className="absolute bottom-2 left-2 w-3 h-3 border-l border-b border-pink-400/60" />
-                  <div className="absolute bottom-2 right-2 w-3 h-3 border-r border-b border-pink-400/60" />
-                  <div className="flex flex-col items-center">
-                    <span className="font-mono-tight text-[10px] tracking-[0.3em] text-pink-400 mb-1">CHARACTER</span>
-                    <span className="text-white/30 text-[10px] font-mono-tight tracking-wider">IMAGE</span>
-                  </div>
+                {/* 캐릭터 이미지 */}
+                <div className="relative w-full aspect-[3/4] my-4 bg-white/[0.03] border border-white/10 overflow-hidden">
+                  <Image
+                    src="/character.jpg"
+                    alt="SSR 아이돌"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 25vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute top-2 left-2 w-3 h-3 border-l border-t border-pink-400/60 z-10" />
+                  <div className="absolute top-2 right-2 w-3 h-3 border-r border-t border-pink-400/60 z-10" />
+                  <div className="absolute bottom-2 left-2 w-3 h-3 border-l border-b border-pink-400/60 z-10" />
+                  <div className="absolute bottom-2 right-2 w-3 h-3 border-r border-b border-pink-400/60 z-10" />
                 </div>
 
                 {/* New Idol 라벨 + 획득 안내 */}
