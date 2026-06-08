@@ -1035,21 +1035,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 하단 액션 버튼 */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 px-5 md:px-6 pb-5 md:pb-6">
-                {["레벨업", "스킬 관리", "의상 변경", "상세 정보"].map((label, i) => (
-                  <button
-                    key={i}
-                    className={`py-2.5 text-xs md:text-sm font-bold rounded border transition ${
-                      i === 0
-                        ? "bg-gradient-to-r from-purple-600 to-pink-600 border-purple-400 text-white shadow-[0_0_15px_rgba(192,132,252,0.4)]"
-                        : "bg-white/[0.03] border-white/15 text-white/70 hover:bg-white/[0.08] hover:border-white/30"
-                    }`}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
             </div>
 
             {/* RIGHT — 4 Feature 카드 (세로 스택) */}
