@@ -7,7 +7,8 @@ import Link from "next/link";
 
 const menuItems = [
   { label: "System", link: "/#core" },
-  { label: "Soundtrack", link: "/#soundtrack" },
+  { label: "Management", link: "/#management" },
+  { label: "Growth", link: "/#growth" },
   { label: "News", link: "/news" },
   { label: "고객센터", link: "/cs" },
 ];
