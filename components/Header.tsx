@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +15,16 @@ const menuItems = [
 
 export default function DearIdolHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // 메뉴 열림 시 본문 스크롤 잠금 (모바일 스크롤 블리드 방지)
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isMenuOpen]);
 
   return (
     <>

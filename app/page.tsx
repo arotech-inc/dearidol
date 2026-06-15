@@ -299,7 +299,10 @@ export default function Home() {
           muted
           loop
           playsInline
-          className="hidden md:block absolute inset-0 w-full h-full object-cover object-top"
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          className="hidden md:block absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
         >
           <source src="/dearidol-hero.mp4" type="video/mp4" />
         </video>
@@ -310,7 +313,10 @@ export default function Home() {
           muted
           loop
           playsInline
-          className="block md:hidden absolute inset-0 w-full h-full object-cover object-top"
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          className="block md:hidden absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
         >
           <source src="/dearidol-hero-m.mp4" type="video/mp4" />
         </video>
@@ -728,7 +734,9 @@ export default function Home() {
                     loop
                     playsInline
                     preload="auto"
-                    className="absolute inset-0 w-full h-full object-contain bg-black"
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    className="absolute inset-0 w-full h-full object-contain bg-black pointer-events-none"
                   >
                     <source src="/dear.mp4" type="video/mp4" />
                   </video>
@@ -828,8 +836,10 @@ export default function Home() {
                 muted={isMuted}
                 loop
                 playsInline
-                preload="metadata"
-                className="absolute inset-0 w-full h-full object-contain bg-black"
+                preload="auto"
+                disablePictureInPicture
+                disableRemotePlayback
+                className="absolute inset-0 w-full h-full object-contain bg-black pointer-events-none"
               >
                 <source src="/dear.mp4" type="video/mp4" />
               </video>
