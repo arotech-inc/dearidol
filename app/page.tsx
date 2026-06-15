@@ -980,8 +980,8 @@ export default function Home() {
                   <div className="flex-1 flex items-center justify-center min-h-0 mt-6">
                     {(() => {
                       const stats = [
-                        { label: "VOCAL", value: 366 },
-                        { label: "DANCE", value: 440 },
+                        { label: "VOCAL", value: 440 },
+                        { label: "DANCE", value: 366 },
                         { label: "PASSION", value: 361 },
                         { label: "CHARISMA", value: 331 },
                         { label: "VISUAL", value: 346 },
@@ -998,7 +998,18 @@ export default function Home() {
                         return [cx + 145 * Math.cos(a), cy + 145 * Math.sin(a)] as const;
                       };
                       return (
-                        <svg viewBox="0 0 360 360" className="w-full max-w-[360px]">
+                        <svg viewBox="0 0 360 360" overflow="visible" className="w-full max-w-[360px]">
+                          <defs>
+                            <filter id="pentaGlow" x="-30%" y="-30%" width="160%" height="160%">
+                              <feGaussianBlur stdDeviation="4" result="blur" />
+                              <feFlood floodColor="rgb(192,132,252)" floodOpacity="0.5" />
+                              <feComposite in2="blur" operator="in" result="glow" />
+                              <feMerge>
+                                <feMergeNode in="glow" />
+                                <feMergeNode in="SourceGraphic" />
+                              </feMerge>
+                            </filter>
+                          </defs>
                           {[1, 0.75, 0.5, 0.25].map((scale, k) => (
                             <polygon
                               key={k}
@@ -1019,7 +1030,7 @@ export default function Home() {
                             fill="rgba(168,85,247,0.3)"
                             stroke="rgb(192,132,252)"
                             strokeWidth="2"
-                            filter="drop-shadow(0 0 8px rgba(192,132,252,0.5))"
+                            filter="url(#pentaGlow)"
                           />
                           {stats.map((s, i) => {
                             const [x, y] = pt(i, s.value / max);
@@ -1300,11 +1311,11 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-10 md:mt-12 flex flex-col md:flex-row items-center justify-between gap-5 px-6 md:px-8 py-5 md:py-6 bg-white/[0.02] border border-white/10"
+            className="mt-10 md:mt-12 flex flex-col md:flex-row items-center justify-between gap-5 px-4 md:px-8 py-5 md:py-6 bg-white/[0.02] border border-white/10 overflow-hidden"
           >
-            <div className="flex items-center gap-3 text-center md:text-left">
+            <div className="flex items-center gap-2 md:gap-3 text-center md:text-left min-w-0">
               <span className="inline-flex items-center justify-center w-2 h-2 rounded-full bg-pink-400 animate-pulse shrink-0" />
-              <p className="text-white/80 text-sm md:text-base">
+              <p className="text-white/80 text-[clamp(0.7rem,3vw,1rem)] md:text-base whitespace-nowrap">
                 최신 소식은 <span className="text-pink-300 font-semibold">공식 카페</span>에서도 확인할 수 있습니다.
               </p>
             </div>
