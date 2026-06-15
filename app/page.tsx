@@ -372,26 +372,26 @@ export default function Home() {
               <div className="h-4 w-px bg-white/20" />
             </div>
             <span className="section-label text-white/40 md:hidden">Available on</span>
-            <div className="flex flex-wrap items-center justify-center gap-3 max-w-md md:max-w-none">
-              {/* App Store 버튼 */}
-              <a
-                href="https://www.apple.com/app-store/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block w-[150px] md:w-[200px] h-11 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
-              >
-                <Image src="/appstore.svg" alt="App Store" fill className="object-contain" />
-              </a>
-
-              {/* Google Play 버튼 */}
-              <a
-                href="https://play.google.com/store"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block w-[150px] md:w-[200px] h-11 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300"
-              >
-                <Image src="/googleplay.png" alt="Google Play" fill className="object-contain" />
-              </a>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3">
+              {/* 스토어 뱃지 그룹 */}
+              <div className="flex items-center justify-center gap-3">
+                <a
+                  href="https://www.apple.com/app-store/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block w-[140px] md:w-[200px] h-11 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300 shrink-0"
+                >
+                  <Image src="/appstore.svg" alt="App Store" fill className="object-contain" />
+                </a>
+                <a
+                  href="https://play.google.com/store"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block w-[140px] md:w-[200px] h-11 md:h-14 relative transition hover:opacity-80 hover:-translate-y-0.5 duration-300 shrink-0"
+                >
+                  <Image src="/googleplay.png" alt="Google Play" fill className="object-contain" />
+                </a>
+              </div>
 
               {/* 트레일러 아이콘 버튼 */}
               <a
@@ -500,12 +500,12 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display leading-[1.1] md:whitespace-nowrap text-[clamp(2.25rem,5vw,3.75rem)]">
+              <h2 className="font-display leading-[1.1] whitespace-nowrap text-[clamp(1.5rem,5vw,3.75rem)]">
                 프로덕션의 모든 순간,<br />
                 <span className="gradient-text-pink">디어아이돌의 핵심 코어</span>
               </h2>
             </div>
-            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl text-center md:text-left mx-auto md:mx-0">
               여섯 개의 코어 시스템으로 폭 넓은 라이브 서비스를 경험
             </p>
           </motion.div>

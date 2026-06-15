@@ -66,25 +66,25 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
           {nextPost && (
             <Link
               href={`/news/${nextPost.slug}`}
-              className="flex items-center justify-between px-6 py-5 border-b border-white/10 hover:bg-white/5 transition group"
+              className="flex items-center justify-between gap-3 px-4 md:px-6 py-4 md:py-5 border-b border-white/10 hover:bg-white/5 transition group"
             >
-              <div className="flex items-center gap-4">
-                <span className="text-xs font-bold text-white/40 bg-white/10 px-3 py-1 rounded-full">다음글</span>
-                <span className="text-white/70 group-hover:text-pink-400 transition font-medium">{nextPost.title}</span>
+              <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
+                <span className="text-[10px] md:text-xs font-bold text-white/40 bg-white/10 px-2 md:px-3 py-1 rounded-full whitespace-nowrap shrink-0">다음글</span>
+                <span className="text-sm md:text-base text-white/70 group-hover:text-pink-400 transition font-medium truncate">{nextPost.title}</span>
               </div>
-              <span className="text-sm text-white/30">{nextPost.date}</span>
+              <span className="text-[11px] md:text-sm text-white/30 whitespace-nowrap shrink-0 tabular-nums">{nextPost.date}</span>
             </Link>
           )}
           {prevPost && (
             <Link
               href={`/news/${prevPost.slug}`}
-              className="flex items-center justify-between px-6 py-5 border-b border-white/10 hover:bg-white/5 transition group"
+              className="flex items-center justify-between gap-3 px-4 md:px-6 py-4 md:py-5 border-b border-white/10 hover:bg-white/5 transition group"
             >
-              <div className="flex items-center gap-4">
-                <span className="text-xs font-bold text-white/40 bg-white/10 px-3 py-1 rounded-full">이전글</span>
-                <span className="text-white/70 group-hover:text-pink-400 transition font-medium">{prevPost.title}</span>
+              <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
+                <span className="text-[10px] md:text-xs font-bold text-white/40 bg-white/10 px-2 md:px-3 py-1 rounded-full whitespace-nowrap shrink-0">이전글</span>
+                <span className="text-sm md:text-base text-white/70 group-hover:text-pink-400 transition font-medium truncate">{prevPost.title}</span>
               </div>
-              <span className="text-sm text-white/30">{prevPost.date}</span>
+              <span className="text-[11px] md:text-sm text-white/30 whitespace-nowrap shrink-0 tabular-nums">{prevPost.date}</span>
             </Link>
           )}
         </div>
