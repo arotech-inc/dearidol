@@ -10,7 +10,11 @@
       "Bash(node_modules/ffmpeg-static/ffmpeg.exe -i \"/g/ARO/홈페이지/dear.mp4\" -vf \"scale=1280:-2,fps=30\" -c:v libx264 -crf 28 -preset fast -c:a aac -b:a 128k -movflags +faststart -y public/dear.mp4)",
       "Bash(npm uninstall *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Read(//c/c/projects/dearidol/**)",
+      "Bash(awk '{print $5, $NF}')",
+      "Bash(node optimize-large.mjs)",
+      "Bash(node /c/projects/dearidol/optimize-large.mjs)"
     ]
   }
 }

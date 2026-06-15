@@ -41,7 +41,7 @@ export default function DearIdolHeader() {
           }}
           className="w-20 md:w-32 cursor-pointer z-50"
         >
-          <Image src="/IDOL_LOGO.png" alt="Dear Idol Logo" width={220} height={220} priority className="object-contain" />
+          <Image src="/IDOL_LOGO.webp" alt="Dear Idol Logo" width={220} height={220} priority className="object-contain" />
         </Link>
 
         {/* 햄버거 버튼 */}
@@ -78,7 +78,7 @@ export default function DearIdolHeader() {
             >
               {/* 메뉴 상단 */}
               <div className="px-6 pt-6 pb-5 border-b border-white/10">
-                <Image src="/IDOL_LOGO.png" alt="Dear Idol" width={90} height={90} className="object-contain mb-2" />
+                <Image src="/IDOL_LOGO.webp" alt="Dear Idol" width={90} height={90} className="object-contain mb-2" />
                 <p className="text-white/40 text-xs">PRODUCE YOUR STAR</p>
               </div>
 

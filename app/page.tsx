@@ -500,7 +500,7 @@ export default function Home() {
                 <span className="section-label text-pink-400">02 / Core System</span>
                 <div className="h-px w-12 bg-pink-400/30" />
               </div>
-              <h2 className="font-display leading-[1.1] whitespace-nowrap text-[clamp(1.5rem,5vw,3.75rem)]">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] whitespace-nowrap">
                 프로덕션의 모든 순간,<br />
                 <span className="gradient-text-pink">디어아이돌의 핵심 코어</span>
               </h2>
@@ -915,7 +915,7 @@ export default function Home() {
             <div className="relative border border-pink-500/30 overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400 z-20" />
               <Image
-                src="/character2.jpg"
+                src="/character2.webp"
                 alt="SSR 아이돌"
                 width={800}
                 height={1066}
@@ -939,7 +939,7 @@ export default function Home() {
                 {/* 캐릭터 프리뷰 */}
                 <div className="relative min-h-[400px] bg-white/[0.02] border border-white/10 overflow-hidden">
                   <Image
-                    src="/character preview.png"
+                    src="/character-preview.webp"
                     alt="Character Preview"
                     fill
                     sizes="(max-width: 1024px) 100vw, 25vw"
