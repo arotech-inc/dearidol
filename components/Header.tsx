@@ -16,13 +16,34 @@ const menuItems = [
 export default function DearIdolHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 메뉴 열림 시 본문 스크롤 잠금 (모바일 스크롤 블리드 방지)
+  // 메뉴 열림 시 본문 스크롤 잠금 (iOS Safari 포함 완전 차단)
   useEffect(() => {
     if (!isMenuOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const prevStyles = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    };
+    // iOS 포함 모든 모바일에서 작동하는 잠금
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = prev;
+      body.style.position = prevStyles.position;
+      body.style.top = prevStyles.top;
+      body.style.left = prevStyles.left;
+      body.style.right = prevStyles.right;
+      body.style.width = prevStyles.width;
+      body.style.overflow = prevStyles.overflow;
+      window.scrollTo(0, scrollY);
     };
   }, [isMenuOpen]);
 
@@ -64,7 +85,7 @@ export default function DearIdolHeader() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110]"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] overscroll-contain touch-none"
               onClick={() => setIsMenuOpen(false)}
             />
 
@@ -74,7 +95,7 @@ export default function DearIdolHeader() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-gradient-to-b from-zinc-900 to-black border-l border-white/10 z-[120] flex flex-col overflow-hidden"
+              className="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-gradient-to-b from-zinc-900 to-black border-l border-white/10 z-[120] flex flex-col overflow-hidden overscroll-contain"
             >
               {/* 메뉴 상단 */}
               <div className="px-6 pt-6 pb-5 border-b border-white/10">
