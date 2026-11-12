@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+function escapeHtml(value: unknown): string {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function POST(req: Request) {
   try {
     if (!process.env.RESEND_API_KEY) {
@@ -23,12 +32,12 @@ export async function POST(req: Request) {
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>Dear Idol 고객 문의</h2>
           <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 8px; border: 1px solid #ddd;"><b>문의 유형</b></td><td style="padding: 8px; border: 1px solid #ddd;">${inquiryType}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;"><b>이메일</b></td><td style="padding: 8px; border: 1px solid #ddd;">${email}</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;"><b>닉네임</b></td><td style="padding: 8px; border: 1px solid #ddd;">${nickname || "-"}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><b>문의 유형</b></td><td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(inquiryType)}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><b>이메일</b></td><td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(email)}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><b>닉네임</b></td><td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(nickname || "-")}</td></tr>
           </table>
           <h3 style="margin-top: 24px;">문의 내용</h3>
-          <p style="white-space: pre-wrap; padding: 16px; background: #f5f5f5; border-radius: 8px;">${message}</p>
+          <p style="white-space: pre-wrap; padding: 16px; background: #f5f5f5; border-radius: 8px;">${escapeHtml(message)}</p>
         </div>
       `,
     });

@@ -9,7 +9,6 @@ import { newsData } from "./data";
 import {
   Building2,
   Shirt,
-  Music2,
   Clapperboard,
   ArrowRight,
   ArrowUpRight,
